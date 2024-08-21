@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory} from "vue-router";
 import intro from '../components/intro/index.vue'
 import notFound from '../components/notFound.vue'
-import register from '../components/register/index.vue'
+import dashboard from '../components/dashboard/index.vue'
 
 const routes = [
     {
@@ -15,9 +15,9 @@ const routes = [
         component: notFound
     },
     {
-        path: '/try',
-        name: 'register.index',
-        component: register
+        path: '/dashboard',
+        name: 'dashboard.index',
+        component: dashboard
     }
 ]
 
