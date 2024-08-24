@@ -1,13 +1,12 @@
 <script setup>
 import Box from './Box.vue';
-import Box2 from './Box2.vue';
 </script>
 
 <template>
   <div class="wrapper">
     <UAHeader class="header"></UAHeader>
   </div>
-
+    
   <div class="page">
       <SideBar></SideBar>
 
@@ -21,28 +20,16 @@ import Box2 from './Box2.vue';
           </div>
         </div>
 
-        <div class="flex">
-          <router-link to="">
-            <Box title="Submitted" />
-          </router-link>
-          <router-link to="">
-            <Box title="Approved" />
-          </router-link>
-          <router-link to="">
-            <Box title="Rejected" />
-          </router-link>
-        </div>
-
-        <div class="horizontal-line"></div>
-
-        <h2>Approval</h2>
-
-        <div class="flex">
-          <Box2 title="College Dean (For RSO)" />
-          <Box2 title="OFFICE OF STUDENT AFFAIRS (For RSO)" />
-          <Box2 title="VPAA Approval" />
-          <Box2 title="Funding Needs Reviewed " />
-          <Box2 title="Copy Received by:"/>
+        <div class="flex boxes">
+          <Box></Box>
+          <Box></Box>
+          <Box></Box>
+          <Box></Box>
+          <Box></Box>
+          <Box></Box>
+          <Box></Box>
+          <Box></Box>
+          <Box></Box>
         </div>
 
     </div>
@@ -51,8 +38,8 @@ import Box2 from './Box2.vue';
 
 <style scoped>
   .wrapper {
-        padding-bottom: 8vh;
-      }
+      padding-bottom: 8vh;
+    }
 
   .page {
     display: flex;
@@ -80,18 +67,12 @@ import Box2 from './Box2.vue';
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 20px;
   }
 
-  .horizontal-line {
-    height: 2px;
-    background-color: #000;
-    margin: 50px auto;
+  .boxes {
+    flex-wrap: wrap;
+    flex: 1 1 calc(33.333% - 20px);
   }
 
-  h2 {
-    margin-left: 30px;
-    margin-bottom: 30px;
-    font-size: 2rem;
-  }
 </style>

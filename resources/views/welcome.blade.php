@@ -15,5 +15,6 @@
 
     <body>
         <div id="app"></div>
+        <div id="modal"></div>
     </body>
 </html>

@@ -1,5 +1,5 @@
 <template>
-    <h1>This is the Register Page.</h1>
+    <h1>This is the Login Page.</h1>
 </template>
 
 <style scoped>

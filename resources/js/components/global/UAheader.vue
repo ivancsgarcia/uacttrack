@@ -6,9 +6,13 @@
 
 <style scoped>
     div {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 8vh;
         background-color: #272F5C;
         color: #fff;
-        padding: 15px;
-        text-align: center;
     }
 </style>

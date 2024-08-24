@@ -1,19 +1,19 @@
+<script setup>
+    defineProps({
+        title: {
+        type: String,
+        default: 'No Input', // Default text if no prop is passed
+        },
+    })
+</script>
+
 <template>
     <div class="box">
         <p>{{ title }}</p>
     </div>
 </template>
 
-<script>
-    export default {
-    props: {
-        title: {
-        type: String,
-        default: 'No Input', // Default text if no prop is passed
-        },
-    },
-    };
-</script>
+
 
 <style scoped>
     .box {
