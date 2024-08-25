@@ -10,6 +10,7 @@ import APF from '../components/apf/index.vue'
 import APF1 from '../components/apf/apf-1/index.vue'
 import APF2 from '../components/apf/apf-2/index.vue'
 import APF3 from '../components/apf/apf-3/index.vue'
+import APFWhole from '../components/apf/apf-whole/index.vue'
 
 const routes = [
     {
@@ -66,6 +67,11 @@ const routes = [
         path: '/apf-3',
         name: 'apf-3.index',
         component: APF3
+    },
+    {
+        path: '/apf-whole',
+        name: 'apf-whole.index',
+        component: APFWhole
     }
 ]
 

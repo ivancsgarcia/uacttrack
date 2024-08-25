@@ -1,18 +1,10 @@
 <template>
-    <div>
-        <h1>University of the Assumption</h1>
+    <div class=" fixed h-20 bg-ua-blue w-full flex justify-center items-center text-white">
+        <img src="../../../../public/images/ua-logo.png" alt="ua-logo" class="w-16 mr-4">
+        <h1 class="text-3xl">University of the Assumption</h1>
     </div>
 </template>
 
 <style scoped>
-    div {
-        position: fixed;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 8vh;
-        background-color: #272F5C;
-        color: #fff;
-    }
+
 </style>
