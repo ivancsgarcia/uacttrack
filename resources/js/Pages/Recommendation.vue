@@ -1,5 +1,5 @@
 <script setup>
-import Box from './Box.vue';
+import Box from '../components/recommendation/Box.vue';
 </script>
 
 <template>

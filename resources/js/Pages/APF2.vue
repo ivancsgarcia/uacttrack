@@ -1,5 +1,5 @@
 <script setup>
-import APFHeader from '../APFHeader.vue';
+import APFHeader from '../components/apf/APFHeader.vue';
 import { ref } from 'vue';
 import { onClickOutside } from '@vueuse/core';
 

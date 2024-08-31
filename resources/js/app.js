@@ -1,27 +1,60 @@
 import './bootstrap';
 
-import { createApp } from 'vue';
-import app from './components/App.vue';
-import router from './router'
-import Account from './components/global/Account.vue';
-import SearchBar from './components/global/SearchBar.vue';
-import SideBar from './components/global/Sidebar.vue';
-import UAHeader from './components/global/UAheader.vue';
+// import { createApp } from 'vue';
+// import app from './components/App.vue';
+// import router from './router'
+import Account from '../js/components/global/Account.vue';
+import SearchBar from '../js/components/global/SearchBar.vue';
+import SideBar from '../js/components/global/Sidebar.vue';
+import UAHeader from '../js/components/global/UAheader.vue';
 
 /* import the fontawesome core */
-import { library } from '@fortawesome/fontawesome-svg-core'
+import { library } from '@fortawesome/fontawesome-svg-core';
 /* import font awesome icon component */
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 /* import specific icons */
-import { fas } from '@fortawesome/free-solid-svg-icons'
+import { fas } from '@fortawesome/free-solid-svg-icons';
 /* add icons to the library */
-library.add(fas)
+library.add(fas);
 
-createApp(app)
-.use(router)
-.component('font-awesome-icon', FontAwesomeIcon)
-.component('Account', Account)
-.component('SearchBar', SearchBar)
-.component('SideBar', SideBar)
-.component('UAHeader', UAHeader)
-.mount("#app")
+// createApp(app)
+// .use(router)
+// .component('font-awesome-icon', FontAwesomeIcon)
+// .component('Account', Account)
+// .component('SearchBar', SearchBar)
+// .component('SideBar', SideBar)
+// .component('UAHeader', UAHeader)
+// .mount("#app")
+
+import { createApp, h } from 'vue';
+import { createInertiaApp } from '@inertiajs/vue3';
+import { ZiggyVue } from '../../vendor/tightenco/ziggy';
+import PrimeVue from 'primevue/config';
+import { PrimeIcons } from '@primevue/core/api';
+// import Aura from '@primevue/themes/aura';
+
+createInertiaApp({
+  resolve: name => {
+    const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
+    return pages[`./Pages/${name}.vue`]
+  },
+  setup({ el, App, props, plugin }) {
+    createApp({ render: () => h(App, props) })
+      .use(plugin)
+      .use(ZiggyVue)
+      // .use(PrimeVue)
+      .use(PrimeVue, {
+        unstyled: true
+        // theme: {
+        //     preset: Aura
+        // }
+      })
+      .use(PrimeIcons)
+      .component('font-awesome-icon', FontAwesomeIcon)
+      .component('Account', Account)
+      .component('SearchBar', SearchBar)
+      .component('SideBar', SideBar)
+      .component('UAHeader', UAHeader)
+      .mount(el)
+  },
+})

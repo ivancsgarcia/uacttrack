@@ -1,10 +1,7 @@
 <script setup>
-import { ref } from 'vue';
-import Box from './Box.vue';
-import Box2 from './Box2.vue';
-import DeanModal from './DeanModal.vue';
+import Box from '../components/dashboard/Box.vue';
+import Box2 from '../components/dashboard/Box2.vue';
 
-const showModal = ref(false);
 </script>
 
 <template>
@@ -43,7 +40,6 @@ const showModal = ref(false);
 
         <div class="flex">
           <Box2 title="College Dean (For RSO)"  />
-          <button @click="showModal = true"> hi</button>
           <Box2 title="OFFICE OF STUDENT AFFAIRS (For RSO)" />
           <Box2 title="VPAA Approval" />
           <Box2 title="Funding Needs Reviewed " />
@@ -52,8 +48,6 @@ const showModal = ref(false);
 
     </div>
   </div>
-
-  <DeanModal v-if="showModal" :show="showModal"  />
 
 </template>
 

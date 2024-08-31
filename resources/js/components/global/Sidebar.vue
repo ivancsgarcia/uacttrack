@@ -1,31 +1,35 @@
+<script setup>
+import { Link } from '@inertiajs/vue3';
+</script>
+
 <template>
     <div class="menu">
         <div>
             <img src="../../../../public/images/UActTrack-logo.png" alt="uacttrack-logo">
 
-            <router-link to="" >
+            <Link :href="route('home')">
                 <div class="border">
                     <p>Dashboard</p>
                 </div>
-            </router-link>
+            </Link>
 
-            <router-link to="" >
+            <Link :href="route('apf')">
                 <div class="border">
                     <p>Activity Proposal Form</p>
                 </div>
-            </router-link>
+            </Link>
 
-            <router-link to="" >
+            <Link :href="route('request-form')">
                 <div class="border">
                     <p>Forms</p>
                 </div>
-            </router-link>
+            </Link>
             
-            <router-link to="" >
+            <Link :href="route('recommendation')">
                 <div class="border">
                     <p>Recommendation</p>
                 </div>
-            </router-link>
+            </Link>
         </div>
 
         <div class="bottom">
