@@ -5,11 +5,11 @@ import FormContainer from '../components/request-form/form-container.vue';
 
 <template>
     <div class="wrapper">
-        <UAHeader></UAHeader>
+        <UAHeader />
     </div>
     
     <div class="page">
-        <SideBar></SideBar>
+        <SideMenu />
 
         <div class="content">
             <div class="one">

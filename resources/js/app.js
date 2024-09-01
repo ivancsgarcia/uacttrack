@@ -5,7 +5,7 @@ import './bootstrap';
 // import router from './router'
 import Account from '../js/components/global/Account.vue';
 import SearchBar from '../js/components/global/SearchBar.vue';
-import SideBar from '../js/components/global/Sidebar.vue';
+import SideMenu from './components/global/SideMenu.vue';
 import UAHeader from '../js/components/global/UAheader.vue';
 
 /* import the fontawesome core */
@@ -53,7 +53,7 @@ createInertiaApp({
       .component('font-awesome-icon', FontAwesomeIcon)
       .component('Account', Account)
       .component('SearchBar', SearchBar)
-      .component('SideBar', SideBar)
+      .component('SideMenu', SideMenu)
       .component('UAHeader', UAHeader)
       .mount(el)
   },

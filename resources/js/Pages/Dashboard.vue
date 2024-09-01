@@ -6,23 +6,23 @@ import Box2 from '../components/dashboard/Box2.vue';
 
 <template>
   <div class="wrapper">
-    <UAHeader class="header"></UAHeader>
+    <UAHeader />
   </div>
 
-  <div class="page">
-      <SideBar></SideBar>
+  <div class="flex">
+      <SideMenu></SideMenu>
 
     <div class="content">
-        <div class="one">
+        <div class="one flex justify-between items-center">
           <Account class="account" name="SSITE"></Account>
-          <div class="right">
+          <div class="flex justify-center items-center gap-5">
             <SearchBar></SearchBar>
             <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
             <font-awesome-icon :icon="['fas', 'bell']" size="2xl"  />
           </div>
         </div>
 
-        <div class="flex">
+        <div class="flex justify-center flex-wrap gap-5">
           <router-link to="">
             <Box title="Submitted" />
           </router-link>
@@ -34,11 +34,11 @@ import Box2 from '../components/dashboard/Box2.vue';
           </router-link>
         </div>
 
-        <div class="horizontal-line"></div>
+        <div class="horizontal-line h-0.5 bg-black mt-14 mb-10"></div>
 
-        <h2>Approval</h2>
+        <h2 class="text-3xl">Approval</h2>
 
-        <div class="flex">
+        <div class="approval-boxes flex justify-center flex-wrap gap-5">
           <Box2 title="College Dean (For RSO)"  />
           <Box2 title="OFFICE OF STUDENT AFFAIRS (For RSO)" />
           <Box2 title="VPAA Approval" />
@@ -56,44 +56,20 @@ import Box2 from '../components/dashboard/Box2.vue';
         padding-bottom: 8vh;
       }
 
-  .page {
-    display: flex;
-  }
-
   .content {
     margin-left: 15vw;
   }
 
   .one {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin: 20px 50px 50px;
-  }
-
-  .right {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .flex {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .horizontal-line {
-    height: 2px;
-    background-color: #000;
-    margin: 50px auto;
   }
 
   h2 {
     margin-left: 30px;
     margin-bottom: 30px;
-    font-size: 2rem;
+  }
+
+  .approval-boxes {
+    flex: 1 1 calc(33.333% - 20px);
   }
 </style>

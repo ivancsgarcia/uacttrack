@@ -4,23 +4,23 @@ import Box from '../components/recommendation/Box.vue';
 
 <template>
   <div class="wrapper">
-    <UAHeader class="header"></UAHeader>
+    <UAHeader />
   </div>
     
-  <div class="page">
-      <SideBar></SideBar>
+  <div class="page flex">
+      <SideMenu />
 
     <div class="content">
-        <div class="one">
+        <div class="one flex justify-between items-center">
           <Account class="account" name="SSITE"></Account>
-          <div class="right">
+          <div class="flex justify-center items-center gap-5">
             <SearchBar></SearchBar>
             <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
             <font-awesome-icon :icon="['fas', 'bell']" size="2xl"  />
           </div>
         </div>
 
-        <div class="flex boxes">
+        <div class="flex justify-center flex-wrap gap-5 boxes">
           <Box></Box>
           <Box></Box>
           <Box></Box>
@@ -41,37 +41,15 @@ import Box from '../components/recommendation/Box.vue';
       padding-bottom: 8vh;
     }
 
-  .page {
-    display: flex;
-  }
-
   .content {
     margin-left: 15vw;
   }
 
   .one {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin: 20px 50px 50px;
   }
 
-  .right {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .flex {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-
   .boxes {
-    flex-wrap: wrap;
     flex: 1 1 calc(33.333% - 20px);
   }
 

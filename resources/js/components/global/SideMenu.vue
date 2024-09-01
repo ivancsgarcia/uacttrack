@@ -54,8 +54,7 @@ import { Link } from '@inertiajs/vue3';
 
     img {
         width: 250px;
-        margin-top: 30px;
-        margin-bottom: 50px;
+        margin: 30px auto 50px;
     }
 
     .border {

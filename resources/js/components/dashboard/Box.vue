@@ -8,7 +8,7 @@
 </script>
 
 <template>
-    <div class="box">
+    <div class="box text-3xl">
         <p>{{ title }}</p>
         <p>Activity Proposal Form</p>
     </div>
@@ -26,6 +26,6 @@
         color: white;
         padding: 20px 10px;
         text-align: center;
-        font-size: 1.8rem;
+        /* font-size: 1.8rem; */
     }
 </style>
