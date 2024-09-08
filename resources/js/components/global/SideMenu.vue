@@ -32,11 +32,13 @@ import { Link } from '@inertiajs/vue3';
             </Link>
         </div>
 
-        <div class="bottom">
-            <div class="border blue">
-                <p>Log Out</p>
+        <Link :href="route('logout')" method="post" as="button">
+            <div class="bottom">
+                <div class="border blue">
+                    <p>Log Out</p>
+                </div>
             </div>
-        </div>
+        </Link>
     </div>
 </template>
 

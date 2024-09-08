@@ -4,11 +4,11 @@
         type: String,
         default: 'No Input', // Default text if no prop is passed
         },
-    })
+    });
 </script>
 
 <template>
-    <div class="box text-2xl text-black">
+    <div @click="$emit('click')" class="box text-2xl text-black">
         <p>{{ title }}</p>
     </div>
 </template>

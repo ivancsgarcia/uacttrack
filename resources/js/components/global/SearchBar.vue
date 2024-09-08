@@ -1,13 +1,12 @@
 <template>
-    <div class="flex">
-        <font-awesome-icon class="icon" :icon="['fas', 'search']" size="2xl" />
+    <div class="flex items-center">
+        <font-awesome-icon class="icon mr-2" :icon="['fas', 'search']" size="2xl" />
         <input type="text" placeholder="Search">
     </div>
 </template>
 
 <style scoped>
     .flex {
-        display: flex;
         border: 1px solid black;
         border-radius: 12px;
     }

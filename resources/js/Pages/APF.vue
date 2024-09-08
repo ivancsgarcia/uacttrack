@@ -1,16 +1,19 @@
 <template>
-    <div class="container">
-        <img src="../../../../public/images/UActTrack-logo-light.png" alt="uacttrack-logo">
-        <button>Start</button>
+    <div class="container flex flex-col items-end rounded-3xl">
+        <img src="../../../public/images/UActTrack-logo-light.png" alt="uacttrack-logo">
+        <Link :href="route('try-apf')">
+            <button class="text-ua-blue bg-white rounded-lg py-5 px-20 text-4xl">Start</button>
+        </Link>
     </div>
 </template>
 
+<script setup>
+import { Link } from '@inertiajs/vue3';
+</script>
+
 <style scoped>
     .container {
-        display: flex;
-        flex-direction: column;
         /* justify-content: center; */
-        align-items: flex-end;
         height: 80vh;
         width: 80vw;
         margin: 70px auto;
@@ -22,12 +25,5 @@
         width: 1000px;
         margin: auto;
     }
-
-    button {
-        font-size: 2rem;
-        padding: 10px;
-        width: 200px;
-    }
-
 
 </style>

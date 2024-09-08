@@ -16,27 +16,20 @@
 </script>
 
 <template>
-    <div class="container">
+    <div class="flex justify-center items-center gap-4 mt-4">
         <div class="title">
             <p>{{ title }}</p>
         </div>
 
         <div class="links">
             <p>{{ link1 }}</p>
-            <p class="line">|</p>
+            <p class="line mx-3">|</p>
             <p>{{ link2 }}</p>
         </div>
     </div>
 </template>
 
 <style scoped>
-    .container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 15px;
-        margin-top: 15px;
-    }
 
     .title, .links {
         display: flex;
@@ -55,10 +48,5 @@
     .links {
         width: 20%;
     }
-
-    .line {
-        margin: 0 10px;
-    }
-
 
 </style>

@@ -8,34 +8,38 @@ import FormContainer from '../components/request-form/form-container.vue';
         <UAHeader />
     </div>
     
-    <div class="page">
+    <div class="page flex">
         <SideMenu />
 
         <div class="content">
-            <div class="one">
+            <div class="one flex justify-between items-center">
                 <Account name="SSITE"></Account>
                 
-                <div class="right">
+                <div class="flex justify-center items-center gap-5">
                     <SearchBar></SearchBar>
                     <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
                     <font-awesome-icon :icon="['fas', 'bell']" size="2xl"  />
                 </div>
             </div>
 
+            <!-- <div class="horizontal-line w-1/4 h-0.5 bg-black mb-5"></div> -->
+
             <h2>University of the Assumption Forms</h2>
 
-            <div class="flex-container">
+            <div class="flex-container flex justify-center gap-4">
                 <div class="title">Form Titles</div>
                 <div class="title dl">Download File</div>
             </div>
 
-            <FormContainer title="Funding Request Form" link1="FRF.pdf" link2="FRF.docx" />
-            <FormContainer title="~" link1=".pdf" link2=".docx" />
-            <FormContainer title="~" link1=".pdf" link2=".docx" />
-            <FormContainer title="~" link1=".pdf" link2=".docx" />
-            <FormContainer title="~" link1=".pdf" link2=".docx" />
-            <FormContainer title="~" link1=".pdf" link2=".docx" />
-            
+            <div class="mb-14">
+                <FormContainer title="Funding Request Form" link1="FRF.pdf" link2="FRF.docx" />
+                <FormContainer title="Petty Cash Form" link1="PCF.pdf" link2="PCF.docx" />
+                <FormContainer title="Request For Meals Form" link1="RFM.pdf" link2="RFM.docx" />
+                <FormContainer title="Requisition Form" link1="RF.pdf" link2="RF.docx" />
+                <FormContainer title="Purchase Requisition" link1="PR.pdf" link2="PR.docx" />
+                <FormContainer title="Reproduction Form" link1="Reproduction.pdf" link2="Reproduction.docx" />
+            </div>
+
         </div>
   </div>
 </template>
@@ -45,27 +49,13 @@ import FormContainer from '../components/request-form/form-container.vue';
       padding-bottom: 8vh;
     }
 
-    .page {
-        display: flex;
-    }
-
     .content {
         margin-left: 15vw;
         width: 85vw;
     }
 
     .one {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
         margin: 20px 50px 50px;
-    }
-
-    .right {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
     }
 
     h2 {
@@ -73,12 +63,6 @@ import FormContainer from '../components/request-form/form-container.vue';
         text-align: center;
         color: #272F5C;
         margin-bottom: 40px;
-    }
-
-    .flex-container {
-        display: flex;  
-        gap: 15px;
-        justify-content: center;
     }
 
     .title {
