@@ -1,5 +1,5 @@
 <template>
-    <div class="section flex flex-col justify-center items-center w-6/12 min-h-screen">
+    <div class="section flex flex-col justify-center items-center w-6/12 min-h-screen py-8">
         <img src="../../../../public/images/UActTrack-logo.png" alt="uacttrack-logo" class="w-2/4 mb-10">
 
         <form @submit.prevent="submit" class="flex flex-col justify-center items-center bg-ua-blue w-9/12 pt-20 pb-4 rounded-3xl">
@@ -69,7 +69,7 @@
                 <input type="password" v-model="form.password_confirmation" placeholder="Confirm Password" class="w-full px-4 rounded-2xl text-xl">
             </div>
 
-             <button type="submit" :disabled="form.processing" class="bg-white rounded-2xl text-2xl mt-10 mb-12 w-1/3 h-14">
+             <button :disabled="form.processing" class="bg-white rounded-2xl text-2xl mt-10 mb-12 w-1/3 h-14">
                 Register
             </button>
         </form>

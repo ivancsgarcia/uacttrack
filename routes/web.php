@@ -23,10 +23,12 @@ Route::middleware("auth")->group(function() {
     Route::inertia('/', 'Dashboard')->name('home');
 
     Route::inertia('/request-form', 'RequestForm')->name('request-form');
-
     Route::inertia('/recommendation', 'Recommendation')->name('recommendation');
-
     Route::inertia('/APF', 'APF')->name('apf');
+
+    Route::inertia('/submitted-form', 'SubmittedAPF')->name('submitted-form');
+    Route::inertia('/approved-form', 'ApprovedAPF')->name('approved-form');
+    Route::inertia('/rejected-form', 'RejectedAPF')->name('rejected-form');
 
     Route::inertia('/APF-try', 'TryAPF')->name('try-apf');
     Route::post('/APF-try', [ActivityFormController::class, 'store']);

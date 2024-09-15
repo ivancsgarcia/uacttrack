@@ -2,6 +2,7 @@
 import { usePage } from '@inertiajs/vue3';
 import Box from '../components/dashboard/Box.vue';
 import Box2 from '../components/dashboard/Box2.vue';
+import { Link } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 
 const page = usePage();
@@ -40,15 +41,15 @@ const closeDialog = () => {
         </div>
 
         <div class="flex justify-center flex-wrap gap-5">
-          <router-link to="">
+          <Link :href="route('submitted-form')">
             <Box title="Submitted" />
-          </router-link>
-          <router-link to="">
+          </Link>
+          <Link :href="route('approved-form')">
             <Box title="Approved" />
-          </router-link>
-          <router-link to="">
+          </Link>
+          <Link :href="route('rejected-form')">
             <Box title="Rejected" />
-          </router-link>
+          </Link>
         </div>
 
         <div class="horizontal-line h-0.5 bg-black mt-14 mb-10"></div>

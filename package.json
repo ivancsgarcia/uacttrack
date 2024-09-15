@@ -27,9 +27,10 @@
         "@fortawesome/free-solid-svg-icons": "^6.6.0",
         "@fortawesome/vue-fontawesome": "^3.0.8",
         "@inertiajs/vue3": "^1.2.0",
-        "@primevue/themes": "^4.0.5",
+        "@primevue/themes": "^4.0.7",
         "@vueuse/core": "^11.0.1",
         "primeicons": "^7.0.0",
-        "primevue": "^4.0.5"
+        "primevue": "^4.0.7",
+        "tailwindcss-primeui": "^0.3.4"
     }
 }

@@ -3,7 +3,7 @@
         <UAHeader />
     </div>
 
-    <form class="w-4/5 flex flex-col justify-center items-center gap-5 mx-auto">
+    <form @submit.prevent="submit" class="w-4/5 flex flex-col justify-center items-center gap-5 mx-auto">
         <div class="part-one w-full space-y-4" v-if="partOne">
             <div class="flex justify-center items-center gap-5">
                 <p class="text-ua-blue text-center font-bold text-3xl w-2/4">Identify the funding requirements for your activity.</p>
@@ -41,7 +41,7 @@
 
             <div class="flex justify-center items-center gap-5">
                 <div class="div-btn">Forms</div>
-                <div as="button" @click="partOne = !partOne, partTwo = !partTwo" class="div-btn bg-ua-blue text-white">Next</div>
+                <div role="button" @click="partOne = !partOne, partTwo = !partTwo" class="div-btn bg-ua-blue text-white">Next</div>
             </div>
         </div>
 
@@ -90,8 +90,8 @@
             </div>
 
             <div class="flex justify-center items-center gap-5 mb-10">
-                <div as="button" @click="partOne = !partOne, partTwo =!partTwo" class="div-btn">Back</div>
-                <div as="button" @click="partTwo =!partTwo, partThree =!partThree" class="div-btn bg-ua-blue text-white">Next</div>
+                <div role="button" @click="partOne = !partOne, partTwo =!partTwo" class="div-btn">Back</div>
+                <div role="button" @click="partTwo =!partTwo, partThree =!partThree" class="div-btn bg-ua-blue text-white">Next</div>
             </div>
 
         </div>
@@ -166,8 +166,11 @@
             <div class="flex mx-auto w-9/12 gap-8 mb-4 text-xl">
                 <div class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md text-2xl">Check Payment / Cash</div>
                 <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
-                    <p class="text-center">Funding Request Form (FRF) for P1,000 and above or Petty Cash Form (PCF) for amount below P1,000.</p>
-                    <p class="text-center underline">Attach File Here</p>
+                    <p class="text-center">Funding Request Form (FRF) for P1,000 and above or Petty Cash Form (PCF
+                        ) for amount below P1,000.</p>
+                    <div class="flex justify-center">
+                        <input type="file" @input="form.paymentOrCashFile = e.target.files[0]" >
+                    </div>
                 </div>
             </div>
 
@@ -175,7 +178,10 @@
                 <div class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md text-2xl">Food</div>
                 <div class="bg-ua-blue/30 w-2/4 flex flex-col justify-center items-center p-2 rounded-md">
                     <p class="text-center">Request for Meals (RFM)</p>
-                    <p class="text-center underline">Attach File Here</p>
+                    <div class="flex justify-center">
+                        <input type="file" @input="form.foodFile = e.target.files[0]" >
+                        <p>{{ form.errors.paymentOrCashFile }}</p>
+                    </div>
                 </div>
             </div>
 
@@ -183,7 +189,10 @@
                 <div class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md text-2xl">Supplies</div>
                 <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
                     <p class="text-center">Requisition Form (RF) for supplies available at RMS or Purchase Requisition (PR) for supplies to be purchased</p>
-                    <p class="text-center underline">Attach File Here</p>
+                    <div class="flex justify-center">
+                        <input type="file" @input="form.suppliesFile = e.target.files[0]" >
+                        <p>{{ form.errors.suppliesFile }}</p>
+                    </div>
                 </div>
             </div>
 
@@ -191,7 +200,10 @@
                 <div class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md text-2xl">Reproduction</div>
                 <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
                     <p class="text-center">Reproduction Form</p>
-                    <p class="text-center underline">Attach File Here </p>
+                    <div class="flex justify-center">
+                        <input type="file" @input="form.reproductionFile = e.target.files[0]" >
+                        <p>{{ form.errors.reproductionFile }}</p>
+                    </div>
                 </div>
             </div>
 
@@ -199,20 +211,16 @@
                 <div class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md text-2xl">Others, specify</div>
                 <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
                     <p class="text-center">If applicable:</p>
-                    <div class="file-upload">
-                        <!-- Label acts as the custom file button -->
-                        <label class="file-upload-label" for="fileInput">Attach File Here</label>
-                        <!-- Actual hidden file input -->
-                        <input type="file" id="fileInput" class="file-upload-input" onchange="updateFileName()">
-                        <!-- Span to display the selected file name -->
-                        <span class="file-name">No file selected</span>
+                    <div class="flex justify-center">
+                        <input type="file" @input="form.othersFile = e.target.files[0]" >
+                        <p>{{ form.errors.othersFile }}</p>
                     </div>
                 </div>
             </div>
 
             <div class="flex justify-center items-center gap-5 mb-10">
-                <div as="button" @click="partTwo = !partTwo, partThree =!partThree" class="div-btn">Back</div>
-                <div as="button" @click="" class="div-btn bg-ua-blue text-white">Submit</div>
+                <div role="button" @click="partTwo = !partTwo, partThree =!partThree" class="div-btn">Back</div>
+                <div role="button" :disabled="form.processing" class="div-btn bg-ua-blue text-white">Submit</div>
             </div>
 
         </div>
@@ -242,7 +250,18 @@ const form = useForm({
     activityTitle: null,
     activityDescription: null,
     participant: null,
+    paymentOrCashFile: null,
+    foodFile: null,
+    suppliesFile: null,
+    reproductionFile: null,
+    othersFile: null,
 });
+
+const submit = () => {
+
+form.post(route('try-apf'));
+}
+
 </script>
 
 <style scoped>

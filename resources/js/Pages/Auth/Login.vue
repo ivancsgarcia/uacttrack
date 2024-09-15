@@ -24,7 +24,7 @@
             <div v-if="form.errors.password" class="w-9/12 text-red-500 text-sm">{{form.errors.password}}</div>
 
 
-            <button type="submit" :disabled="form.processing" class="bg-white rounded-2xl text-2xl mb-12 w-1/3 h-14">
+            <button :disabled="form.processing" class="bg-white rounded-2xl text-2xl mb-12 w-1/3 h-14">
                 Log In
             </button>
 
