@@ -1,18 +1,12 @@
-<script setup>
-import Box from '../components/recommendation/Box.vue';
-</script>
-
 <template>
-  <div class="wrapper">
+  <div class="app flex pt-16">
     <UAHeader />
-  </div>
-    
-  <div class="page flex">
-      <SideMenu />
+    <SideMenu/>
 
-    <div class="content">
-        <div class="one flex justify-between items-center">
-          <Account class="account" name="SSITE"></Account>
+    <div class="main-content w-screen ml-64 p-5">
+        <div class="flex justify-between items-center mt-5 mx-12 mb-12">
+          <Account class="account" :name="fullName" /> 
+
           <div class="flex justify-center items-center gap-5">
             <SearchBar></SearchBar>
             <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
@@ -36,17 +30,19 @@ import Box from '../components/recommendation/Box.vue';
   </div>
 </template>
 
+<script setup>
+import Box from '../components/recommendation/Box.vue';
+import { usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+
+const page = usePage();
+const user = computed(() => page.props.auth.user);
+const fullName = `${user.value.firstName} ${user.value.lastName}`;
+</script>
+
 <style scoped>
-  .wrapper {
-      padding-bottom: 8vh;
-    }
-
-  .content {
-    margin-left: 15vw;
-  }
-
-  .one {
-    margin: 20px 50px 50px;
+  .main-content {
+    min-height: calc(100vh - 60px);
   }
 
   .boxes {

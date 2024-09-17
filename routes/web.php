@@ -30,14 +30,8 @@ Route::middleware("auth")->group(function() {
     Route::inertia('/approved-form', 'ApprovedAPF')->name('approved-form');
     Route::inertia('/rejected-form', 'RejectedAPF')->name('rejected-form');
 
-    Route::inertia('/APF-try', 'TryAPF')->name('try-apf');
-    Route::post('/APF-try', [ActivityFormController::class, 'store']);
-
-    Route::inertia('/APF-1', 'APF1')->name('apf-1');
-
-    Route::inertia('/APF-2', 'APF2')->name('apf-2');
-
-    Route::inertia('/APF-3', 'APF3')->name('apf-3');
+    Route::inertia('/activity-form', 'ActivityForm')->name('activity-form');
+    Route::post('/activity-form', [ActivityFormController::class, 'store']);
 
     Route::inertia('/APF-whole', 'APFWhole')->name('apf-whole');
 

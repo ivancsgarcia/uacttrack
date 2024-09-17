@@ -1,7 +1,7 @@
 <template>
     <div class="container flex flex-col items-end rounded-3xl">
         <img src="../../../public/images/UActTrack-logo-light.png" alt="uacttrack-logo">
-        <Link :href="route('try-apf')">
+        <Link :href="route('activity-form')">
             <button class="text-ua-blue bg-white rounded-lg py-5 px-20 text-4xl">Start</button>
         </Link>
     </div>

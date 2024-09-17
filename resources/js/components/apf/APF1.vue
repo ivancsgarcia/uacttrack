@@ -8,26 +8,26 @@
 
         <div class="flex justify-center items-center gap-5">
             <div class="name flex justify-center items-center p-3 h-20 text-3xl w-2/4 shadow-xl">Check Payment / Cash</div>
-            <div class="radio radio1 shadow-xl"><input type="radio" name="cash" value="yes" v-model="form.paymentOrCash"/></div>
-            <div class="radio radio2 shadow-xl"><input type="radio" name="cash" value="no" v-model="form.paymentOrCash"/></div>
+            <div class="radio radio1 shadow-xl"><input type="radio" name="cash" value="1" v-model="form.paymentOrCash"/></div>
+            <div class="radio radio2 shadow-xl"><input type="radio" name="cash" value="0" v-model="form.paymentOrCash"/></div>
         </div>
 
         <div class="flex justify-center items-center gap-5">
             <div class="name flex justify-center items-center p-3 h-20 text-3xl w-2/4 shadow-xl">Food</div>
-            <div class="radio radio1 shadow-xl"><input type="radio" name="food" value="yes" v-model="form.food"/></div>
-            <div class="radio radio2 shadow-xl"><input type="radio" name="food" value="no" v-model="form.food"/></div>
+            <div class="radio radio1 shadow-xl"><input type="radio" name="food" value="1" v-model="form.food"/></div>
+            <div class="radio radio2 shadow-xl"><input type="radio" name="food" value="0" v-model="form.food"/></div>
         </div>
 
         <div class="flex justify-center items-center gap-5">
             <div class="name flex justify-center items-center p-3 h-20 text-3xl w-2/4 shadow-xl">Supplies</div>
-            <div class="radio radio1 shadow-xl"><input type="radio" name="supplies" value="yes" v-model="form.supplies"/></div>
-            <div class="radio radio2 shadow-xl"><input type="radio" name="supplies" value="no" v-model="form.supplies"/></div>
+            <div class="radio radio1 shadow-xl"><input type="radio" name="supplies" value="1" v-model="form.supplies"/></div>
+            <div class="radio radio2 shadow-xl"><input type="radio" name="supplies" value="0" v-model="form.supplies"/></div>
         </div>
 
         <div class="flex justify-center items-center gap-5">
             <div class="name flex justify-center items-center p-3 h-20 text-3xl w-2/4 shadow-xl">Reproduction</div>
-            <div class="radio radio1 shadow-xl"><input type="radio" name="reproduction" value="yes" v-model="form.reproduction"/></div>
-            <div class="radio radio2 shadow-xl"><input type="radio" name="reproduction" value="no" v-model="form.reproduction"/></div>
+            <div class="radio radio1 shadow-xl"><input type="radio" name="reproduction" value="1" v-model="form.reproduction"/></div>
+            <div class="radio radio2 shadow-xl"><input type="radio" name="reproduction" value="0" v-model="form.reproduction"/></div>
         </div>
 
         <div class="mx-14">
@@ -35,14 +35,21 @@
         </div>
 
         <div class="flex justify-center items-center gap-5">
-            <div role="button" class="div-btn">Forms</div>
-            <div role="button" class="div-btn bg-ua-blue text-white">Next</div>
+            <!-- class="div-btn" -->
+            <button @click="" class="border border-black rounded-xl text-ua-blue text-2xl px-12 py-4">Forms</button>
+
+            <!-- class="div-btn bg-ua-blue text-white" -->
+            <button @click="emit('nextStep')" class="border border-ua-blue rounded-xl bg-ua-blue text-white text-2xl px-12 py-4">Next</button>
         </div>
     </div>
 </template>
 
 <script setup>
+    const props = defineProps({
+        form: Object,
+    })
 
+    const emit = defineEmits(['nextStep'])
 </script>
 
 <style scoped>

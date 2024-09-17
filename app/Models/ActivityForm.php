@@ -28,6 +28,6 @@ class ActivityForm extends Model
         'foodFile',
         'suppliesFile',
         'reproductionFile',
-        'othersFile',
+        'othersFile'
     ];
 }

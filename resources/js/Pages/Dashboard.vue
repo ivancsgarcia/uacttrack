@@ -1,3 +1,60 @@
+<template>
+  <div class="app flex pt-16">
+    <UAHeader />
+    <SideMenu/>
+
+    <div class="main-content w-screen ml-64 p-5">
+      <div class="flex justify-between items-center mt-5 mx-12 mb-12">
+          <Account class="account" :name="fullName" /> 
+
+          <div class="flex justify-center items-center gap-5">
+              <SearchBar></SearchBar>
+              <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
+              <font-awesome-icon :icon="['fas', 'bell']" size="2xl"  />
+          </div>
+      </div>
+
+        <div class="flex justify-center flex-wrap gap-5 mt-5 mx-12 mb-12">
+          <Link :href="route('submitted-form')">
+            <Box title="Submitted" />
+          </Link>
+          <Link :href="route('approved-form')">
+            <Box title="Approved" />
+          </Link>
+          <Link :href="route('rejected-form')">
+            <Box title="Rejected" />
+          </Link>
+        </div>
+
+        <div class="horizontal-line h-0.5 bg-black mt-14 mb-10"></div>
+
+        <h2 class="text-3xl">Approval</h2>
+        <div class="approval-boxes flex justify-center flex-wrap gap-5">
+          <Box2 title="College Dean (For RSO)" @click="openDialog"  />
+          <Box2 title="OFFICE OF STUDENT AFFAIRS (For RSO)" />
+          <Box2 title="VPAA Approval" />
+          <Box2 title="Funding Needs Reviewed " />
+          <Box2 title="Copy Received by:"/>
+        </div>
+
+        <dialog ref="dialogRef" class="modal">
+          <div class="modal-box">
+            <h3 class="text-lg font-bold">Hello!</h3>
+            <p class="py-4">Press ESC key or click the button below to close</p>
+            <div class="modal-action">
+              <form method="dialog">
+                <!-- if there is a button in form, it will close the modal -->
+                <button class="btn">Close</button>
+              </form>
+            </div>
+          </div>
+      </dialog>
+
+    </div>
+  </div>
+  
+</template>
+
 <script setup>
 import { usePage } from '@inertiajs/vue3';
 import Box from '../components/dashboard/Box.vue';
@@ -22,89 +79,10 @@ const closeDialog = () => {
 };
 </script>
 
-<template>
-  <div class="wrapper">
-    <UAHeader />
-  </div>
-
-  <div class="flex w-screen">
-      <SideMenu></SideMenu>
-
-    <div class="content">
-        <div class="one flex justify-between items-center">
-          <Account class="account" :name="fullName" /> 
-          <div class="flex justify-center items-center gap-5">
-            <SearchBar></SearchBar>
-            <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
-            <font-awesome-icon :icon="['fas', 'bell']" size="2xl"  />
-          </div>
-        </div>
-
-        <div class="flex justify-center flex-wrap gap-5">
-          <Link :href="route('submitted-form')">
-            <Box title="Submitted" />
-          </Link>
-          <Link :href="route('approved-form')">
-            <Box title="Approved" />
-          </Link>
-          <Link :href="route('rejected-form')">
-            <Box title="Rejected" />
-          </Link>
-        </div>
-
-        <div class="horizontal-line h-0.5 bg-black mt-14 mb-10"></div>
-
-        <h2 class="text-3xl">Approval</h2>
-
-        <div class="approval-boxes flex justify-center flex-wrap gap-5">
-          <Box2 title="College Dean (For RSO)" @click="openDialog"  />
-          <Box2 title="OFFICE OF STUDENT AFFAIRS (For RSO)" />
-          <Box2 title="VPAA Approval" />
-          <Box2 title="Funding Needs Reviewed " />
-          <Box2 title="Copy Received by:"/>
-        </div>
-
-          <!-- The dialog element -->
-          <!-- <dialog ref="dialogRef">
-            <p>This is a dialog box.</p>
-            <button @click="closeDialog">Close</button>
-          </dialog> -->
-
-            <dialog ref="dialogRef" class="modal">
-              <div class="modal-box">
-                <h3 class="text-lg font-bold">Hello!</h3>
-                <p class="py-4">Press ESC key or click the button below to close</p>
-                <div class="modal-action">
-                  <form method="dialog">
-                    <!-- if there is a button in form, it will close the modal -->
-                    <button class="btn">Close</button>
-                  </form>
-                </div>
-              </div>
-          </dialog>
-
-
-    </div>
-  </div>
-
-</template>
-
 <style scoped>
-  .wrapper {
-        padding-bottom: 8vh;
-      }
 
-  .content {
-    margin-left: 15vw;
-  }
-
-  .one {
-    margin: 20px 50px 50px;
-  }
-
-  h2 {
-    margin-left: 30px;
-    margin-bottom: 30px;
+  .main-content {
+    min-height: calc(100vh - 60px);
   }
 
   .approval-boxes {

@@ -9,6 +9,7 @@ export default {
     extend: {
       colors: {
         'ua-blue': '#272F5C',
+        'ua-gray': '#D9D9D9',
       },
     },
   },

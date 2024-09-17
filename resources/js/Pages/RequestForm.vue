@@ -1,19 +1,11 @@
-<script setup>
-import FormContainer from '../components/request-form/form-container.vue';
-
-</script>
-
 <template>
-    <div class="wrapper">
-        <UAHeader />
-    </div>
-    
-    <div class="page flex">
-        <SideMenu />
+    <div class="app flex pt-16">
+    <UAHeader />
+    <SideMenu/>
 
-        <div class="content">
-            <div class="one flex justify-between items-center">
-                <Account name="SSITE"></Account>
+        <div class="main-content w-screen ml-64 p-5">
+            <div class="flex justify-between items-center mt-5 mx-12 mb-12">
+                <Account class="account" :name="fullName" /> 
                 
                 <div class="flex justify-center items-center gap-5">
                     <SearchBar></SearchBar>
@@ -24,7 +16,7 @@ import FormContainer from '../components/request-form/form-container.vue';
 
             <!-- <div class="horizontal-line w-1/4 h-0.5 bg-black mb-5"></div> -->
 
-            <h2>University of the Assumption Forms</h2>
+            <h2 class="text-center text-5xl mb-10">University of the Assumption Forms</h2>
 
             <div class="flex-container flex justify-center gap-4">
                 <div class="title">Form Titles</div>
@@ -41,28 +33,27 @@ import FormContainer from '../components/request-form/form-container.vue';
             </div>
 
         </div>
-  </div>
+    </div>
 </template>
 
+<script setup>
+import FormContainer from '../components/request-form/form-container.vue';
+import { usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+
+const page = usePage();
+const user = computed(() => page.props.auth.user);
+const fullName = `${user.value.firstName} ${user.value.lastName}`;
+</script>
+
 <style scoped>
-    .wrapper {
-      padding-bottom: 8vh;
-    }
 
-    .content {
-        margin-left: 15vw;
-        width: 85vw;
-    }
-
-    .one {
-        margin: 20px 50px 50px;
+    .main-content {
+        min-height: calc(100vh - 60px);
     }
 
     h2 {
-        font-size: 3rem;
-        text-align: center;
         color: #272F5C;
-        margin-bottom: 40px;
     }
 
     .title {

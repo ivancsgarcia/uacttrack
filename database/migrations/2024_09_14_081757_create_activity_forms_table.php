@@ -21,7 +21,7 @@ return new class extends Migration
             $table->time('fromTime');
             $table->time('toTime');
             $table->integer('numberOfAttendees');
-            $table->integer('typeOfEvent');
+            $table->string('typeOfEvent');
             $table->string('availableVenue');
             $table->text('requirementsOrResourcesNeeded');
             $table->string('activityTitle');

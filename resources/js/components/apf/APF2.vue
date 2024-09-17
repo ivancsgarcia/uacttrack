@@ -44,14 +44,19 @@
             </div>
 
             <div class="flex justify-center items-center gap-5 mb-10">
-                <div role="button" class="div-btn">Back</div>
-                <div role="button" class="div-btn bg-ua-blue text-white">Next</div>
+                <button @click="emit('previousStep')" class="border border-black rounded-xl text-ua-blue text-2xl px-12 py-4">Back</button>
+                <button @click="emit('nextStep')" class="border border-ua-blue rounded-xl bg-ua-blue text-white text-2xl px-12 py-4">Next</button>
             </div>
 
         </div>
 </template>
 
 <script setup>
+    const props = defineProps({
+        form: Object,
+    })
+
+    const emit = defineEmits(['nextStep', 'previousStep'])
 
 </script>
 
