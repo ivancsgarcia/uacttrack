@@ -5,7 +5,7 @@
 
     <div class="main-content w-screen ml-64 p-5">
         <div class="flex justify-between items-center mt-5 mx-12 mb-12">
-          <Account class="account" :name="fullName" /> 
+          <Account class="account" /> 
 
           <div class="flex justify-center items-center gap-5">
             <SearchBar></SearchBar>
@@ -38,11 +38,12 @@ import { computed } from 'vue';
 const page = usePage();
 const user = computed(() => page.props.auth.user);
 const fullName = `${user.value.firstName} ${user.value.lastName}`;
+
 </script>
 
 <style scoped>
   .main-content {
-    min-height: calc(100vh - 60px);
+    min-height: calc(100vh - 64px);
   }
 
   .boxes {

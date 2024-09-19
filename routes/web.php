@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActivityFormController;
 use App\Http\Controllers\Auth\AuthenticateController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware("guest")->group(function() {
@@ -20,15 +21,15 @@ Route::middleware("auth")->group(function() {
     // Logout
     Route::post('/logout', [AuthenticateController::class, 'destroy'])->name('logout');
 
-    Route::inertia('/', 'Dashboard')->name('home');
+    Route::get('/', [DashboardController::class, 'create'])->name('home');
 
     Route::inertia('/request-form', 'RequestForm')->name('request-form');
     Route::inertia('/recommendation', 'Recommendation')->name('recommendation');
     Route::inertia('/APF', 'APF')->name('apf');
 
-    Route::inertia('/submitted-form', 'SubmittedAPF')->name('submitted-form');
-    Route::inertia('/approved-form', 'ApprovedAPF')->name('approved-form');
-    Route::inertia('/rejected-form', 'RejectedAPF')->name('rejected-form');
+    Route::get('/submitted-apf', [ActivityFormController::class, 'fetchAll'])->name('submitted-apf');
+    Route::get('/approved-apf', [ActivityFormController::class, 'fetchApproved'])->name('approved-apf');
+    Route::get('/rejected-apf', [ActivityFormController::class, 'fetchRejected'])->name('rejected-apf');
 
     Route::inertia('/activity-form', 'ActivityForm')->name('activity-form');
     Route::post('/activity-form', [ActivityFormController::class, 'store']);

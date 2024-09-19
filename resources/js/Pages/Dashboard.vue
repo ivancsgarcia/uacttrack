@@ -5,7 +5,7 @@
 
     <div class="main-content w-screen ml-64 p-5">
       <div class="flex justify-between items-center mt-5 mx-12 mb-12">
-          <Account class="account" :name="fullName" /> 
+          <Account class="account" /> 
 
           <div class="flex justify-center items-center gap-5">
               <SearchBar></SearchBar>
@@ -15,13 +15,13 @@
       </div>
 
         <div class="flex justify-center flex-wrap gap-5 mt-5 mx-12 mb-12">
-          <Link :href="route('submitted-form')">
+          <Link :href="route('submitted-apf')">
             <Box title="Submitted" />
           </Link>
-          <Link :href="route('approved-form')">
+          <Link :href="route('approved-apf')">
             <Box title="Approved" />
           </Link>
-          <Link :href="route('rejected-form')">
+          <Link :href="route('rejected-apf')">
             <Box title="Rejected" />
           </Link>
         </div>
@@ -60,11 +60,8 @@ import { usePage } from '@inertiajs/vue3';
 import Box from '../components/dashboard/Box.vue';
 import Box2 from '../components/dashboard/Box2.vue';
 import { Link } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 
-const page = usePage();
-const user = computed(() => page.props.auth.user);
-const fullName = `${user.value.firstName} ${user.value.lastName}`;
 
 const dialogRef = ref(null);
 
@@ -82,7 +79,7 @@ const closeDialog = () => {
 <style scoped>
 
   .main-content {
-    min-height: calc(100vh - 60px);
+    min-height: calc(100vh - 64px);
   }
 
   .approval-boxes {

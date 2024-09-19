@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('activity_forms', function (Blueprint $table) {
             $table->id();
+            $table->string('status')->default('pending');
             $table->boolean('paymentOrCash');
             $table->boolean('food');
             $table->boolean('supplies');

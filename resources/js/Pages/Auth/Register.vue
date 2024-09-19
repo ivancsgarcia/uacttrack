@@ -17,7 +17,8 @@
             <div class="flex w-9/12 h-14 bg-white rounded-2xl mt-4">
                 <select v-model="form.organization" class="w-full rounded-2xl text-xl px-4">
                 <option value="" selected disabled>Select An Organization</option>
-                <option v-if="form.role === 'Admin'" value="None" >None</option>
+                <option v-for="org in organizations" :key="org.id" :value="org.name">{{ org.name }}</option>
+                <!-- <option v-if="form.role === 'Admin'" value="None" >None</option>
                 <option value="AAA" >AAA</option>
                 <option value="BACC" >BACC</option>
                 <option value="BHSPHS" >BHSPHS</option>
@@ -40,7 +41,7 @@
                 <option value="CSC" >University of the Assumption –
                     Central Student Council</option>
                 <option value="SAO" >University of the Assumption –
-                    Student Assistants Organization</option>
+                    Student Assistants Organization</option> -->
             </select>
             </div>
             <div v-if="form.errors.organization" class="w-9/12 text-red-500 text-sm">{{form.errors.organization}}</div>
@@ -78,6 +79,10 @@
 
 <script setup>
 import { useForm } from '@inertiajs/vue3';
+
+defineProps({
+    organizations: Array,
+})
 
 const form = useForm({
     role: "",

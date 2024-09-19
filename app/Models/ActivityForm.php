@@ -10,6 +10,7 @@ class ActivityForm extends Model
     use HasFactory;
 
     protected $fillable = [
+        'status',
         'paymentOrCash',
         'food',
         'supplies',

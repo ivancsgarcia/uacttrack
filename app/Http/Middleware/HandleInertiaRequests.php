@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Organization;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -40,7 +42,10 @@ class HandleInertiaRequests extends Middleware
                 'user' => fn () => $request->user()
                 ? $request->user()->only('firstName', 'lastName', 'email')
                 : null,
-            ]
+            ],
+            'organization' => fn() => Auth::user() && Auth::user()->organization
+            ? Organization::where('name', Auth::user()->organization)->first()->only('name', 'logo')
+            : null,
         ]);
     }
 }

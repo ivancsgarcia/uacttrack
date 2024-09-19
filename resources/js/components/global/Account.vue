@@ -1,22 +1,22 @@
 <template>
     <div class="flex">
-        <div class="round-avatar flex"></div>
+        <div class="round-avatar flex">
+            <img :src="organizations" alt="organization-logo">
+        </div>
         <div class="flex text">
             <p>Welcome,</p>
-            <p class="name">{{ name }}</p>
+            <p class="name">{{ auth.user.firstName }} {{ auth.user.lastName }}</p>
         </div>
     </div>
 </template>
 
-<script>
-    export default {
-    props: {
-        name: {
-        type: String,
-        default: 'No Input', // Default text if no prop is passed
-        },
-    },
-    };
+<script setup>
+import { usePage } from '@inertiajs/vue3';
+
+const page = usePage();
+const auth = page.props.auth;
+const organizations = page.props.organizations;
+
 </script>
 
 <style scoped>

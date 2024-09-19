@@ -56,4 +56,33 @@ class ActivityFormController extends Controller
         return redirect()->route('home');
 
     }
+
+    public function fetchAll()
+    {
+        // Fetch all activity forms from the database
+        $activityForms = ActivityForm::all();
+
+        // Return Inertia response with the activity forms data
+        return Inertia::render('SubmittedAPF', [
+            'activityForms' => $activityForms
+        ]);
+    }
+
+    public function fetchApproved()
+    {
+        $approvedForms = ActivityForm::where('status', 'Approved')->get();
+
+        return Inertia::render('ApprovedAPF', [
+            'approvedForms' => $approvedForms
+        ]);
+    }
+
+    public function fetchRejected()
+    {
+        $rejectedForms = ActivityForm::where('status', 'Rejected')->get();
+
+        return Inertia::render('RejectedAPF', [
+            'rejectedForms' => $rejectedForms
+        ]);
+    }
 }
