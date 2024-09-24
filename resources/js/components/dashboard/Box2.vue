@@ -1,3 +1,9 @@
+<template>
+    <div @click="$emit('click')" class="box text-2xl text-black">
+        <p>{{ title }}</p>
+    </div>
+</template>
+
 <script setup>
     defineProps({
         title: {
@@ -6,14 +12,6 @@
         },
     });
 </script>
-
-<template>
-    <div @click="$emit('click')" class="box text-2xl text-black">
-        <p>{{ title }}</p>
-    </div>
-</template>
-
-
 
 <style scoped>
     .box {

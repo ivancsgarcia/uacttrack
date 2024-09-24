@@ -2,7 +2,9 @@ import './bootstrap';
 import Account from '../js/components/global/Account.vue';
 import SearchBar from '../js/components/global/SearchBar.vue';
 import SideMenu from './components/global/SideMenu.vue';
+import AdminSideMenu from './components/global/AdminSideMenu.vue';
 import UAHeader from '../js/components/global/UAheader.vue';
+import Modal from '../js/components/global/Modal.vue';
 
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -48,6 +50,8 @@ createInertiaApp({
       .component('SearchBar', SearchBar)
       .component('SideMenu', SideMenu)
       .component('UAHeader', UAHeader)
+      .component('Modal', Modal)
+      .component('AdminSideMenu', AdminSideMenu)
       .mount(el)
   },
 })

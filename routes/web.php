@@ -21,7 +21,7 @@ Route::middleware("auth")->group(function() {
     // Logout
     Route::post('/logout', [AuthenticateController::class, 'destroy'])->name('logout');
 
-    Route::get('/', [DashboardController::class, 'create'])->name('home');
+    Route::inertia('/', 'Dashboard')->name('home');
 
     Route::inertia('/request-form', 'RequestForm')->name('request-form');
     Route::inertia('/recommendation', 'Recommendation')->name('recommendation');
@@ -35,6 +35,14 @@ Route::middleware("auth")->group(function() {
     Route::post('/activity-form', [ActivityFormController::class, 'store']);
 
     Route::inertia('/APF-whole', 'APFWhole')->name('apf-whole');
+
+
+    Route::inertia('/admin-dashboard', 'Admin/AdminDashboard')->name('admin-dashboard');
+    Route::inertia('/admin-approved-apf', 'Admin/AdminApprovedAPF')->name('admin-approved-apf');
+    Route::inertia('/admin-rejected-apf', 'Admin/AdminRejectedAPF')->name('admin-rejected-apf');
+    Route::inertia('/admin-revision', 'Admin/AdminRevision')->name('admin-revision');
+    Route::inertia('/admin-send-copy', 'Admin/AdminSendCopy')->name('admin-send-copy');
+
 
     Route::inertia('/{pathMatch}', 'notFound')->where('pathMatch', ".*");
 

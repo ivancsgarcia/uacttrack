@@ -16,33 +16,9 @@
             
             <div class="flex w-9/12 h-14 bg-white rounded-2xl mt-4">
                 <select v-model="form.organization" class="w-full rounded-2xl text-xl px-4">
-                <option value="" selected disabled>Select An Organization</option>
-                <option v-for="org in organizations" :key="org.id" :value="org.name">{{ org.name }}</option>
-                <!-- <option v-if="form.role === 'Admin'" value="None" >None</option>
-                <option value="AAA" >AAA</option>
-                <option value="BACC" >BACC</option>
-                <option value="BHSPHS" >BHSPHS</option>
-                <option value="CDW" >CDW</option>
-                <option value="CHARMS" >CHARMS</option>
-                <option value="CRYCYC" >CRYCYC</option>
-                <option value="CREATE" >CREATE</option>
-                <option value="ICPEP" >ICPEP</option>
-                <option value="INA" >INA</option>
-                <option value="JPIA" >JPIA</option>
-                <option value="JPPHA" >JPPHA</option>
-                <option value="LEAD" >LEAD</option>
-                <option value="LTSP" >LTSP</option>
-                <option value="MCSA" >MCSA</option>
-                <option value="NSC" >NSC</option>
-                <option value="PICE" >PICE</option>
-                <option value="PIIE" >PIIE</option>
-                <option value="PSYCHSOC" >PSYCHSOC</option>
-                <option value="SSITE" >SSITE</option>
-                <option value="CSC" >University of the Assumption –
-                    Central Student Council</option>
-                <option value="SAO" >University of the Assumption –
-                    Student Assistants Organization</option> -->
-            </select>
+                    <option value="" selected disabled>Select An Organization</option>
+                    <option v-for="org in organizations" :key="org.id" :value="org.name">{{ org.name }}</option>
+                </select>
             </div>
             <div v-if="form.errors.organization" class="w-9/12 text-red-500 text-sm">{{form.errors.organization}}</div>
             

@@ -10,25 +10,25 @@ import { Link } from '@inertiajs/vue3';
 
         <div class="menu-items text-ua-blue text-center text-2xl">
             <Link :href="route('home')">
-                <div class="hover:!bg-ua-blue hover:text-white">
+                <div :class="route().current('home') ? '!bg-ua-blue !text-white' : ''" class="hover:!bg-ua-blue/80 hover:text-white">
                     <p>Dashboard</p>
                 </div>
             </Link>
 
             <Link :href="route('apf')">
-                <div class="hover:!bg-ua-blue hover:text-white">
+                <div :class="route().current('apf') ? '!bg-ua-blue !text-white' : ''" class="hover:!bg-ua-blue/80 hover:text-white">
                     <p>Activity Proposal Form</p>
                 </div>
             </Link>
 
             <Link :href="route('request-form')">
-                <div class="hover:!bg-ua-blue hover:text-white">
+                <div :class="route().current('request-form') ? '!bg-ua-blue !text-white' : ''" class="hover:!bg-ua-blue/80 hover:text-white">
                     <p>Forms</p>
                 </div>
             </Link>
             
             <Link :href="route('recommendation')">
-                <div class="hover:!bg-ua-blue hover:text-white">
+                <div :class="route().current('recommendation') ? '!bg-ua-blue !text-white' : ''" class="hover:!bg-ua-blue/80 hover:text-white">
                     <p>Recommendation</p>
                 </div>
             </Link>
@@ -45,35 +45,11 @@ import { Link } from '@inertiajs/vue3';
 </template>
 
 <style scoped>
-
     .side-menu {
-  /* position: fixed;
-  top: 0;
-  left: 0; */
-  /* width: 250px; */
-  /* height: 100%; */
-  /* background-color: rgba(39, 47, 92, 0.1); */
-  /* padding-top: 20px; */
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* justify-content: space-between; */
   height: calc(100vh - 64px);
 }
 
-.profile-section {
-  /* text-align: center;
-  margin-bottom: 20px; */
-}
-
-.profile-section img {
-  /* border-radius: 50%; */
-  /* width: 250px; */
-  /* height: 120px; */
-}
-
 .menu-items {
-  /* list-style-type: none; */
-  /* padding: 0; */
   flex-grow: 1;
 }
 
@@ -83,31 +59,4 @@ import { Link } from '@inertiajs/vue3';
   margin: 5px auto;
 }
 
-.menu-items div p {
-  /* text-decoration: none; */
-  /* display: block; */
-  /* font-size: 18px; */
-}
-
-/* .menu-items div p:hover {
-  background-color: #575757;
-} */
-
-.logout-section {
-  /* padding: 16px; */
-  /* text-align: center; */
-}
-
-.logout-section button {
-  /* border: none; */
-  /* color: white; */
-  /* padding: 10px 20px; */
-  /* font-size: 16px; */
-  /* cursor: pointer; */
-  /* border-radius: 4px; */
-}
-
-/* .logout-section button:hover {
-  background-color: #ff1a1a;
-} */
 </style>

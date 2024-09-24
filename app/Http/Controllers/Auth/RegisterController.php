@@ -30,10 +30,19 @@ class RegisterController extends Controller
             'firstName' => ['required', 'max:255'],
             'lastName' => ['required', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'min:8', 'confirmed']
+            'password' => ['required', 'confirmed']
         ]);
 
-        $user = User::create($credentials);
+        // Retrieve the organization name from the request
+        $organizationName = $credentials['organization'];
+
+        // Fetch the organization using the validated name
+        $organization = Organization::where('name', $organizationName)->firstOrFail();
+
+        // Create the user and associate with the organization ID
+        $user = User::create(array_merge($credentials, [
+            'organization_id' => $organization->id, // Add the organization ID here
+        ]));
 
         Auth::login($user);
 

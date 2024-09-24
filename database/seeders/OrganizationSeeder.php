@@ -20,87 +20,87 @@ class OrganizationSeeder extends Seeder
             ],
             [
                 'name' => 'AAA',
-                'logo' => 'public/organization_logos/AAA.jpg'
+                'logo' => 'organization_logos/AAA.jpg'
             ],
             [
                 'name' => 'BACC',
-                'logo' => 'public/organization_logos/BACC.jpg'
+                'logo' => 'organization_logos/BACC.jpg'
             ],
             [
                 'name' => 'BHSPHS',
-                'logo' => 'public/organization_logos/BHSPHS.jpg'
+                'logo' => 'organization_logos/BHSPHS.jpg'
             ],
             [
                 'name' => 'CDW',
-                'logo' => 'public/organization_logos/CDW.jpg'
+                'logo' => 'organization_logos/CDW.jpg'
             ],
             [
                 'name' => 'CHARMS',
-                'logo' => 'public/organization_logos/CHARMS.jpg'
+                'logo' => 'organization_logos/CHARMS.jpg'
             ],
             [
                 'name' => 'CRYCYC',
-                'logo' => 'public/organization_logos/CRYCYC.jpg'
+                'logo' => 'organization_logos/CRYCYC.jpg'
             ],
             [
                 'name' => 'CREATE',
-                'logo' => 'public/organization_logos/CREATE.jpg'
+                'logo' => 'organization_logos/CREATE.jpg'
             ],
             [
                 'name' => 'ICPEP',
-                'logo' => 'public/organization_logos/ICPEP.jpg'
+                'logo' => 'organization_logos/ICPEP.jpg'
             ],
             [
                 'name' => 'INA',
-                'logo' => 'public/organization_logos/INA.jpg'
+                'logo' => 'organization_logos/INA.jpg'
             ],
             [
                 'name' => 'JPIA',
-                'logo' => 'public/organization_logos/JPIA.jpg'
+                'logo' => 'organization_logos/JPIA.jpg'
             ],
             [
                 'name' => 'JPPHA',
-                'logo' => 'public/organization_logos/JPPHA.jpg'
+                'logo' => 'organization_logos/JPPHA.jpg'
             ],
             [
                 'name' => 'LEAD',
-                'logo' => 'public/organization_logos/LEAD.jpg'
+                'logo' => 'organization_logos/LEAD.jpg'
             ],
             [
                 'name' => 'LTSP',
-                'logo' => 'public/organization_logos/LTSP.jpg'
+                'logo' => 'organization_logos/LTSP.jpg'
             ],
             [
                 'name' => 'MCSA',
-                'logo' => 'public/organization_logos/MCSA.jpg'
+                'logo' => 'organization_logos/MCSA.jpg'
             ],
             [
                 'name' => 'NSC',
-                'logo' => 'public/organization_logos/NSC.jpg'
+                'logo' => 'organization_logos/NSC.jpg'
             ],
             [
                 'name' => 'PICE',
-                'logo' => 'public/organization_logos/PICE.jpg'
+                'logo' => 'organization_logos/PICE.jpg'
             ],
             [
                 'name' => 'PIIE',
-                'logo' => 'public/organization_logos/PIIE.jpg'
+                'logo' => 'organization_logos/PIIE.jpg'
             ],
             [
                 'name' => 'PSYCHSOC',
-                'logo' => 'public/organization_logos/PSYCHSOC.jpg'
+                'logo' => 'organization_logos/PSYCHSOC.jpg'
             ],
             [
                 'name' => 'SSITE',
-                'logo' => 'public/organization_logos/SSITE.jpg'
+                'logo' => 'organization_logos/SSITE.jpg'
             ],
             [
                 'name' => 'CSC',
-                'logo' => 'public/organization_logos/CSC.jpg'
+                'logo' => 'organization_logos/CSC.jpg'
             ],
             [
                 'name' => 'SAO',
-                'logo' => 'public/organization_logos/SAO.jpg'
+                'logo' => 'organization_logos/SAO.jpg'
             ],
         ]);
     }

@@ -1,21 +1,17 @@
 <template>
     <div class="flex">
         <div class="round-avatar flex">
-            <img :src="organizations" alt="organization-logo">
+            <!-- ../../../../public/storage/organization_logos/AAA.jpg -->
+            <img src="" alt="organization-logo">
         </div>
         <div class="flex text">
             <p>Welcome,</p>
-            <p class="name">{{ auth.user.firstName }} {{ auth.user.lastName }}</p>
+            <p class="name">First Name</p>
         </div>
     </div>
 </template>
 
 <script setup>
-import { usePage } from '@inertiajs/vue3';
-
-const page = usePage();
-const auth = page.props.auth;
-const organizations = page.props.organizations;
 
 </script>
 

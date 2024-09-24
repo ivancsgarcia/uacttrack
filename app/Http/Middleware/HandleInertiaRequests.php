@@ -43,9 +43,9 @@ class HandleInertiaRequests extends Middleware
                 ? $request->user()->only('firstName', 'lastName', 'email')
                 : null,
             ],
-            'organization' => fn() => Auth::user() && Auth::user()->organization
-            ? Organization::where('name', Auth::user()->organization)->first()->only('name', 'logo')
-            : null,
+            // 'organization' => fn() => Auth::user() && Auth::user()->organization
+            // ? Organization::where('name', Auth::user()->organization)->first()->only('name', 'logo')
+            // : null,
         ]);
     }
 }

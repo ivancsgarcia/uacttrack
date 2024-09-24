@@ -18,6 +18,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'role',
+        'organization_id',
         'organization',
         'firstName',
         'lastName',
@@ -27,7 +28,7 @@ class User extends Authenticatable
 
     public function organization() 
     {
-        return $this->belongsTo(Organization::class, 'organization', 'name');
+        return $this->belongsTo(Organization::class);
     }
 
     /**
