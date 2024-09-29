@@ -1,19 +1,24 @@
+<script setup>
+import { computed } from 'vue'
+import { usePage } from '@inertiajs/vue3'
+
+const page = usePage()
+const user = computed(() => page.props.auth.user)
+const orgLogo = computed(() => page.props.organization.logo)
+</script>
+
 <template>
     <div class="flex">
-        <div class="round-avatar flex">
+        <div class="round-avatar flex mr-4">
             <!-- ../../../../public/storage/organization_logos/AAA.jpg -->
-            <img src="" alt="organization-logo">
+            <img :src="orgLogo" alt="organization-logo" class="rounded-full">
         </div>
         <div class="flex text">
             <p>Welcome,</p>
-            <p class="name">First Name</p>
+            <p class="name">{{ user.first_name + ' ' + user.last_name}}</p>
         </div>
     </div>
 </template>
-
-<script setup>
-
-</script>
 
 <style scoped>
     .flex {

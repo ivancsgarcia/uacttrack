@@ -1,3 +1,40 @@
+<script setup>
+import { useForm } from '@inertiajs/vue3';
+import { watch } from 'vue';
+
+defineProps({
+    organizations: Array,
+    admin_categories: Array,
+})
+
+const form = useForm({
+    role: "",
+    organization: "",
+    position: "",
+    first_name: null,
+    last_name: null,
+    email: null,
+    password: null,
+    password_confirmation: null,
+})
+
+watch(() => form.role, (value) => {
+    if (value == 'Admin') {
+        form.organization = "";
+    } else {
+        form.position = "";
+    }
+})
+
+const submit = () => {
+
+    form.post(route('register'), {
+        onFinish: () => form.reset('password', 'password_confirmation'),
+        onError: () => form.reset('password', 'password_confirmation'),
+    });
+}
+</script>
+
 <template>
     <div class="section flex flex-col justify-center items-center w-6/12 min-h-screen py-8">
         <img src="../../../../public/images/UActTrack-logo.png" alt="uacttrack-logo" class="w-2/4 mb-10">
@@ -14,23 +51,31 @@
             </div>
             <div v-if="form.errors.role" class="w-9/12 text-red-500 text-sm">{{form.errors.role}}</div>
             
-            <div class="flex w-9/12 h-14 bg-white rounded-2xl mt-4">
+            <div v-if="form.role == 'Student Officer'" class="flex w-9/12 h-14 bg-white rounded-2xl mt-4">
                 <select v-model="form.organization" class="w-full rounded-2xl text-xl px-4">
                     <option value="" selected disabled>Select An Organization</option>
                     <option v-for="org in organizations" :key="org.id" :value="org.name">{{ org.name }}</option>
                 </select>
             </div>
             <div v-if="form.errors.organization" class="w-9/12 text-red-500 text-sm">{{form.errors.organization}}</div>
+
+            <div v-if="form.role == 'Admin'" class="flex w-9/12 h-14 bg-white rounded-2xl mt-4">
+                <select v-model="form.position" class="w-full rounded-2xl text-xl px-4">
+                    <option value="" selected disabled>Select Your Position</option>
+                    <option v-for="category in admin_categories" :key="category.id" :value="category.name">{{ category.name }}</option>
+                </select>
+            </div>
+            <div v-if="form.errors.position" class="w-9/12 text-red-500 text-sm">{{form.errors.position}}</div>
             
             <div class="flex w-9/12 h-14 bg-white rounded-2xl mt-4">
-                <input type="text" v-model="form.firstName" placeholder="First Name" class="w-full px-4 rounded-2xl text-xl">
+                <input type="text" v-model="form.first_name" placeholder="First Name" class="w-full px-4 rounded-2xl text-xl">
             </div>
-            <div v-if="form.errors.firstName" class="w-9/12 text-red-500 text-sm">{{form.errors.firstName}}</div>
+            <div v-if="form.errors.first_name" class="w-9/12 text-red-500 text-sm">{{form.errors.first_name}}</div>
 
             <div class="flex w-9/12 h-14 bg-white rounded-2xl mt-4">
-                <input type="text" v-model="form.lastName" placeholder="Last Name" class="w-full px-4 rounded-2xl text-xl">
+                <input type="text" v-model="form.last_name" placeholder="Last Name" class="w-full px-4 rounded-2xl text-xl">
             </div>
-            <div v-if="form.errors.lastName" class="w-9/12 text-red-500 text-sm">{{form.errors.lastName}}</div>
+            <div v-if="form.errors.last_name" class="w-9/12 text-red-500 text-sm">{{form.errors.last_name}}</div>
 
             <div class="flex w-9/12 h-14 bg-white rounded-2xl mt-4">
                 <input type="email" v-model="form.email" placeholder="email" class="w-full px-4 rounded-2xl text-xl">
@@ -52,32 +97,6 @@
         </form>
     </div>
 </template>
-
-<script setup>
-import { useForm } from '@inertiajs/vue3';
-
-defineProps({
-    organizations: Array,
-})
-
-const form = useForm({
-    role: "",
-    organization: "",
-    firstName: null,
-    lastName: null,
-    email: null,
-    password: null,
-    password_confirmation: null,
-})
-
-const submit = () => {
-
-    form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
-        onError: () => form.reset('password', 'password_confirmation'),
-    });
-}
-</script>
 
 <style scoped>
 

@@ -11,24 +11,24 @@ class ActivityForm extends Model
 
     protected $fillable = [
         'status',
-        'paymentOrCash',
+        'check_payment_or_cash',
         'food',
         'supplies',
         'reproduction',
         'date',
-        'fromTime',
-        'toTime',
-        'numberOfAttendees',
-        'typeOfEvent',
-        'availableVenue',
-        'requirementsOrResourcesNeeded',
-        'activityTitle',
-        'activityDescription',
+        'from_time',
+        'to_time',
+        'attendance_count',
+        'event_type',
+        'venue',
+        'requirements_or_resources_needed',
+        'title',
+        'description',
         'participant',
-        'paymentOrCashFile',
-        'foodFile',
-        'suppliesFile',
-        'reproductionFile',
-        'othersFile'
+        'payment_or_cash_file',
+        'food_file',
+        'supplies_file',
+        'reproduction_file',
+        'others_file'
     ];
 }

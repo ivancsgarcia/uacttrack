@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             OrganizationSeeder::class,
+            VenueSeeder::class,
+            AdminCategoriesSeeder::class,
+            RequestFormSeeder::class,
         ]);
     }
 }

@@ -12,20 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         // Schema::table('users', function (Blueprint $table) {
-        //     $table->foreignId('organization_id')->after('role')->constrained()->cascadeOnDelete();
+        //     $table->foreignId('position_id')->after('organization')->constrained('admin_categories')->cascadeOnDelete();
         // });
-
     }
 
-    // /**
-    //  * Reverse the migrations.
-    //  */
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         // Schema::table('users', function (Blueprint $table) {
-        //     $table->dropForeign(['organization_id']);
-        //     $table->dropColumn('organization_id');
+        //     $table->dropForeign(['position_id']);
+        //     $table->dropColumn('position_id');
         // });
-
     }
 };

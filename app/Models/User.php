@@ -18,10 +18,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'role',
-        'organization_id',
+        // 'organization_id',
         'organization',
-        'firstName',
-        'lastName',
+        // 'position_id',
+        'position',
+        'first_name',
+        'last_name',
         'email',
         'password',
     ];
@@ -29,6 +31,11 @@ class User extends Authenticatable
     public function organization() 
     {
         return $this->belongsTo(Organization::class);
+    }
+
+    public function adminCategory() 
+    {
+        return $this->belongsTo(AdminCategory::class);
     }
 
     /**

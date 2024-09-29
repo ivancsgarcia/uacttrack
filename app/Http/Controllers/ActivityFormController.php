@@ -2,53 +2,62 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Container\Attributes\Storage;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\ActivityForm;
+use App\Models\Venue;
 
 class ActivityFormController extends Controller
 {
+
+    public function create() 
+    {
+        $venues = Venue::all();
+
+        return Inertia::render('ActivityForm', [
+            'venues' => $venues,
+        ]);
+    }
 
     public function store(Request $request) 
     {
 
         $data = $request->validate([
-            'paymentOrCash' => ['boolean', 'nullable'],
+            'check_payment_or_cash' => ['boolean', 'nullable'],
             'food' => ['boolean', 'nullable'],
             'supplies' => ['boolean', 'nullable'],
             'reproduction' => ['boolean', 'nullable'],
             'date' => ['required', 'date'],
-            'fromTime' => ['required', 'max:255'],
-            'toTime' => ['required', 'max:255'],
-            'numberOfAttendees' => ['required', 'integer', 'numeric'],
-            'typeOfEvent' => ['required', 'string'],
-            'availableVenue' => ['required', 'max:255'],
-            'requirementsOrResourcesNeeded' => ['required', 'string'],
-            'activityTitle' => ['required', 'string'],
-            'activityDescription' => ['required', 'string'],
+            'from_time' => ['required', 'max:255'],
+            'to_time' => ['required', 'max:255'],
+            'attendance_count' => ['required', 'integer', 'numeric'],
+            'event_type' => ['required', 'string'],
+            'venue' => ['required', 'max:255'],
+            'requirements_or_resources_needed' => ['required', 'string'],
+            'title' => ['required', 'string'],
+            'description' => ['required', 'string'],
             'participant' => ['required', 'string'],
-            'paymentOrCashFile' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048'],
-            'foodFile' => ['nullable', 'file','mimes:pdf,jpg,png', 'max:2048'],
-            'suppliesFile' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048'],  
-            'reproductionFile' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048'],
-            'othersFile' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048']
+            'payment_or_cash_file' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048'],
+            'food_file' => ['nullable', 'file','mimes:pdf,jpg,png', 'max:2048'],
+            'supplies_file' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048'],  
+            'reproduction_file' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048'],
+            'others_file' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048']
         ]);
 
-        if ($request->hasFile('paymentOrCashFile')) {
-            $data['paymentOrCashFile'] = $request->file('paymentOrCashFile')->store('public/paymentOrCashFiles');
+        if ($request->hasFile('payment_or_cash_file')) {
+            $data['payment_or_cash_file'] = $request->file('payment_or_cash_file')->store('public/paymentOrCashFiles');
         }
-        if ($request->hasFile('foodFile')) {
-            $data['foodFile'] = $request->file('foodFile')->store('public/foodFiles');
+        if ($request->hasFile('food_file')) {
+            $data['food_file'] = $request->file('food_file')->store('public/foodFiles');
         }
-        if ($request->hasFile('suppliesFile')) {
-            $data['suppliesFile'] = $request->file('suppliesFile')->store('public/suppliesFiles');
+        if ($request->hasFile('supplies_file')) {
+            $data['supplies_file'] = $request->file('supplies_file')->store('public/suppliesFiles');
         }
-        if ($request->hasFile('reproductionFile')) {
-            $data['reproductionFile'] = $request->file('reproductionFile')->store('public/reproductionFiles');
+        if ($request->hasFile('reproduction_file')) {
+            $data['reproduction_file'] = $request->file('reproduction_file')->store('public/reproductionFiles');
         }
-        if ($request->hasFile('othersFile')) {
-            $data['othersFile'] = $request->file('othersFile')->store('public/othersFiles');
+        if ($request->hasFile('others_file')) {
+            $data['others_file'] = $request->file('others_file')->store('public/othersFiles');
         }
 
         ActivityForm::create($data);

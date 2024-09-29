@@ -1,3 +1,17 @@
+<script setup>
+    const props = defineProps({
+        form: Object,
+        venues: Array,
+    })
+
+    const emit = defineEmits(['previousStep', 'submitForm'])
+
+    const handleFileUpload = (event, fieldName) => {
+    const file = event.target.files[0];
+    props.form[fieldName] = file;
+}
+</script>
+
 <template>
     <div class="part-three w-full">
             <h1 class="text-5xl text-ua-blue text-center mb-8">Activity Proposal Form</h1>
@@ -6,17 +20,17 @@
         
             <div class="flex flex-col mb-4">
                 <label for="" class="text-ua-blue text-3xl">Activity Title</label>
-                <input type="text" v-model="form.activityTitle" class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4">
+                <input type="text" v-model="form.title" class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4">
             </div>
 
             <div class="flex flex-row mx-auto mb-4 gap-10">
                 <div class="flex flex-col w-2/4">
                     <label for="" class="text-ua-blue text-3xl">Type of Event</label>
-                    <input type="text" v-model="form.typeOfEvent" class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4">
+                    <input type="text" v-model="form.event_type" class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4">
                 </div>
                 <div class="flex flex-col w-2/4">
                     <label for="" class="text-ua-blue text-3xl">Activity Description</label>
-                    <textarea name="" id="" v-model="form.activityDescription" class="border-2 rounded-md bg-ua-blue/30 h-40 text-2xl p-4"></textarea>
+                    <textarea name="" id="" v-model="form.description" class="border-2 rounded-md bg-ua-blue/30 h-40 text-2xl p-4"></textarea>
                 </div>
             </div>
 
@@ -27,23 +41,25 @@
                 </div>
                 <div class="flex flex-col w-1/4">
                     <label for="" class="text-ua-blue text-3xl">From Time</label>
-                    <input type="time" name="" id="" v-model="form.fromTime" class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4">
+                    <input type="time" name="" id="" v-model="form.from_time" class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4">
                 </div>
                 <div class="flex flex-col w-1/4">
                     <label for="" class="text-ua-blue text-3xl">To Time</label>
-                    <input type="time" name="" id="" v-model="form.toTime" class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4">
+                    <input type="time" name="" id="" v-model="form.to_time" class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4">
                 </div>
             </div>
 
             <div class="flex flex-col mx-auto mb-4">
                 <label for="" class="text-ua-blue text-3xl">Venue</label>
-                <input type="text" name="" id="" v-model="form.availableVenue" class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl p-4">
+                <select name="vue" id="" v-model="form.venue" class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4">
+                        <option v-for="venue in venues" :key="venue.id" :value="venue.name">{{ venue.name }}</option>
+                    </select>
             </div>
 
             <div class="flex mx-auto mb-8 gap-10">
                 <div class="flex flex-col w-2/4">
                     <label for="" class="text-ua-blue text-3xl">Requirements / Resources Needed</label>
-                    <textarea name="" id="" v-model="form.requirementsOrResourcesNeeded" class="border-2 rounded-md bg-ua-blue/30 h-full p-4 text-2xl"></textarea>
+                    <textarea name="" id="" v-model="form.requirements_or_resources_needed" class="border-2 rounded-md bg-ua-blue/30 h-full p-4 text-2xl"></textarea>
                 </div>
                 <div class="w-2/4">
                     <div class="flex flex-col mb-4">
@@ -52,7 +68,7 @@
                     </div>
                     <div class="flex flex-col">
                         <label for="" class="text-ua-blue text-3xl">Expected Number of Attendees</label>
-                        <input type="number" name="" id="" v-model="form.numberOfAttendees" class="border-2 rounded-md bg-ua-blue/30 h-20 p-4 text-2xl">
+                        <input type="number" name="" id="" v-model="form.attendance_count" class="border-2 rounded-md bg-ua-blue/30 h-20 p-4 text-2xl">
                     </div>
                 </div>
             </div>
@@ -72,7 +88,7 @@
                     <p class="text-center">Funding Request Form (FRF) for P1,000 and above or Petty Cash Form (PCF
                         ) for amount below P1,000.</p>
                     <div class="flex justify-center">
-                        <input type="file" @change="handleFileUpload($event, 'paymentOrCashFile')" >
+                        <input type="file" @change="handleFileUpload($event, 'payment_or_cash_file')" >
                     </div>
                 </div>
             </div>
@@ -82,7 +98,7 @@
                 <div class="bg-ua-blue/30 w-2/4 flex flex-col justify-center items-center p-2 rounded-md">
                     <p class="text-center">Request for Meals (RFM)</p>
                     <div class="flex justify-center">
-                        <input type="file" @change="handleFileUpload($event, 'foodFile')" >
+                        <input type="file" @change="handleFileUpload($event, 'food_file')" >
                         <!-- <p>{{ form.errors.paymentOrCashFile }}</p> -->
                     </div>
                 </div>
@@ -93,7 +109,7 @@
                 <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
                     <p class="text-center">Requisition Form (RF) for supplies available at RMS or Purchase Requisition (PR) for supplies to be purchased</p>
                     <div class="flex justify-center">
-                        <input type="file" @change="handleFileUpload($event, 'suppliesFile')" >
+                        <input type="file" @change="handleFileUpload($event, 'supplies_file')" >
                         <!-- <p>{{ form.errors.suppliesFile }}</p> -->
                     </div>
                 </div>
@@ -104,7 +120,7 @@
                 <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
                     <p class="text-center">Reproduction Form</p>
                     <div class="flex justify-center">
-                        <input type="file" @change="handleFileUpload($event, 'reproductionFile')" >
+                        <input type="file" @change="handleFileUpload($event, 'reproduction_file')" >
                         <!-- <p>{{ form.errors.reproductionFile }}</p> -->
                     </div>
                 </div>
@@ -115,7 +131,7 @@
                 <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
                     <p class="text-center">If applicable:</p>
                     <div class="flex justify-center">
-                        <input type="file" @change="handleFileUpload($event, 'othersFile')" >
+                        <input type="file" @change="handleFileUpload($event, 'others_file')" >
                         <!-- <p>{{ form.errors.othersFile }}</p> -->
                     </div>
                 </div>
@@ -128,19 +144,6 @@
 
         </div>
 </template>
-
-<script setup>
-    const props = defineProps({
-        form: Object,
-    })
-
-    const emit = defineEmits(['previousStep', 'submitForm'])
-
-    const handleFileUpload = (event, fieldName) => {
-    const file = event.target.files[0];
-    props.form[fieldName] = file;
-}
-</script>
 
 <style scoped>
 

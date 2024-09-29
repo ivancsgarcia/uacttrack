@@ -22,7 +22,7 @@
                     <!-- fetch data -->
                     <tr class="text-center h-20" v-for="form in activityForms" :key="form.id">
                         <td class="bg-ua-gray w-1/5 border">{{ form.id }}</td>
-                        <td class="bg-ua-gray w-3/5 border">{{ form.activityTitle }}</td>
+                        <td class="bg-ua-gray w-3/5 border">{{ form.title }}</td>
                         <td class="bg-ua-gray w-1/5 border">{{ new Date(form.created_at).toLocaleDateString('en-US') }}</td>
                     </tr>
                 </tbody>

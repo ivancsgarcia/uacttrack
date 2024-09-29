@@ -3,7 +3,7 @@
 use App\Http\Controllers\ActivityFormController;
 use App\Http\Controllers\Auth\AuthenticateController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RequestFormController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware("guest")->group(function() {
@@ -23,7 +23,7 @@ Route::middleware("auth")->group(function() {
 
     Route::inertia('/', 'Dashboard')->name('home');
 
-    Route::inertia('/request-form', 'RequestForm')->name('request-form');
+    Route::get('/request-form', [RequestFormController::class, 'create'])->name('request-form');
     Route::inertia('/recommendation', 'Recommendation')->name('recommendation');
     Route::inertia('/APF', 'APF')->name('apf');
 
@@ -31,7 +31,7 @@ Route::middleware("auth")->group(function() {
     Route::get('/approved-apf', [ActivityFormController::class, 'fetchApproved'])->name('approved-apf');
     Route::get('/rejected-apf', [ActivityFormController::class, 'fetchRejected'])->name('rejected-apf');
 
-    Route::inertia('/activity-form', 'ActivityForm')->name('activity-form');
+    Route::get('/activity-form', [ActivityFormController::class, 'create'])->name('activity-form');
     Route::post('/activity-form', [ActivityFormController::class, 'store']);
 
     Route::inertia('/APF-whole', 'APFWhole')->name('apf-whole');
