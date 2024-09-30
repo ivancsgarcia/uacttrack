@@ -8,7 +8,7 @@ const orgLogo = computed(() => page.props.organization.logo)
 </script>
 
 <template>
-    <div class="flex">
+    <div class="flex w-full">
         <div class="round-avatar flex mr-4">
             <!-- ../../../../public/storage/organization_logos/AAA.jpg -->
             <img :src="orgLogo" alt="organization-logo" class="rounded-full">

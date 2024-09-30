@@ -4,6 +4,12 @@ import Box2 from '../components/dashboard/Box2.vue';
 import { Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
+const isMenuOpen = ref(false);
+
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
+};
+
 const modal = ref(null);
 const modalTitle = ref('');
 const modalHeaders = ref([]);
@@ -50,8 +56,13 @@ const openModal = ({ title, headers, data }) => {
           <Account class="account" /> 
 
           <div class="flex justify-center items-center gap-5">
+            <button @click="toggleMenu" class="menu-button md:hidden">
+              <font-awesome-icon :icon="['fas', 'bars']" size="2xl" />
+            </button>
+            <div :class="{'hidden': !isMenuOpen, 'flex': isMenuOpen}" class="menu-icons flex-col md:flex-row md:flex gap-5">
               <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
               <font-awesome-icon :icon="['fas', 'bell']" size="2xl"  />
+            </div>
           </div>
       </div>
 
@@ -90,4 +101,22 @@ const openModal = ({ title, headers, data }) => {
   .approval-boxes {
     flex: 1 1 calc(33.333% - 20px);
   }
+
+  .menu-button {
+  display: none;
+}
+
+.menu-icons {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .menu-button {
+    display: block;
+  }
+
+  .menu-icons {
+    display: none;
+  }
+}
 </style>
