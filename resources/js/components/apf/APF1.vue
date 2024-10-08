@@ -39,7 +39,7 @@
         </div>
 
         <div class="mx-14">
-            <p class="text-lg">By clicking 'YES', you indicate that you need to download the following forms. To download these forms, please click the 'Forms' button.</p>
+            <p class="text-lg">Please download and complete any additional forms required based on the funding requirements you selected, and attach them at the end of this form.</p>
         </div>
 
         <div class="flex justify-center items-center gap-5">

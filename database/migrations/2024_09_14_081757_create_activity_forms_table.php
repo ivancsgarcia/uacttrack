@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('activity_forms', function (Blueprint $table) {
             $table->id();
-            $table->string('status')->default('pending');
+            $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
+            $table->enum('status', ['PENDING', 'APPROVED', 'REJECTED', 'FOR_REVISION'])->default('PENDING');
+
             $table->boolean('check_payment_or_cash');
             $table->boolean('food');
             $table->boolean('supplies');
             $table->boolean('reproduction');
+
             $table->date('date');
             $table->time('from_time');
             $table->time('to_time');
@@ -28,11 +31,20 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('participant');
+
             $table->string('payment_or_cash_file')->nullable();
             $table->string('food_file')->nullable();
             $table->string('supplies_file')->nullable();
             $table->string('reproduction_file')->nullable();
             $table->string('others_file')->nullable();
+
+            $table->enum('college_dean_status', ['PENDING', 'APPROVED', 'REJECTED', 'FOR_REVISION'])->default('PENDING');
+            $table->enum('osa_status', ['PENDING', 'APPROVED', 'REJECTED', 'FOR_REVISION'])->default('PENDING');
+            $table->enum('vpaa_status', ['PENDING', 'APPROVED', 'REJECTED', 'FOR_REVISION'])->default('PENDING');
+            $table->text('college_dean_remarks')->nullable();
+            $table->text('osa_remarks')->nullable();
+            $table->text('vpaa_remarks')->nullable();
+
             $table->timestamps();
         });
     }

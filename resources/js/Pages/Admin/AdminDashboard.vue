@@ -1,21 +1,42 @@
 <script setup>
-import Box from '../../components/dashboard/Box.vue';
-import Box2 from '../../components/dashboard/Box2.vue';
-import { Link } from '@inertiajs/vue3';
-import { ref } from 'vue';
 import AdminSideMenu from '../../components/global/AdminSideMenu.vue';
 
-const modal = ref(null)
+// defineProps({
+//   activityForms: Array
+// })
 
-const openModal = () => {
-  modal.value.openModal()
+import { ref } from 'vue';
+import { router, usePage } from '@inertiajs/vue3';
+
+// Get the props passed from the Laravel controller
+const { activityForms, position } = usePage().props
+
+// Track the status updates
+const formStatuses = ref({})
+
+// Initialize the form statuses based on the existing data
+activityForms.forEach((form) => {
+  formStatuses.value[form.id] = getInitialStatus(form, position);
+})
+
+// Determine the initial status based on the user's position
+function getInitialStatus(form, position) {
+  if (position === 'College Dean') return form.college_dean_status;
+  if (position === 'OSA') return form.osa_status;
+  if (position === 'VPAA') return form.vpaa_status;
+  return form.status;
 }
 
-// const closeModal = () => {
-//   modal.value.closeModal()
-// }
+// Method to update the status in the database
+const updateStatus = (formId) => {
+  router.post(`/activity-forms/${formId}/status`, {
+    status: formStatuses.value[formId],
+    position: position,  // Pass the current user's position
+  });
 
-</script>
+};
+
+</script> 
 
 <template>
     <div class="app flex pt-16">
@@ -49,16 +70,16 @@ const openModal = () => {
             </tr>
           </thead>
           <tbody>
-            <tr class="text-center h-20">
-              <td class="bg-ua-gray text-ua-blue">01</td>
-              <td class="bg-ua-gray text-ua-blue">01/01/2000</td>
-              <td class="bg-ua-gray text-ua-blue">My APF</td>
+            <tr v-for="form in activityForms" :key="form.id" class="text-center h-20">
+              <td class="bg-ua-gray text-ua-blue">{{ form.id }}</td>
+              <td class="bg-ua-gray text-ua-blue">{{ new Date(form.created_at).toLocaleDateString('en-US') }}</td>
+              <td class="bg-ua-gray text-ua-blue">{{ form.title }}</td>
               <td class="bg-ua-gray text-ua-blue p-0">
-                <select name="" id="" class="w-full h-20 bg-ua-gray p-2">
-                  <option value="" selected disabled>Pending</option>
-                  <option value="Approved">Approved</option>
-                  <option value="Rejected">Rejected</option>
-                  <option value="Revisions">For Revisions</option>
+                <select v-model="formStatuses[form.id]" @change="updateStatus(form.id)" class="w-full h-20 bg-ua-gray p-2">
+                  <option value="PENDING" selected disabled>Pending</option>
+                  <option value="APPROVED">Approved</option>
+                  <option value="REJECTED">Rejected</option>
+                  <option value="FOR_REVISION">For Revision</option>
               </select>
             </td>
             </tr>

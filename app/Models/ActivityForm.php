@@ -10,6 +10,7 @@ class ActivityForm extends Model
     use HasFactory;
 
     protected $fillable = [
+        'created_by',
         'status',
         'check_payment_or_cash',
         'food',
@@ -29,6 +30,17 @@ class ActivityForm extends Model
         'food_file',
         'supplies_file',
         'reproduction_file',
-        'others_file'
+        'others_file',
+        'college_dean_status', 
+        'osa_status', 
+        'vpaa_status',
+        'college_dean_remarks', 
+        'osa_remarks', 
+        'vpaa_remarks',
     ];
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }

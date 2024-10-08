@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActivityFormController;
 use App\Http\Controllers\Auth\AuthenticateController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RequestFormController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,14 +15,15 @@ Route::middleware("guest")->group(function() {
     // Login
     Route::get('/login', [AuthenticateController::class, 'create'])->name('login');
     Route::post('/login', [AuthenticateController::class, 'store']);
-});
 
+    Route::inertia('/forgot-password', 'Auth/ForgotPassword')->name('forgot-password');
+});
 
 Route::middleware("auth")->group(function() {
     // Logout
     Route::post('/logout', [AuthenticateController::class, 'destroy'])->name('logout');
 
-    Route::inertia('/', 'Dashboard')->name('home');
+    Route::get('/', [DashboardController::class, 'create'])->name('home');
 
     Route::get('/request-form', [RequestFormController::class, 'create'])->name('request-form');
     Route::inertia('/recommendation', 'Recommendation')->name('recommendation');
@@ -37,12 +39,16 @@ Route::middleware("auth")->group(function() {
     Route::inertia('/APF-whole', 'APFWhole')->name('apf-whole');
 
 
-    Route::inertia('/admin-dashboard', 'Admin/AdminDashboard')->name('admin-dashboard');
-    Route::inertia('/admin-approved-apf', 'Admin/AdminApprovedAPF')->name('admin-approved-apf');
-    Route::inertia('/admin-rejected-apf', 'Admin/AdminRejectedAPF')->name('admin-rejected-apf');
-    Route::inertia('/admin-revision', 'Admin/AdminRevision')->name('admin-revision');
-    Route::inertia('/admin-send-copy', 'Admin/AdminSendCopy')->name('admin-send-copy');
+    Route::middleware('admin')->group(function() {
+        Route::get('/admin-dashboard', [ActivityFormController::class, 'fetchPendingAdmin'])->name('admin-dashboard');
+        Route::post('/activity-forms/{id}/status', [ActivityFormController::class, 'updateStatus']);
 
+        Route::get('/admin-approved-apf', [ActivityFormController::class, 'fetchApprovedAdmin'])->name('admin-approved-apf');
+        Route::get('/admin-rejected-apf', [ActivityFormController::class, 'fetchRejectedAdmin'])->name('admin-rejected-apf');
+        Route::inertia('/admin-revision', 'Admin/AdminRevision')->name('admin-revision');
+        Route::inertia('/admin-send-copy', 'Admin/AdminSendCopy')->name('admin-send-copy');
+    });
+    
 
     Route::inertia('/{pathMatch}', 'notFound')->where('pathMatch', ".*");
 

@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('organizations', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->string('description')->nullable();
             $table->string('logo')->nullable();
+            $table->string('adviser_first_name')->nullable();
+            $table->string('adviser_last_name')->nullable();
         });
     }
 

@@ -1,20 +1,19 @@
 <script setup>
+import { defineEmits } from 'vue';
+
 const props = defineProps({
-    title: String,
-    data: Array,
-    headers: Array,
+  title: {
+    type: String,
+    required: true,
+  }
 });
 
-const emit = defineEmits(['openModal']);
-
-const handleClick = () => {
-    emit('openModal', { title: props.title, headers: props.headers, data: props.data });
-};
+defineEmits(['click']);
 
 </script>
 
 <template>
-    <div @click="handleClick" class="box2 text-2xl text-black hover:!bg-ua-blue/80 hover:!text-gray-200">
+    <div @click="click" class="box2 text-2xl text-black hover:!bg-ua-blue/80 hover:!text-gray-200">
         <h3>{{ title }}</h3>
     </div>
 </template>

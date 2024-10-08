@@ -21,11 +21,17 @@ class AuthenticateController extends Controller
             'password' => ['required']
         ]);
 
-        if(Auth::attempt($credentials)) 
-        {
-            $request->session()->regenerate();
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
 
-            return redirect()->intended();
+            // Check user role and redirect accordingly
+            if ($user->role === 'Admin') {
+                // Redirect to Admin Dashboard
+                return redirect()->route('admin-dashboard');
+            } else {
+                // Redirect to user dashboard or home
+                return redirect()->route('home'); 
+            }
         }
 
         return back()->withErrors([

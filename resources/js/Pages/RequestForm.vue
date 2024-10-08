@@ -1,3 +1,11 @@
+<script setup>
+
+defineProps({
+    request_forms: Array,
+});
+
+</script>
+
 <template>
     <div class="app flex pt-16">
     <UAHeader />
@@ -25,33 +33,8 @@
                     </tr>
                 </thead>
                 <tbody class="bg-ua-gray">
-                    <tr class="h-16">
-                        <td class="border">Funding Request Form</td>
-                        <td class="border">pdf</td>
-                        <td class="border">docx</td>
-                    </tr>
-                    <tr class="h-16">
-                        <td class="border">Petty Cash Form</td>
-                        <td class="border">pdf</td>
-                        <td class="border">docx</td>
-                    </tr>
-                    <tr class="h-16">
-                        <td class="border">Request For Meals Form</td>
-                        <td class="border">pdf</td>
-                        <td class="border">docx</td>
-                    </tr>
-                    <tr class="h-16">
-                        <td class="border">Requisition Form</td>
-                        <td class="border">pdf</td>
-                        <td class="border">docx</td>
-                    </tr>
-                    <tr class="h-16">
-                        <td class="border">Purchase Requisition</td>
-                        <td class="border">pdf</td>
-                        <td class="border">docx</td>
-                    </tr>
-                    <tr class="h-16">
-                        <td class="border">Reproduction Form</td>
+                    <tr v-for="reqForm in request_forms" :key="reqForm.id" class="h-16">
+                        <td class="border">{{ reqForm.name }}</td>
                         <td class="border">pdf</td>
                         <td class="border">docx</td>
                     </tr>
@@ -61,12 +44,6 @@
         </div>
     </div>
 </template>
-
-<script setup>
-import FormContainer from '../components/request-form/form-container.vue';
-
-
-</script>
 
 <style scoped>
 

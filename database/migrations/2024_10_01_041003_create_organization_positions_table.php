@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('request_forms', function (Blueprint $table) {
+        Schema::create('organization_positions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('docs_link')->nullable();
-            $table->string('pdf_link')->nullable();
         });
     }
 
@@ -24,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('request_forms');
+        Schema::dropIfExists('organization_positions');
     }
 };

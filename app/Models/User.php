@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,9 +17,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'role',
-        // 'organization_id',
         'organization',
-        // 'position_id',
         'position',
         'first_name',
         'last_name',
@@ -33,9 +30,19 @@ class User extends Authenticatable
         return $this->belongsTo(Organization::class);
     }
 
-    public function adminCategory() 
+    public function adminPosition() 
     {
-        return $this->belongsTo(AdminCategory::class);
+        return $this->belongsTo(AdminPosition::class);
+    }
+
+    public function organizationPosition() 
+    {
+        return $this->belongsTo(OrganizationPosition::class);
+    }
+
+    public function apf() 
+    {
+        return $this->hasMany(ActivityForm::class);
     }
 
     /**

@@ -22,8 +22,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
             OrganizationSeeder::class,
             VenueSeeder::class,
-            AdminCategoriesSeeder::class,
+            AdminPositionsSeeder::class,
             RequestFormSeeder::class,
+            OrganizationPositionSeeder::class,
+            AdminSeeder::class,
+            StudentOfficerSeeder::class,
         ]);
     }
 }
