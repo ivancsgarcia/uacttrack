@@ -1,48 +1,77 @@
 <template>
-  <div class="app flex pt-16">
-    <UAHeader />
-    <SideMenu/>
+    <div class="app">
+        <UAHeader />
+        <SideMenu />
 
-    <div class="main-content w-screen ml-64 p-5">
-        <div class="flex justify-between items-center mt-5 mx-12 mb-4">
-          <Account class="account"/>
+        <div class="main-content">
+            <div class="account-section">
+                <Account/>
 
-          <div class="flex justify-center items-center gap-5">
-            <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
-            <font-awesome-icon :icon="['fas', 'bell']" size="2xl"  />
-          </div>
+                <div class="icons-box">
+                    <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
+                    <font-awesome-icon :icon="['fas', 'bell']" size="2xl" />
+                </div>
+            </div>
+
+            <div class="vertical-line"></div>
+
+            <div class="box-div">
+                <Box></Box>
+                <Box></Box>
+                <Box></Box>
+                <Box></Box>
+                <Box></Box>
+                <Box></Box>
+                <Box></Box>
+                <Box></Box>
+                <Box></Box>
+            </div>
         </div>
-
-        <div class="h-0.5 bg-ua-blue mb-8"></div>
-
-        <div class="flex justify-center flex-wrap gap-5 boxes">
-          <Box></Box>
-          <Box></Box>
-          <Box></Box>
-          <Box></Box>
-          <Box></Box>
-          <Box></Box>
-          <Box></Box>
-          <Box></Box>
-          <Box></Box>
-        </div>
-
     </div>
-  </div>
 </template>
 
 <script setup>
-import Box from '../components/recommendation/Box.vue';
-
+import Box from "../components/recommendation/Box.vue";
 </script>
 
 <style scoped>
-  .main-content {
+.app {
+    display: flex;
+    padding-top: 4rem;
+}
+
+.account-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem;
+}
+
+.main-content {
     min-height: calc(100vh - 64px);
-  }
+    width: 100vw;
+    margin-left: 16rem;
+    padding: 1rem;
+}
 
-  .boxes {
+.icons-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.vertical-line {
+    height: 0.125rem;
+    background-color: #272f5c;
+    margin-bottom: 3rem;
+}
+
+.box-div {
     flex: 1 1 calc(33.333% - 20px);
-  }
-
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
 </style>

@@ -9,8 +9,7 @@ const orgLogo = computed(() => page.props.organization.logo)
 
 <template>
     <div class="flex w-full">
-        <div class="round-avatar mr-4">
-            <!-- ../../../../public/storage/organization_logos/AAA.jpg -->
+        <div class="round-avatar">
             <img :src="orgLogo" alt="organization-logo" class="rounded-full">
         </div>
         <div class="flex text">
@@ -30,6 +29,7 @@ const orgLogo = computed(() => page.props.organization.logo)
         height: 100px;
         border-radius: 50%;
         background-color: gray;
+        margin-right: 1rem;
     }
 
     .text {

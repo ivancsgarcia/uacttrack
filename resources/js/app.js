@@ -18,10 +18,10 @@ library.add(fas);
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
-import PrimeVue from 'primevue/config';
-import { PrimeIcons } from '@primevue/core/api';
+// import PrimeVue from 'primevue/config';
+// import { PrimeIcons } from '@primevue/core/api';
 import { setThemeOnLoad } from './theme';
-import Aura from '@primevue/themes/aura';
+// import Aura from '@primevue/themes/aura';
 
 createInertiaApp({
   resolve: name => {

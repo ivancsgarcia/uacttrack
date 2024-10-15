@@ -1,12 +1,80 @@
+<script setup>
+import { router } from '@inertiajs/vue3'
+
+const goBack = () => {
+    window.history.back();
+};
+
+const goHome = () => {
+    router.get(route('home'));
+};
+</script>
+
 <template>
-    <!-- fixed min-h-20 bg-ua-blue w-full flex justify-center items-center text-white -->
-    <header class="header flex justify-center items-center fixed top-0 left-0 w-full h-16 py-10 bg-ua-blue text-white z-50">
-        <div class="logo-section mr-2">
-            <!-- w-16 mr-4 -->
-            <img src="../../../../public/images/ua-logo.png" alt="ua-logo" class="logo w-14 h-14">
-        </div>
-        <div class="title-section">
-            <h1 class="title text-3xl font-bold">University of the Assumption</h1>
+    <header>
+        <div class="ua-header">
+            <div class="icons-box">
+                <font-awesome-icon :icon="['fas', 'chevron-left']" @click="goBack" size="2xl" class="icon" />
+                <font-awesome-icon :icon="['fas', 'house']" @click="goHome" size="2xl" class="icon" />
+            </div>
+            <div class="logo-container">
+                <img
+                    :src="'images/sys-logos/ua-logo.png'"
+                    alt="ua-logo"
+                    class="logo"
+                />
+            </div>
+            <div><h1>University of the Assumption</h1></div>
         </div>
     </header>
 </template>
+
+<style scoped>
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+}
+
+.ua-header {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    padding: 0.5rem 0;
+    background-color: #272f5c;
+    color: #fff;
+    position: relative;
+}
+
+.icons-box {
+    position: absolute;
+    top: 50%;
+    left: 2rem;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 1.5rem;
+}
+
+.icon:hover {
+    cursor: pointer;
+    color: lightblue;
+}
+
+.logo-container {
+    margin-right: 0.5rem;
+}
+
+.logo {
+    width: 3.5rem;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    text-align: center;
+}
+</style>

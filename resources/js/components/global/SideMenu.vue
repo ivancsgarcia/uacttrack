@@ -1,62 +1,129 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link } from "@inertiajs/vue3";
 </script>
 
 <template>
-    <div class="side-menu fixed top-16 left-0 flex flex-col justify-between h-screen w-64 pt-5 bg-ua-blue/10">
-        <div class="profile-section text-center mb-5">
-            <img src="../../../../public/images/UActTrack-logo.png" alt="uacttrack-logo" class="mt-8 mb-12 mx-auto w-60">
+    <div class="side-menu">
+        <div class="profile-section">
+            <img
+                :src="'images/sys-logos/UActTrack-logo.png'"
+                alt="uacttrack-logo"
+                class="image"
+            />
         </div>
 
-        <div class="menu-items text-ua-blue text-center text-2xl">
+        <div class="menu-items">
             <Link :href="route('home')">
-                <div :class="route().current('home') ? '!bg-ua-blue !text-white' : ''" class="hover:!bg-ua-blue/80 hover:text-white">
+                <div
+                    :class="
+                        route().current('home') ? '!bg-ua-blue !text-white' : ''
+                    "
+                    class="link"
+                >
                     <p>Dashboard</p>
                 </div>
             </Link>
 
             <Link :href="route('apf')">
-                <div :class="route().current('apf') ? '!bg-ua-blue !text-white' : ''" class="hover:!bg-ua-blue/80 hover:text-white">
+                <div
+                    :class="
+                        route().current('apf') ? '!bg-ua-blue !text-white' : ''
+                    "
+                    class="link"
+                >
                     <p>Activity Proposal Form</p>
                 </div>
             </Link>
 
             <Link :href="route('request-form')">
-                <div :class="route().current('request-form') ? '!bg-ua-blue !text-white' : ''" class="hover:!bg-ua-blue/80 hover:text-white">
+                <div
+                    :class="
+                        route().current('request-form')
+                            ? '!bg-ua-blue !text-white'
+                            : ''
+                    "
+                    class="link"
+                >
                     <p>Forms</p>
                 </div>
             </Link>
-            
+
             <Link :href="route('recommendation')">
-                <div :class="route().current('recommendation') ? '!bg-ua-blue !text-white' : ''" class="hover:!bg-ua-blue/80 hover:text-white">
+                <div
+                    :class="
+                        route().current('recommendation')
+                            ? '!bg-ua-blue !text-white'
+                            : ''
+                    "
+                    class="link"
+                >
                     <p>Recommendation</p>
                 </div>
             </Link>
         </div>
 
         <Link :href="route('logout')" method="post" as="button">
-            <div class="logout-section p-4 bg-ua-blue text-xl text-center hover:!bg-red-500">
-                    <div class="py-2 px-5 text-white">
-                        <p>Log Out</p>
-                    </div>
+            <div class="logout-section">
+                <div>
+                    <p>Log Out</p>
+                </div>
             </div>
         </Link>
     </div>
 </template>
 
 <style scoped>
-    .side-menu {
-  height: calc(100vh - 64px);
+.side-menu {
+    height: calc(100vh - 64px);
+    width: 16rem;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: rgb(39 47 92 / 0.1);
+}
+
+.profile-section {
+    text-align: center;
+    margin-bottom: 1.25rem;
+}
+
+.image {
+    margin: 2rem auto 3rem auto;
+    width: 15rem;
 }
 
 .menu-items {
-  flex-grow: 1;
+    flex-grow: 1;
+    color: #272f5c;
+    text-align: center;
+    font-size: 1.25rem;
 }
 
 .menu-items div {
-  background-color: #D9D9D9;
-  padding: 12px 16px;
-  margin: 5px auto;
+    background-color: #d9d9d9;
+    padding: 12px 16px;
+    margin: 5px auto;
 }
 
+.menu-items div:hover {
+    background-color: rgba(39, 47, 92, 0.6);
+    color: white;
+}
+
+.logout-section {
+    background-color: #272f5c;
+    text-align: center;
+}
+
+.logout-section:hover {
+    background-color: #c41e3a;
+}
+
+.logout-section div {
+    padding: 12px 16px;
+    color: white;
+}
 </style>

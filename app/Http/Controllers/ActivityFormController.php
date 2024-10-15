@@ -71,8 +71,16 @@ class ActivityFormController extends Controller
 
     public function fetchAll()
     {
+
+        $org = Auth::user()->organization;
+
+        // Assuming ActivityForm has a user relationship
+        $activityForms = ActivityForm::whereHas('creator', function ($query) use ($org) {
+            $query->where('organization', $org)->orderBy('created_at', 'desc');
+        })->get();
+
         // Fetch all activity forms from the database
-        $activityForms = ActivityForm::where('created_by', Auth::id())->get();
+        // $activityForms = ActivityForm::where('created_by', Auth::id())->get();
 
         // Return Inertia response with the activity forms data
         return Inertia::render('SubmittedAPF', [
