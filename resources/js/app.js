@@ -8,6 +8,7 @@ import Modal from "../js/components/global/Modal.vue";
 import MyButton from "../js/components/global/MyButton.vue";
 import MyToggleSwitch from "../js/components/global/MyToggleSwitch.vue";
 import MyDatePicker from "../js/components/global/MyDatePicker.vue";
+import MyTimePicker from "../js/components/global/MyTimePicker.vue";
 
 /* import the fontawesome core */
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -50,6 +51,7 @@ createInertiaApp({
             .component("MyButton", MyButton)
             .component("MyToggleSwitch", MyToggleSwitch)
             .component("MyDatePicker", MyDatePicker)
+            .component("MyTimePicker", MyTimePicker)
             .component("AdminSideMenu", AdminSideMenu)
             .mount(el);
     },

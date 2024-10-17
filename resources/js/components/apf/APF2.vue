@@ -1,9 +1,13 @@
 <script setup>
+import DatePicker from 'primevue/datepicker';
+import { ref } from 'vue';
+
 const props = defineProps({
     form: Object,
     venues: Array,
 });
 
+const date = ref();
 const emit = defineEmits(["nextStep", "previousStep"]);
 </script>
 
@@ -20,7 +24,8 @@ const emit = defineEmits(["nextStep", "previousStep"]);
                         class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
                     />
                 </div> -->
-                <MyDatePicker v-model="form.date" />
+                <DatePicker v-model="form.date" dateFormat="dd/mm/yy" showIcon iconDisplay="input" />
+                <!-- <MyDatePicker v-model="form.date" /> -->
 
                 <div class="flex flex-col">
                     <label for="from-time" class="text-ua-blue text-3xl"
@@ -33,6 +38,8 @@ const emit = defineEmits(["nextStep", "previousStep"]);
                         class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
                     />
                 </div>
+                <!-- <MyTimePicker /> -->
+
                 <div class="flex flex-col">
                     <label for="to-time" class="text-ua-blue text-3xl"
                         >To Time</label
