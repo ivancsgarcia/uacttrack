@@ -28,7 +28,7 @@ class ActivityFormController extends Controller
             'food' => ['required', 'boolean'],
             'supplies' => ['required', 'boolean'],
             'reproduction' => ['required', 'boolean'],
-            'date' => ['required', 'date'],
+            'date' => ['required', 'date', 'date_format:m/d/Y'],
             'from_time' => ['required', 'max:255'],
             'to_time' => ['required', 'max:255'],
             'attendance_count' => ['required', 'integer', 'numeric'],
@@ -44,6 +44,8 @@ class ActivityFormController extends Controller
             'reproduction_file' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048'],
             'others_file' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048']
         ]);
+
+        $data['date'] = \Carbon\Carbon::createFromFormat('m/d/Y', $data['date'])->format('Y-m-d');
 
         $data['created_by'] = Auth::id();
 
