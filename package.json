@@ -30,7 +30,7 @@
         "@primevue/themes": "^4.0.7",
         "@vueuse/core": "^11.0.1",
         "primeicons": "^7.0.0",
-        "primevue": "^4.0.7",
+        "primevue": "^4.1.1",
         "tailwindcss-primeui": "^0.3.4"
     }
 }

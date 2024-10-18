@@ -13,7 +13,7 @@ import { Link } from "@inertiajs/vue3";
             </div>
             <div class="btn-box">
                 <Link :href="route('activity-form')">
-                    <MyButton label="Start" />
+                    <Button label="Start" />
                 </Link>
             </div>
         </div>

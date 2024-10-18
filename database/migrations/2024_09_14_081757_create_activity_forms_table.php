@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('activity_forms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
+            // $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
+            $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
             $table->enum('status', ['PENDING', 'APPROVED', 'REJECTED', 'FOR_REVISION'])->default('PENDING');
 
             $table->boolean('check_payment_or_cash');

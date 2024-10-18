@@ -7,11 +7,12 @@ use Inertia\Inertia;
 use App\Models\ActivityForm;
 use App\Models\Venue;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class ActivityFormController extends Controller
 {
 
-    public function create() 
+    public function create()
     {
         $venues = Venue::all();
 
@@ -20,7 +21,7 @@ class ActivityFormController extends Controller
         ]);
     }
 
-    public function store(Request $request) 
+    public function store(Request $request)
     {
 
         $data = $request->validate([
@@ -28,9 +29,9 @@ class ActivityFormController extends Controller
             'food' => ['required', 'boolean'],
             'supplies' => ['required', 'boolean'],
             'reproduction' => ['required', 'boolean'],
-            'date' => ['required', 'date', 'date_format:m/d/Y'],
-            'from_time' => ['required', 'max:255'],
-            'to_time' => ['required', 'max:255'],
+            'date' => ['required', 'date'], //'date_format:Y/m/d'
+            'from_time' => ['required'], //'date_format:H:i:s'
+            'to_time' => ['required'], //'date_format:H:i:s'
             'attendance_count' => ['required', 'integer', 'numeric'],
             'event_type' => ['required', 'string'],
             'venue' => ['required', 'max:255'],
@@ -39,13 +40,16 @@ class ActivityFormController extends Controller
             'description' => ['required', 'string'],
             'participant' => ['required', 'string'],
             'payment_or_cash_file' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048'],
-            'food_file' => ['nullable', 'file','mimes:pdf,jpg,png', 'max:2048'],
-            'supplies_file' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048'],  
+            'food_file' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048'],
+            'supplies_file' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048'],
             'reproduction_file' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048'],
             'others_file' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048']
         ]);
 
-        $data['date'] = \Carbon\Carbon::createFromFormat('m/d/Y', $data['date'])->format('Y-m-d');
+        // $data['date'] = \Carbon\Carbon::createFromFormat('m/d/Y', $data['date'])->format('m-d-Y');
+        $data['date'] = Carbon::parse($request->date)->format('Y-m-d');
+        // $data['from_time'] = Carbon::parse($request->from_time)->format('H:i:s');
+        // $data['to_time'] = Carbon::parse($request->to_time)->format('H:i:s');
 
         $data['created_by'] = Auth::id();
 
@@ -68,7 +72,6 @@ class ActivityFormController extends Controller
         ActivityForm::create($data);
 
         return redirect()->route('home');
-
     }
 
     public function fetchAll()
@@ -116,7 +119,7 @@ class ActivityFormController extends Controller
             $activityForms = ActivityForm::where('college_dean_status', 'APPROVED')->where('osa_status', 'PENDING')->get();
         } elseif ($user->position == 'VPAA') {
             $activityForms = ActivityForm::where('college_dean_status', 'APPROVED')->where('osa_status', 'APPROVED')->where('vpaa_status', 'PENDING')->get();
-        } 
+        }
 
         return Inertia::render('Admin/AdminDashboard', [
             'activityForms' => $activityForms,
@@ -126,7 +129,7 @@ class ActivityFormController extends Controller
     public function fetchApprovedAdmin()
     {
         $user = Auth::user();
-        
+
         if ($user->position == 'College Dean') {
             $approvedForms = ActivityForm::where('college_dean_status', 'APPROVED')->get();
         } elseif ($user->position == 'OSA') {
@@ -189,7 +192,7 @@ class ActivityFormController extends Controller
         ) {
             // Set the main status to "APPROVED"
             $activityForm->status = 'APPROVED';
-        } else if(
+        } else if (
             $activityForm->college_dean_status === 'REJECTED' ||
             $activityForm->osa_status === 'REJECTED' ||
             $activityForm->vpaa_status === 'REJECTED'

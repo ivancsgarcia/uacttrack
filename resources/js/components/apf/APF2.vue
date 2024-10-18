@@ -1,13 +1,12 @@
 <script setup>
-import DatePicker from 'primevue/datepicker';
-import { ref } from 'vue';
+import DatePicker from "primevue/datepicker";
+import { ref } from "vue";
 
 const props = defineProps({
     form: Object,
     venues: Array,
 });
 
-const date = ref();
 const emit = defineEmits(["nextStep", "previousStep"]);
 </script>
 
@@ -15,7 +14,7 @@ const emit = defineEmits(["nextStep", "previousStep"]);
     <div class="part-two">
         <div class="flex justify-center gap-5">
             <div class="flex flex-col gap-10 w-2/4">
-                <!-- <div class="flex flex-col">
+                <div class="flex flex-col">
                     <label for="date" class="text-ua-blue text-3xl">Date</label>
                     <input
                         type="date"
@@ -23,9 +22,18 @@ const emit = defineEmits(["nextStep", "previousStep"]);
                         v-model="form.date"
                         class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
                     />
+                </div>
+                <!-- <div>
+                    <label for="date">Date</label>
+                    <DatePicker
+                        id="date"
+                        inputId="date"
+                        v-model="form.date"
+                        dateFormat="mm/dd/yy"
+                        showIcon
+                        iconDisplay="input"
+                    />
                 </div> -->
-                <DatePicker v-model="form.date" dateFormat="dd/mm/yy" showIcon iconDisplay="input" />
-                <!-- <MyDatePicker v-model="form.date" /> -->
 
                 <div class="flex flex-col">
                     <label for="from-time" class="text-ua-blue text-3xl"
@@ -38,7 +46,18 @@ const emit = defineEmits(["nextStep", "previousStep"]);
                         class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
                     />
                 </div>
-                <!-- <MyTimePicker /> -->
+                <!-- <div>
+                    <label for="from-time">From Time</label>
+                    <DatePicker
+                        id="from-time"
+                        inputId="from-time"
+                        v-model="form.from_time"
+                        showTime
+                        timeOnly
+                        hourFormat="12"
+                        hideOnDateTimeSelect
+                    />
+                </div> -->
 
                 <div class="flex flex-col">
                     <label for="to-time" class="text-ua-blue text-3xl"
@@ -51,9 +70,21 @@ const emit = defineEmits(["nextStep", "previousStep"]);
                         class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
                     />
                 </div>
+                <!-- <div>
+                    <label for="to-time">To Time</label>
+                    <DatePicker
+                        id="to-time"
+                        inputId="to-time"
+                        v-model="form.to_time"
+                        showTime
+                        timeOnly
+                        hourFormat="12"
+                        hideOnDateTimeSelect
+                    />
+                </div> -->
             </div>
             <div class="flex flex-col gap-10 w-2/4">
-                <div class="flex flex-col">
+                <!-- <div class="flex flex-col">
                     <label for="attendees" class="text-ua-blue text-3xl"
                         >Number of attendees</label
                     >
@@ -63,8 +94,19 @@ const emit = defineEmits(["nextStep", "previousStep"]);
                         v-model="form.attendance_count"
                         class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
                     />
+                </div> -->
+                <div>
+                    <label for="attendees">Number Of Attendees</label>
+                    <InputNumber
+                        inputId="attendees"
+                        v-model="form.attendance_count"
+                        :min="0"
+                        :max="10000"
+                        showButtons
+                    />
                 </div>
-                <div class="flex flex-col">
+
+                <!-- <div class="flex flex-col">
                     <label for="event" class="text-ua-blue text-3xl"
                         >Type of Event</label
                     >
@@ -74,6 +116,10 @@ const emit = defineEmits(["nextStep", "previousStep"]);
                         v-model="form.event_type"
                         class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
                     />
+                </div> -->
+                <div>
+                    <label for="event">Type Of Event</label>
+                    <InputText id="event" v-model="form.event_type" />
                 </div>
             </div>
         </div>
@@ -90,7 +136,7 @@ const emit = defineEmits(["nextStep", "previousStep"]);
                 <label for="" class="text-ua-blue text-3xl"
                     >Available Venue (Recommended)</label
                 >
-                <select
+                <!-- <select
                     name="vue"
                     id=""
                     v-model="form.venue"
@@ -104,17 +150,29 @@ const emit = defineEmits(["nextStep", "previousStep"]);
                     >
                         {{ venue.name }}
                     </option>
-                </select>
+                </select> -->
+                <Select
+                    v-model="form.venue"
+                    :options="venues"
+                    optionLabel="name"
+                    optionValue="name"
+                    placeholder="Pick A Venue"
+                />
             </div>
             <div class="flex flex-col w-2/4">
                 <label for="reqs" class="text-ua-blue text-3xl"
                     >Requirements / Resources Needed</label
                 >
-                <textarea
+                <!-- <textarea
                     name="reqs"
                     v-model="form.requirements_or_resources_needed"
                     class="border-2 rounded-md bg-ua-blue/30 h-40 text-2xl p-4"
-                ></textarea>
+                ></textarea> -->
+                <Textarea
+                    v-model="form.requirements_or_resources_needed"
+                    rows="5"
+                    cols="30"
+                />
             </div>
         </div>
 

@@ -30,11 +30,12 @@ const handleFileUpload = (event, fieldName) => {
 
         <div class="flex flex-col mb-4">
             <label for="" class="text-ua-blue text-3xl">Activity Title</label>
-            <input
+            <!-- <input
                 type="text"
                 v-model="form.title"
                 class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
-            />
+            /> -->
+            <InputText v-model="form.title" />
         </div>
 
         <div class="flex flex-row mx-auto mb-4 gap-10">
@@ -42,56 +43,88 @@ const handleFileUpload = (event, fieldName) => {
                 <label for="" class="text-ua-blue text-3xl"
                     >Type of Event</label
                 >
-                <input
+                <!-- <input
                     type="text"
                     v-model="form.event_type"
                     class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
-                />
+                /> -->
+                <InputText v-model="form.event_type" />
             </div>
             <div class="flex flex-col w-2/4">
                 <label for="" class="text-ua-blue text-3xl"
                     >Activity Description</label
                 >
-                <textarea
+                <!-- <textarea
                     name=""
                     id=""
                     v-model="form.description"
                     class="border-2 rounded-md bg-ua-blue/30 h-40 text-2xl p-4"
-                ></textarea>
+                ></textarea> -->
+                <Textarea v-model="form.description" rows="5" cols="30" />
             </div>
         </div>
 
         <div class="flex mx-auto mb-4 gap-10">
-            <!-- <div class="flex flex-col w-2/4">
-                    <label for="" class="text-ua-blue text-3xl">Date</label>
-                    <input type="date" name="" id="" v-model="form.date" class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4">
-                </div> -->
-            <MyDatePicker v-model="form.date" />
+            <div class="flex flex-col w-2/4">
+                <label for="" class="text-ua-blue text-3xl">Date</label>
+                <!-- <input
+                    type="date"
+                    name=""
+                    id=""
+                    v-model="form.date"
+                    class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
+                /> -->
+                <Datepicker
+                    id="date"
+                    inputId="date"
+                    v-model="form.date"
+                    dateFormat="mm/dd/yy"
+                    showIcon
+                    iconDisplay="input"
+                />
+            </div>
+
             <div class="flex flex-col w-1/4">
                 <label for="" class="text-ua-blue text-3xl">From Time</label>
-                <input
+                <!-- <input
                     type="time"
                     name=""
                     id=""
                     v-model="form.from_time"
                     class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
+                /> -->
+                <DatePicker
+                    id="from-time"
+                    inputId="from-time"
+                    v-model="form.from_time"
+                    timeOnly
+                    hourFormat="12"
+                    hideOnDateTimeSelect
                 />
             </div>
             <div class="flex flex-col w-1/4">
                 <label for="" class="text-ua-blue text-3xl">To Time</label>
-                <input
+                <!-- <input
                     type="time"
                     name=""
                     id=""
                     v-model="form.to_time"
                     class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
+                /> -->
+                <DatePicker
+                    id="to-time"
+                    inputId="to-time"
+                    v-model="form.to_time"
+                    timeOnly
+                    hourFormat="12"
+                    hideOnDateTimeSelect
                 />
             </div>
         </div>
 
         <div class="flex flex-col mx-auto mb-4">
             <label for="" class="text-ua-blue text-3xl">Venue</label>
-            <select
+            <!-- <select
                 name="vue"
                 id=""
                 v-model="form.venue"
@@ -104,7 +137,14 @@ const handleFileUpload = (event, fieldName) => {
                 >
                     {{ venue.name }}
                 </option>
-            </select>
+            </select> -->
+            <Select
+                v-model="form.venue"
+                :options="venues"
+                optionLabel="name"
+                optionValue="name"
+                placeholder="Pick A Venue"
+            />
         </div>
 
         <div class="flex mx-auto mb-8 gap-10">
@@ -112,12 +152,17 @@ const handleFileUpload = (event, fieldName) => {
                 <label for="" class="text-ua-blue text-3xl"
                     >Requirements / Resources Needed</label
                 >
-                <textarea
+                <!-- <textarea
                     name=""
                     id=""
                     v-model="form.requirements_or_resources_needed"
                     class="border-2 rounded-md bg-ua-blue/30 h-full p-4 text-2xl"
-                ></textarea>
+                ></textarea> -->
+                <Textarea
+                    v-model="form.requirements_or_resources_needed"
+                    rows="5"
+                    cols="30"
+                />
             </div>
             <div class="w-2/4">
                 <div class="flex flex-col mb-4">
@@ -125,24 +170,32 @@ const handleFileUpload = (event, fieldName) => {
                         >Participants - Department / Program / Grade or Year
                         Level</label
                     >
-                    <input
+                    <!-- <input
                         type="text"
                         name=""
                         id=""
                         v-model="form.participant"
                         class="border-2 rounded-md bg-ua-blue/30 h-20 p-4 text-2xl"
-                    />
+                    /> -->
+                    <InputText v-model="form.participant" />
                 </div>
                 <div class="flex flex-col">
                     <label for="" class="text-ua-blue text-3xl"
                         >Expected Number of Attendees</label
                     >
-                    <input
+                    <!-- <input
                         type="number"
                         name=""
                         id=""
                         v-model="form.attendance_count"
                         class="border-2 rounded-md bg-ua-blue/30 h-20 p-4 text-2xl"
+                    /> -->
+                    <InputNumber
+                        inputId="attendees"
+                        v-model="form.attendance_count"
+                        :min="0"
+                        :max="10000"
+                        showButtons
                     />
                 </div>
             </div>

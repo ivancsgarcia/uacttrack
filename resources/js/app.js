@@ -5,10 +5,15 @@ import SideMenu from "./components/global/SideMenu.vue";
 import AdminSideMenu from "./components/global/AdminSideMenu.vue";
 import UAHeader from "../js/components/global/UAheader.vue";
 import Modal from "../js/components/global/Modal.vue";
-import MyButton from "../js/components/global/MyButton.vue";
-import MyToggleSwitch from "../js/components/global/MyToggleSwitch.vue";
-import MyDatePicker from "../js/components/global/MyDatePicker.vue";
-import MyTimePicker from "../js/components/global/MyTimePicker.vue";
+
+import Button from "primevue/button";
+import ToggleSwitch from "primevue/toggleswitch";
+import DatePicker from "primevue/datepicker";
+import InputText from "primevue/inputtext";
+import InputNumber from "primevue/inputnumber";
+import Select from "primevue/select";
+import Textarea from "primevue/textarea";
+import FileUpload from "primevue/fileupload";
 
 /* import the fontawesome core */
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -48,10 +53,14 @@ createInertiaApp({
             .component("SideMenu", SideMenu)
             .component("UAHeader", UAHeader)
             .component("Modal", Modal)
-            .component("MyButton", MyButton)
-            .component("MyToggleSwitch", MyToggleSwitch)
-            .component("MyDatePicker", MyDatePicker)
-            .component("MyTimePicker", MyTimePicker)
+            .component("Button", Button)
+            .component("ToggleSwitch", ToggleSwitch)
+            .component("DatePicker", DatePicker)
+            .component("InputText", InputText)
+            .component("InputNumber", InputNumber)
+            .component("Select", Select)
+            .component("Textarea", Textarea)
+            .component("FileUpload", FileUpload)
             .component("AdminSideMenu", AdminSideMenu)
             .mount(el);
     },

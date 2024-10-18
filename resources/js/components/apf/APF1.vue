@@ -37,7 +37,7 @@ const emit = defineEmits(["nextStep"]);
                 />
             </div> -->
             <div>
-                <MyToggleSwitch v-model="form.check_payment_or_cash" />
+                <ToggleSwitch v-model="form.check_payment_or_cash" />
             </div>
         </div>
 
@@ -62,7 +62,7 @@ const emit = defineEmits(["nextStep"]);
                 />
             </div> -->
             <div>
-                <MyToggleSwitch v-model="form.food" />
+                <ToggleSwitch v-model="form.food" />
             </div>
         </div>
 
@@ -87,7 +87,7 @@ const emit = defineEmits(["nextStep"]);
                 />
             </div> -->
             <div>
-                <MyToggleSwitch v-model="form.supplies" />
+                <ToggleSwitch v-model="form.supplies" />
             </div>
         </div>
 
@@ -112,7 +112,7 @@ const emit = defineEmits(["nextStep"]);
                 />
             </div> -->
             <div>
-                <MyToggleSwitch v-model="form.reproduction" />
+                <ToggleSwitch v-model="form.reproduction" />
             </div>
         </div>
 
