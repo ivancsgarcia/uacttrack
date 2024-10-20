@@ -1,6 +1,16 @@
+<script setup>
+    defineProps({
+        approvedForms: Array,
+    })
+</script>
+
 <template>
     <div class="app flex pt-16">
         <UAHeader />
+
+        <div class="bg-img">
+            <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+        </div>
 
         <div class="content w-9/12 mx-auto py-16 text-xl bg-rgb(217, 217, 217)">
             <h1 class="text-center text-4xl mb-8 text-ua-blue">
@@ -26,12 +36,20 @@
 
 </template>
 
-<script setup>
-    defineProps({
-        approvedForms: Array,
-    })
-</script>
-
 <style scoped>
+.bg-img {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    margin-bottom: -3rem;
+    margin-right: -3rem;
+}
 
+.bg-img img {
+    transform: rotate(15deg);
+    width: 60rem;
+    filter: grayscale(100%);
+    opacity: 0.05;
+}
 </style>

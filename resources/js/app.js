@@ -14,6 +14,12 @@ import InputNumber from "primevue/inputnumber";
 import Select from "primevue/select";
 import Textarea from "primevue/textarea";
 import FileUpload from "primevue/fileupload";
+import Dialog from 'primevue/dialog';
+import Avatar from 'primevue/avatar';
+import Popover from 'primevue/popover';
+import Card from 'primevue/card';
+
+
 
 /* import the fontawesome core */
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -61,6 +67,10 @@ createInertiaApp({
             .component("Select", Select)
             .component("Textarea", Textarea)
             .component("FileUpload", FileUpload)
+            .component("Dialog", Dialog)
+            .component("Avatar", Avatar)
+            .component("Popover", Popover)
+            .component("Card", Card)
             .component("AdminSideMenu", AdminSideMenu)
             .mount(el);
     },

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,6 +20,9 @@ class DatabaseSeeder extends Seeder
         //     'password' => '123456'
         // ]);
 
+        
+
+
         $this->call([
             OrganizationSeeder::class,
             VenueSeeder::class,
@@ -26,7 +30,9 @@ class DatabaseSeeder extends Seeder
             RequestFormSeeder::class,
             OrganizationPositionSeeder::class,
             AdminSeeder::class,
-            StudentOfficerSeeder::class,
+            StudentOfficerSeeder::class, 
         ]);
+
+        User::factory(100)->create();
     }
 }

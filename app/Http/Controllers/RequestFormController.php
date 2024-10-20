@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\RequestForm;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class RequestFormController extends Controller

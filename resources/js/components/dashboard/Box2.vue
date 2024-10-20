@@ -1,23 +1,18 @@
 <script setup>
 import { defineEmits } from "vue";
 
-const props = defineProps({
+defineProps({
     title: {
         type: String,
         required: true,
     },
 });
 
-const emit = defineEmits(["openModal"]);
-
-const openModal = () => {
-    emit("openModal");
-};
 </script>
 
 <template>
     <div
-        @click="openModal"
+        @click="$emit('openModal')"
         class="box2 text-2xl text-black hover:!bg-ua-blue/80 hover:!text-gray-200"
     >
         <h3>{{ title }}</h3>

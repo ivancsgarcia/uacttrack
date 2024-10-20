@@ -8,10 +8,11 @@ const orgLogo = computed(() => page.props.organization.logo)
 </script>
 
 <template>
-    <div class="flex w-full">
-        <div class="round-avatar">
+    <div class="flex items-center w-full">
+        <!-- <div class="round-avatar">
             <img :src="orgLogo" alt="organization-logo" class="rounded-full">
-        </div>
+        </div> -->
+        <Avatar :image="orgLogo" size="xlarge" shape="circle"/>
         <div class="flex text">
             <p>Welcome,</p>
             <p class="name">{{ user.first_name + ' ' + user.last_name}}</p>
@@ -34,12 +35,12 @@ const orgLogo = computed(() => page.props.organization.logo)
 
     .text {
         flex-direction: column;
-        align-items: start;
-        justify-content: center;
+        /* align-items: start; */
+        /* justify-content: center; */
     }
 
     .text p {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
 
     .name {

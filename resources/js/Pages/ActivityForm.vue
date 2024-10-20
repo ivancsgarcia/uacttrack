@@ -61,28 +61,50 @@ const submitForm = async () => {
 <template>
     <div>
         <UAHeader />
+
+        <div class="bg-img">
+            <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+        </div>
+
+        <form @submit.prevent="submitForm" class="w-4/5 mx-auto py-28">
+            <!-- PART 1 -->
+            <APF1 v-if="currentStep === 1" :form="form" @nextStep="nextStep" />
+
+            <!-- PART 2 -->
+            <APF2
+                v-if="currentStep === 2"
+                :form="form"
+                @nextStep="nextStep"
+                @previousStep="previousStep"
+                :venues="props.venues"
+            />
+
+            <!-- PART 3 -->
+            <APF3
+                v-if="currentStep === 3"
+                :form="form"
+                @previousStep="previousStep"
+                @submitForm="submitForm"
+                :venues="props.venues"
+            />
+        </form>
     </div>
-
-    <form @submit.prevent="submitForm" class="w-4/5 mx-auto py-28">
-        <!-- PART 1 -->
-        <APF1 v-if="currentStep === 1" :form="form" @nextStep="nextStep" />
-
-        <!-- PART 2 -->
-        <APF2
-            v-if="currentStep === 2"
-            :form="form"
-            @nextStep="nextStep"
-            @previousStep="previousStep"
-            :venues="props.venues"
-        />
-
-        <!-- PART 3 -->
-        <APF3
-            v-if="currentStep === 3"
-            :form="form"
-            @previousStep="previousStep"
-            @submitForm="submitForm"
-            :venues="props.venues"
-        />
-    </form>
 </template>
+
+<style scoped>
+.bg-img {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    margin-bottom: -3rem;
+    margin-right: -3rem;
+}
+
+.bg-img img {
+    transform: rotate(15deg);
+    width: 60rem;
+    filter: grayscale(100%);
+    opacity: 0.1;
+}
+</style>

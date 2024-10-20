@@ -3,6 +3,7 @@ import Box from "../components/dashboard/Box.vue";
 import Box2 from "../components/dashboard/Box2.vue";
 import { Link } from "@inertiajs/vue3";
 import { ref } from "vue";
+import MyDialog from "../components/global/MyDialog.vue";
 
 const props = defineProps({
     activityForms: Array,
@@ -12,7 +13,12 @@ const showCollegeDean = ref(false);
 const showOSA = ref(false);
 const showVPAA = ref(false);
 const showFundings = ref(false);
-const showCopyReceived = ref(false);
+const copyReceive = ref(false);
+const op = ref();
+
+const toggle = (event) => {
+    op.value.toggle(event);
+};
 </script>
 
 <template>
@@ -20,21 +26,33 @@ const showCopyReceived = ref(false);
         <UAHeader />
         <SideMenu />
 
+        <div class="bg-img">
+            <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+        </div>
+
         <div class="main-content">
             <div class="account-section">
                 <Account />
 
                 <div class="icons-box">
-                    <font-awesome-icon
-                        :icon="['fas', 'envelope']"
-                        size="2xl"
-                        class="icon"
-                    />
-                    <font-awesome-icon
-                        :icon="['fas', 'bell']"
-                        size="2xl"
-                        class="icon"
-                    />
+                    <div>
+                        <font-awesome-icon
+                            :icon="['fas', 'envelope']"
+                            size="2xl"
+                            class="icon"
+                        />
+                    </div>
+                    <div>
+                        <font-awesome-icon
+                            @click="toggle"
+                            :icon="['fas', 'bell']"
+                            size="2xl"
+                            class="icon"
+                        />
+                        <Popover ref="op">
+                            <div>hi</div>
+                        </Popover>
+                    </div>
                 </div>
             </div>
 
@@ -42,13 +60,31 @@ const showCopyReceived = ref(false);
 
             <div class="box-div">
                 <Link :href="route('submitted-apf')">
-                    <Box title="Submitted" />
+                    <!-- <Box title="Submitted" /> -->
+                    <Card>
+                        <template #content>
+                            <p>Submitted</p>
+                            <p>Activity Proposal Form</p>
+                        </template>
+                    </Card>
                 </Link>
                 <Link :href="route('approved-apf')">
-                    <Box title="Approved" />
+                    <!-- <Box title="Approved" /> -->
+                    <Card>
+                        <template #content>
+                            <p>Approved</p>
+                            <p>Activity Proposal Form</p>
+                        </template>
+                    </Card>
                 </Link>
                 <Link :href="route('rejected-apf')">
-                    <Box title="Rejected" />
+                    <!-- <Box title="Rejected" /> -->
+                    <Card>
+                        <template #content>
+                            <p>Rejected</p>
+                            <p>Activity Proposal Form</p>
+                        </template>
+                    </Card>
                 </Link>
             </div>
 
@@ -56,49 +92,138 @@ const showCopyReceived = ref(false);
 
             <h2>Approval</h2>
             <div class="box2-div">
-                <Box2
+                <!-- <Box2
                     title="College Dean"
                     @openModal="showCollegeDean = true"
-                />
-                <Box2
+                /> -->
+                <Card @click="showCollegeDean = true">
+                    <template #content>
+                        <p>College Dean</p>
+                    </template>
+                </Card>
+
+                <!-- <Box2
                     title="Office of Student Affairs"
                     @openModal="showOSA = true"
-                />
-                <Box2 title="VPAA Approval" @openModal="showVPAA = true" />
-                <Box2
+                /> -->
+                <Card @click="showOSA = true">
+                    <template #content>
+                        <p>Office of Student Affairs</p>
+                    </template>
+                </Card>
+
+                <!-- <Box2 title="VPAA Approval" @openModal="showVPAA = true" /> -->
+                <Card @click="showVPAA = true">
+                    <template #content>
+                        <p>VPAA Approval</p>
+                    </template>
+                </Card>
+
+                <!-- <Box2
                     title="Funding Needs Reviewed"
                     @openModal="showFundings = true"
-                />
-                <Box2
+                /> -->
+                <Card @click="showFundings = true">
+                    <template #content>
+                        <p>Funding Needs Reviewed</p>
+                    </template>
+                </Card>
+
+                <!-- <Box2
                     title="Copy Received by:"
-                    @openModal="showCopyReceived = true"
-                />
+                    @openModal="copyReceive = true"
+                /> -->
+                <Card @click="copyReceive = true">
+                    <template #content>
+                        <p>Copy Received by</p>
+                    </template>
+                </Card>
             </div>
 
-            <Modal
-                v-model:modelValue="showCollegeDean"
-                title="College Dean Approval"
+            <Dialog
+                v-model:visible="showCollegeDean"
+                header="College Dean Approval Status"
+                modal
             >
-                <template> </template>
-            </Modal>
-            <Modal
-                v-model:modelValue="showOSA"
-                title="Office of Student Affairs Approval"
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Transaction Number</th>
+                            <th>College Dean</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="form in activityForms" :key="form.id">
+                            <td>{{ form.id }}</td>
+                            <td></td>
+                            <td>{{ form.college_dean_status }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </Dialog>
+
+            <Dialog
+                v-model:visible="showOSA"
+                header="OSA Approval Status"
+                modal
             >
-                <p>Office of Student Affairs Approval</p>
-            </Modal>
-            <Modal v-model:modelValue="showVPAA" title="VPAA Approval">
-                <p>VPAA Approval</p>
-            </Modal>
-            <Modal
-                v-model:modelValue="showFundings"
-                title="Funding Needs Reviewed"
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Transaction Number</th>
+                            <th>OSA</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>01</td>
+                            <td>Joey Suba</td>
+                            <td>Pending</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </Dialog>
+
+            <Dialog
+                v-model:visible="showVPAA"
+                header="VPAA Approval Status"
+                modal
             >
-                <p>Funding Needs Reviewed</p>
-            </Modal>
-            <Modal v-model:modelValue="showCopyReceived" title="Copy Received">
-                <p>Copy Received</p>
-            </Modal>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Transaction Number</th>
+                            <th>VPAA</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>01</td>
+                            <td>Joey Suba</td>
+                            <td>Pending</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </Dialog>
+
+            <Dialog
+                v-model:visible="showFundings"
+                header="Fundings Approval Status"
+                modal
+            >
+                <div>Fundings</div>
+            </Dialog>
+
+            <Dialog
+                v-model:visible="copyReceive"
+                header="Copy Received By"
+                modal
+            >
+                <div>Copy Receive</div>
+            </Dialog>
         </div>
     </div>
 </template>
@@ -107,6 +232,22 @@ const showCopyReceived = ref(false);
 .app {
     display: flex;
     padding-top: 4rem;
+}
+
+.bg-img {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    margin-bottom: -3rem;
+    margin-right: -3rem;
+}
+
+.bg-img img {
+    transform: rotate(15deg);
+    width: 60rem;
+    filter: grayscale(100%);
+    opacity: 0.1;
 }
 
 .main-content {
@@ -155,5 +296,30 @@ h2 {
     justify-content: center;
     flex-wrap: wrap;
     gap: 1rem;
+}
+
+table {
+    border-collapse: separate;
+    background-color: #272f5c;
+}
+
+table,
+th,
+td {
+    border: 2px solid #272f5c;
+    border-radius: 0.2rem;
+}
+
+th,
+td {
+    padding: 1rem;
+    text-align: center;
+    background-color: #fff;
+}
+
+.p-card {
+    width: 20rem;
+    background-color: #272f5c;
+    color: white;
 }
 </style>

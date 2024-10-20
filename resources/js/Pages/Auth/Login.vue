@@ -20,6 +20,7 @@ const submit = () => {
         <div class="bg-img">
             <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
         </div>
+        
         <div class="content">
             <img
                 :src="'images/sys-logos/UActTrack-logo.png'"

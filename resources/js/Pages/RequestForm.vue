@@ -9,6 +9,10 @@ defineProps({
         <UAHeader />
         <SideMenu />
 
+        <div class="bg-img">
+            <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+        </div>
+
         <div class="main-content">
             <div class="account-section">
                 <Account />
@@ -46,6 +50,22 @@ defineProps({
 .app {
     display: flex;
     padding-top: 4rem;
+}
+
+.bg-img {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    margin-bottom: -3rem;
+    margin-right: -3rem;
+}
+
+.bg-img img {
+    transform: rotate(15deg);
+    width: 60rem;
+    filter: grayscale(100%);
+    opacity: 0.1;
 }
 
 .main-content {

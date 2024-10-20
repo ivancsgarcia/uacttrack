@@ -1,7 +1,18 @@
+<script setup>
+import { Link } from "@inertiajs/vue3";
+
+defineProps({
+    activityForms: Array,
+});
+</script>
+
 <template>
     <div class="app flex pt-16">
         <UAHeader />
-    
+        
+        <div class="bg-img">
+            <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+        </div>
 
         <div class="content w-9/12 mx-auto py-16 text-xl bg-rgb(217, 217, 217)">
             <h1 class="text-center text-4xl mb-4 text-ua-blue">
@@ -17,27 +28,48 @@
                     </tr>
                 </thead>
 
-                
-                 <tbody>
+                <tbody>
                     <!-- fetch data -->
-                    <tr class="text-center h-20" v-for="form in activityForms" :key="form.id">
+                    <tr
+                        class="text-center h-20"
+                        v-for="form in activityForms"
+                        :key="form.id"
+                    >
                         <td class="bg-ua-gray w-1/5 border">{{ form.id }}</td>
-                        <td class="bg-ua-gray w-3/5 border">{{ form.title }}</td>
-                        <td class="bg-ua-gray w-1/5 border">{{ new Date(form.created_at).toLocaleDateString('en-US') }}</td>
+                        <td class="bg-ua-gray w-3/5 border underline">
+                            <Link
+                                :href="route('activity-form-preview', form.id)"
+                                >{{ form.title }}</Link
+                            >
+                        </td>
+                        <td class="bg-ua-gray w-1/5 border">
+                            {{
+                                new Date(form.created_at).toLocaleDateString(
+                                    "en-US"
+                                )
+                            }}
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-
 </template>
 
-<script setup>
-    defineProps({
-        activityForms: Array,
-    })
-</script>
-
 <style scoped>
+.bg-img {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    margin-bottom: -3rem;
+    margin-right: -3rem;
+}
 
+.bg-img img {
+    transform: rotate(15deg);
+    width: 60rem;
+    filter: grayscale(100%);
+    opacity: 0.05;
+}
 </style>

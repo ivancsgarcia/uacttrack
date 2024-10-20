@@ -44,7 +44,7 @@ import { Link } from "@inertiajs/vue3";
                     "
                     class="link"
                 >
-                    <p>Forms</p>
+                    <p>Request Forms</p>
                 </div>
             </Link>
 
@@ -57,7 +57,7 @@ import { Link } from "@inertiajs/vue3";
                     "
                     class="link"
                 >
-                    <p>Recommendation</p>
+                    <p>External Links</p>
                 </div>
             </Link>
         </div>

@@ -12,11 +12,21 @@ class DashboardController extends Controller
     {
         $org = Auth::user()->organization;
 
-        // Assuming ActivityForm has a user relationship
         $activityForms = ActivityForm::whereHas('creator', function ($query) use ($org) {
             $query->where('organization', $org);
         })->get();
-        // $activityForms = ActivityForm::where('created_by', Auth::id())->get();
+
+        // $activityForms = ActivityForm::with(['creator.organization' => function ($query) {
+        //     // Optionally filter organizations if needed
+        // }])->get();
+
+        // $activityForms = ActivityForm::with(['creator' => function ($query) {
+        //     $query->with('organization'); // Load the organization relationship
+        // }])
+        // ->whereHas('creator', function ($query) use ($org) {
+        //     $query->where('organization', $org); // Filter creators based on the organization
+        // })
+        // ->get();
 
         return Inertia::render('Dashboard', [
             'activityForms' => $activityForms,

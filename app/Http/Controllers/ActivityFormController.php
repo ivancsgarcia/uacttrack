@@ -74,6 +74,25 @@ class ActivityFormController extends Controller
         return redirect()->route('home');
     }
 
+    public function show($activityId)
+    {
+
+        // Get the organization of the authenticated user
+        $org = Auth::user()->organization;
+
+        // Retrieve the activity form based on creator's organization and activity ID
+        $activityForms = ActivityForm::whereHas('creator', function ($query) use ($org) {
+            $query->where('organization', $org);
+        })
+            ->where('id', $activityId) // Filter by activity ID
+            ->orderBy('created_at', 'desc') // Apply orderBy on the main query
+            ->firstOrFail();
+
+        return Inertia::render('ActivityFormPreview', [
+            'activityForms' => $activityForms,
+        ]);
+    }
+
     public function fetchAll()
     {
 
@@ -108,100 +127,5 @@ class ActivityFormController extends Controller
         return Inertia::render('RejectedAPF', [
             'rejectedForms' => $rejectedForms
         ]);
-    }
-
-    public function fetchPendingAdmin()
-    {
-        $user = Auth::user();
-        if ($user->position == 'College Dean') {
-            $activityForms = ActivityForm::where('college_dean_status', 'PENDING')->get();
-        } elseif ($user->position == 'OSA') {
-            $activityForms = ActivityForm::where('college_dean_status', 'APPROVED')->where('osa_status', 'PENDING')->get();
-        } elseif ($user->position == 'VPAA') {
-            $activityForms = ActivityForm::where('college_dean_status', 'APPROVED')->where('osa_status', 'APPROVED')->where('vpaa_status', 'PENDING')->get();
-        }
-
-        return Inertia::render('Admin/AdminDashboard', [
-            'activityForms' => $activityForms,
-            'position' => $user->position
-        ]);
-    }
-    public function fetchApprovedAdmin()
-    {
-        $user = Auth::user();
-
-        if ($user->position == 'College Dean') {
-            $approvedForms = ActivityForm::where('college_dean_status', 'APPROVED')->get();
-        } elseif ($user->position == 'OSA') {
-            $approvedForms = ActivityForm::where('osa_status', 'APPROVED')->get();
-        } elseif ($user->position == 'VPAA') {
-            $approvedForms = ActivityForm::where('vpaa_status', 'APPROVED')->get();
-        } else {
-            // Default: show all forms (for admins or higher-level roles)
-            $approvedForms = ActivityForm::all();
-        }
-
-        // Return Inertia response with the activity forms data
-        return Inertia::render('Admin/AdminApprovedAPF', [
-            'approvedForms' => $approvedForms
-        ]);
-    }
-
-    public function fetchRejectedAdmin()
-    {
-        $user = Auth::user();
-
-        if ($user->position == 'College Dean') {
-            $rejectedForms = ActivityForm::where('college_dean_status', 'REJECTED')->get();
-        } elseif ($user->position == 'OSA') {
-            $rejectedForms = ActivityForm::where('osa_status', 'REJECTED')->get();
-        } elseif ($user->position == 'VPAA') {
-            $rejectedForms = ActivityForm::where('vpaa_status', 'REJECTED')->get();
-        }
-
-        // Return Inertia response with the activity forms data
-        return Inertia::render('Admin/AdminRejectedAPF', [
-            'rejectedForms' => $rejectedForms
-        ]);
-    }
-
-    public function updateStatus(Request $request, $id)
-    {
-        $user = Auth::user();
-        $activityForm = ActivityForm::findOrFail($id);
-
-        // Update the status based on the user's role
-        switch ($request->position) {
-            case 'College Dean':
-                $activityForm->college_dean_status = $request->status;
-                break;
-            case 'OSA':
-                $activityForm->osa_status = $request->status;
-                break;
-            case 'VPAA':
-                $activityForm->vpaa_status = $request->status;
-                break;
-            default:
-                return response()->json(['message' => 'Unauthorized'], 403);
-        }
-
-        if (
-            $activityForm->college_dean_status === 'APPROVED' &&
-            $activityForm->osa_status === 'APPROVED' &&
-            $activityForm->vpaa_status === 'APPROVED'
-        ) {
-            // Set the main status to "APPROVED"
-            $activityForm->status = 'APPROVED';
-        } else if (
-            $activityForm->college_dean_status === 'REJECTED' ||
-            $activityForm->osa_status === 'REJECTED' ||
-            $activityForm->vpaa_status === 'REJECTED'
-        ) {
-            // Set the main status to "REJECTED"
-            $activityForm->status = 'REJECTED';
-        }
-
-        $activityForm->save();
-        return Inertia::location(url()->previous());
     }
 }
