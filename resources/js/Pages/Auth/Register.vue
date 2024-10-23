@@ -10,7 +10,7 @@ defineProps({
 
 const form = useForm({
     role: "",
-    organization: "",
+    organization_id: "",
     position: "",
     first_name: null,
     last_name: null,
@@ -83,7 +83,7 @@ const submit = () => {
                         <option
                             v-for="org in organizations"
                             :key="org.id"
-                            :value="org.name"
+                            :value="org.id"
                         >
                             {{ org.name }}
                         </option>
@@ -107,7 +107,7 @@ const submit = () => {
                         <option
                             v-for="orgPos in organization_positions"
                             :key="orgPos.id"
-                            :value="orgPos.name"
+                            :value="orgPos.id"
                         >
                             {{ orgPos.name }}
                         </option>
@@ -131,7 +131,7 @@ const submit = () => {
                         <option
                             v-for="pos in admin_positions"
                             :key="pos.id"
-                            :value="pos.name"
+                            :value="pos.id"
                         >
                             {{ pos.name }}
                         </option>
@@ -321,7 +321,8 @@ input {
     color: #272f5c;
 }
 
-select:focus, input:focus {
+select:focus,
+input:focus {
     outline: none;
 }
 

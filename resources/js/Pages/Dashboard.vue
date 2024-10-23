@@ -245,7 +245,7 @@ const toggle = (event) => {
 
 .bg-img img {
     transform: rotate(15deg);
-    width: 60rem;
+    width: 40rem;
     filter: grayscale(100%);
     opacity: 0.1;
 }
