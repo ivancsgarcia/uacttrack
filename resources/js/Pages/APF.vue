@@ -3,7 +3,9 @@ import { Link } from "@inertiajs/vue3";
 </script>
 
 <template>
-    <div class="body">
+    <div class="app">
+        <UAHeader />
+
         <div class="content">
             <div class="img">
                 <img
@@ -21,14 +23,19 @@ import { Link } from "@inertiajs/vue3";
 </template>
 
 <style scoped>
-.body {
+.app {
+    width: 100%;
+    padding-top: 6rem;
+}
+
+/* .body {
     width: 100vw;
     height: 100vh;
     background-color: #f2f2f2;
     display: flex;
     justify-content: center;
     padding: 4rem;
-}
+} */
 
 .content {
     position: relative;
@@ -37,6 +44,7 @@ import { Link } from "@inertiajs/vue3";
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: auto 4rem;
 }
 
 .img {

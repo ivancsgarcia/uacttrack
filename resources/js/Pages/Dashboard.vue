@@ -1,9 +1,6 @@
 <script setup>
-import Box from "../components/dashboard/Box.vue";
-import Box2 from "../components/dashboard/Box2.vue";
 import { Link } from "@inertiajs/vue3";
 import { ref } from "vue";
-import MyDialog from "../components/global/MyDialog.vue";
 
 const props = defineProps({
     activityForms: Array,
