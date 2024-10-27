@@ -6,6 +6,7 @@ use App\Models\RequestForm;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class RequestFormSeeder extends Seeder
@@ -19,51 +20,46 @@ class RequestFormSeeder extends Seeder
             Storage::disk('public')->makeDirectory('request-forms');
         }
 
-        $requestForms = [
+        $files = File::files(database_path('seeders/request-forms'));
+
+        foreach ($files as $file) {
+
+            $targetPath = 'request-forms/' . $file->getFilename();
+            Storage::disk('public')->put($targetPath, File::get($file));
+        }
+
+        DB::table('request_forms')->insert([
             [
                 'name' => 'Funding Request Form',
-                'docs_link' => null,
-                'xlsx_link' => 'Funding_Request_Form.xls',
+                'docs_link' => '',
+                'xlsx_link' => 'request-forms/Funding_Request_Form.xls',
             ],
             [
                 'name' => 'Petty Cash Form',
-                'docs_link' => null,
-                'xlsx_link' => 'Petty_Cash_Form.xlsx',
+                'docs_link' => '',
+                'xlsx_link' => 'request-forms/Petty_Cash_Form.xlsx',
             ],
             [
                 'name' => 'Request For Meals Form',
-                'docs_link' => null,
-                'xlsx_link' => 'Request_for_Meals.xlsx',
+                'docs_link' => '',
+                'xlsx_link' => 'request-forms/Request_for_Meals.xlsx',
             ],
             [
                 'name' => 'Requisition Form',
-                'docs_link' => null,
-                'xlsx_link' => null,
+                'docs_link' => '',
+                'xlsx_link' => '',
             ],
             [
                 'name' => 'Purchase Requisition',
-                'docs_link' => 'Purchase_Requisition_Form.doc',
-                'xlsx_link' => null,
+                'docs_link' => 'request-forms/Purchase_Requisition_Form.doc',
+                'xlsx_link' => '',
             ],
             [
                 'name' => 'Reproduction Form',
-                'docs_link' => 'Reproduction_Form.doc',
-                'xlsx_link' => null,
+                'docs_link' => 'request-forms/Reproduction_Form.doc',
+                'xlsx_link' => '',
             ],
-        ];
 
-        foreach ($requestForms as $form) {
-            $docxFormsPath = 'request-forms/' . $form['docs_link'];
-            Storage::disk('public')->put($docxFormsPath, file_get_contents(database_path('seeders/request-forms/' . $form['docs_link'])));
-
-            $xlsxFormsPath = 'request-forms/' . $form['xlsx_link'];
-            Storage::disk('public')->put($xlsxFormsPath, file_get_contents(database_path('seeders/request-forms/' . $form['xlsx_link'])));
-
-            RequestForm::create([
-                'name' => $form['name'],
-                'docs_link' => $docxFormsPath,
-                'xlsx_link' => $xlsxFormsPath,
-            ]);
-        }
+        ]);
     }
 }
