@@ -37,8 +37,8 @@ defineProps({
                 <tbody>
                     <tr v-for="reqForm in request_forms" :key="reqForm.id">
                         <td>{{ reqForm.name }}</td>
-                        <td>pdf</td>
                         <td>docx</td>
+                        <td>xlsx</td>
                     </tr>
                 </tbody>
             </table>

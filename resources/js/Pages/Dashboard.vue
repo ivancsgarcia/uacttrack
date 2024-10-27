@@ -4,6 +4,9 @@ import { ref } from "vue";
 
 const props = defineProps({
     activityForms: Array,
+    collegeDeanName: String,
+    osaName: String,
+    vpaaName: String,
 });
 
 const showCollegeDean = ref(false);
@@ -57,26 +60,25 @@ const toggle = (event) => {
 
             <div class="box-div">
                 <Link :href="route('submitted-apf')">
-                    <!-- <Box title="Submitted" /> -->
-                    <Card>
+                    <Card class="top">
                         <template #content>
                             <p>Submitted</p>
                             <p>Activity Proposal Form</p>
                         </template>
                     </Card>
                 </Link>
+
                 <Link :href="route('approved-apf')">
-                    <!-- <Box title="Approved" /> -->
-                    <Card>
+                    <Card class="top">
                         <template #content>
                             <p>Approved</p>
                             <p>Activity Proposal Form</p>
                         </template>
                     </Card>
                 </Link>
+
                 <Link :href="route('rejected-apf')">
-                    <!-- <Box title="Rejected" /> -->
-                    <Card>
+                    <Card class="top">
                         <template #content>
                             <p>Rejected</p>
                             <p>Activity Proposal Form</p>
@@ -89,47 +91,30 @@ const toggle = (event) => {
 
             <h2>Approval</h2>
             <div class="box2-div">
-                <!-- <Box2
-                    title="College Dean"
-                    @openModal="showCollegeDean = true"
-                /> -->
                 <Card @click="showCollegeDean = true">
                     <template #content>
                         <p>College Dean</p>
                     </template>
                 </Card>
 
-                <!-- <Box2
-                    title="Office of Student Affairs"
-                    @openModal="showOSA = true"
-                /> -->
                 <Card @click="showOSA = true">
                     <template #content>
                         <p>Office of Student Affairs</p>
                     </template>
                 </Card>
 
-                <!-- <Box2 title="VPAA Approval" @openModal="showVPAA = true" /> -->
                 <Card @click="showVPAA = true">
                     <template #content>
                         <p>VPAA Approval</p>
                     </template>
                 </Card>
 
-                <!-- <Box2
-                    title="Funding Needs Reviewed"
-                    @openModal="showFundings = true"
-                /> -->
                 <Card @click="showFundings = true">
                     <template #content>
                         <p>Funding Needs Reviewed</p>
                     </template>
                 </Card>
 
-                <!-- <Box2
-                    title="Copy Received by:"
-                    @openModal="copyReceive = true"
-                /> -->
                 <Card @click="copyReceive = true">
                     <template #content>
                         <p>Copy Received by</p>
@@ -153,7 +138,7 @@ const toggle = (event) => {
                     <tbody>
                         <tr v-for="form in activityForms" :key="form.id">
                             <td>{{ form.id }}</td>
-                            <td></td>
+                            <td>{{ collegeDeanName }}</td>
                             <td>{{ form.college_dean_status }}</td>
                         </tr>
                     </tbody>
@@ -174,10 +159,10 @@ const toggle = (event) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>01</td>
-                            <td>Joey Suba</td>
-                            <td>Pending</td>
+                        <tr v-for="form in activityForms" :key="form.id">
+                            <td>{{ form.id }}</td>
+                            <td>{{ osaName }}</td>
+                            <td>{{ form.osa_status }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -197,10 +182,10 @@ const toggle = (event) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>01</td>
-                            <td>Joey Suba</td>
-                            <td>Pending</td>
+                        <tr v-for="form in activityForms" :key="form.id">
+                            <td>{{ form.id }}</td>
+                            <td>{{ vpaaName }}</td>
+                            <td>{{ form.vpaa_status }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -211,7 +196,30 @@ const toggle = (event) => {
                 header="Fundings Approval Status"
                 modal
             >
-                <div>Fundings</div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Transaction Number</th>
+                            <td>00</td>
+                        </tr>
+                        <tr>
+                            <th>Funding Needs Approval</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr>
+                            <td>Finance FMS Team Leader</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Vice President For Finance</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Vice President For Administration</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
             </Dialog>
 
             <Dialog
@@ -227,8 +235,8 @@ const toggle = (event) => {
 
 <style scoped>
 .app {
-    display: flex;
     padding-top: 4rem;
+    width: 100%;
 }
 
 .bg-img {
@@ -248,7 +256,6 @@ const toggle = (event) => {
 }
 
 .main-content {
-    /* width: 100vw; */
     margin-left: 16rem;
     padding: 1rem;
 }
@@ -265,6 +272,11 @@ const toggle = (event) => {
     justify-content: center;
     align-items: center;
     gap: 1.5rem;
+}
+
+.icon:hover {
+    cursor: pointer;
+    color: gold;
 }
 
 .vertical-line {
@@ -314,9 +326,29 @@ td {
     background-color: #fff;
 }
 
+.top {
+    background-color: #272f5c !important;
+    color: #fff !important;
+}
+
+.top:hover {
+    background-color: hsl(230.94, 40.46%, 95%) !important;
+    color: #272f5c !important;
+    border: 1px solid #272f5c !important;
+}
+
 .p-card {
-    width: 20rem;
+    padding: 1.5rem 1rem;
+    background-color: hsl(230.94, 40.46%, 98%);
+    color: #272f5c;
+    border: 1px solid #272f5c;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.p-card:hover {
     background-color: #272f5c;
-    color: white;
+    color: #fff;
+    cursor: pointer;
 }
 </style>

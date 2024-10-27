@@ -11,10 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('organization_positions', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-        });
+        // Schema::create('organization_positions', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->foreignId('organization_id')->constrained()->cascadeOnDelete();
+        //     $table->string('name');
+        // });
+
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->foreignId('organization_position_id')->constrained()->cascadeOnDelete()->nullable();
+        // });
     }
 
     /**
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('organization_positions');
+        // Schema::dropIfExists('organization_positions');
     }
 };

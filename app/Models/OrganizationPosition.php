@@ -9,12 +9,18 @@ class OrganizationPosition extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-    ];
+    // protected $fillable = [
+    //     'name',
+    //     'organization_id'
+    // ];
 
-    public function users() 
-    {
-        return $this->hasOne(User::class);
-    }
+    // public function users() 
+    // {
+    //     return $this->hasMany(User::class);
+    // }
+
+    // public function organizations() 
+    // {
+    //     return $this->belongsTo(Organization::class);
+    // }
 }

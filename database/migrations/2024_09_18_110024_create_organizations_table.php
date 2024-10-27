@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('description')->nullable();
-            $table->string('logo')->nullable();
-            $table->string('adviser_first_name')->nullable();
-            $table->string('adviser_last_name')->nullable();
+            $table->string('logo');
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('organization_id')->constrained()->cascadeOnDelete()->nullable();
         });
     }
 

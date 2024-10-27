@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('role');
-            $table->foreignId('organization_id')->constrained('organizations')->cascadeOnDelete()->nullable();
-            $table->string('position')->nullable();
+            // $table->foreignId('organization_id')->constrained()->cascadeOnDelete()->nullable();
+            // $table->foreignId('organization_position_id')->constrained()->cascadeOnDelete()->nullable();
+            // $table->foreignId('admin_position_id')->cascadeOnDelete()->nullable();
+            $table->string('position');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();

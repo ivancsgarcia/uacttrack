@@ -26,13 +26,13 @@ class DatabaseSeeder extends Seeder
         $this->call([
             OrganizationSeeder::class,
             VenueSeeder::class,
-            AdminPositionsSeeder::class,
+            // AdminPositionsSeeder::class,
             RequestFormSeeder::class,
-            OrganizationPositionSeeder::class,
+            // OrganizationPositionSeeder::class,
             AdminSeeder::class,
             StudentOfficerSeeder::class, 
         ]);
 
-        User::factory(100)->create();
+        // User::factory(100)->create();
     }
 }

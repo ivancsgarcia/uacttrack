@@ -16,7 +16,7 @@ class AdminSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'role' => 'Admin',
-                'organization' => null,
+                'organization_id' => 20,
                 'position' => 'College Dean',
                 'first_name' => 'Joey',
                 'last_name' => 'Suba',
@@ -25,7 +25,7 @@ class AdminSeeder extends Seeder
             ],
             [
                 'role' => 'Admin',
-                'organization' => null,
+                'organization_id' => 1,
                 'position' => 'OSA',
                 'first_name' => 'Precious Bernadette',
                 'last_name' => 'Estrada',
@@ -34,7 +34,7 @@ class AdminSeeder extends Seeder
             ],
             [
                 'role' => 'Admin',
-                'organization' => null,
+                'organization_id' => 1,
                 'position' => 'VPAA',
                 'first_name' => 'Arnel',
                 'last_name' => 'Sicat',
@@ -43,7 +43,7 @@ class AdminSeeder extends Seeder
             ],
             [
                 'role' => 'Admin',
-                'organization' => null,
+                'organization_id' => 1,
                 'position' => 'Finance Team Leader',
                 'first_name' => 'idk',
                 'last_name' => 'idk',
@@ -52,8 +52,8 @@ class AdminSeeder extends Seeder
             ],
             [
                 'role' => 'Admin',
-                'organization' => null,
-                'position' => 'Vice President For Finance',
+                'organization_id' => 1,
+                'position' => 'Vice President for Finance',
                 'first_name' => 'Khriselle Anne',
                 'last_name' => 'Castillo',
                 'email' => 'vpf@email.com',
@@ -61,8 +61,8 @@ class AdminSeeder extends Seeder
             ],
             [
                 'role' => 'Admin',
-                'organization' => null,
-                'position' => 'Vice President For Administration',
+                'organization_id' => 1,
+                'position' => 'Vice President for Administration',
                 'first_name' => 'Victor Nicomedes',
                 'last_name' => 'Nicdao',
                 'email' => 'vpa@email.com',

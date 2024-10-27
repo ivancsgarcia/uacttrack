@@ -13,12 +13,17 @@ class Organization extends Model
         'name',
         'description',
         'logo',
-        'adviser_first_name',
-        'adviser_last_name',
     ];
 
-    public function users() 
+    public $timestamps = false;
+
+    public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function collegeDean()
+    {
+        return $this->hasOne(User::class)->where('position', 'College Dean');
     }
 }

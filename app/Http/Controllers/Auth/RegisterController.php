@@ -17,13 +17,13 @@ class RegisterController extends Controller
     public function create()
     {
         $organizations = Organization::all(['id', 'name']);
-        $admin_positions = AdminPosition::all(['id', 'name']);
-        $organization_positions = OrganizationPosition::all(['id', 'name']);
+        // $admin_positions = AdminPosition::all(['id', 'name']);
+        // $organization_positions = OrganizationPosition::all(['id', 'name']);
 
         return Inertia::render('Auth/Register', [
             'organizations' => $organizations,
-            'admin_positions' => $admin_positions,
-            'organization_positions' => $organization_positions
+            // 'admin_positions' => $admin_positions,
+            // 'organization_positions' => $organization_positions
         ]);
     }
 
@@ -32,8 +32,9 @@ class RegisterController extends Controller
 
         $credentials = $request->validate([
             'role' => ['required'],
-            'organization_id' => ['string', 'exists:organizations,id', 'nullable'],
-            'position' => ['string', 'exists:admin_positions,id',  'exists:organization_positions,id || admin_positions,id', 'nullable'],
+            'organization_id' => ['exists:organizations,id', 'nullable'],
+            'position' => ['required', 'string'], //'exists:organization_positions,id'
+            // 'admin_position' => ['string', 'nullable'], //'exists:admin_positions,id'
             'first_name' => ['required', 'max:255'],
             'last_name' => ['required', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],

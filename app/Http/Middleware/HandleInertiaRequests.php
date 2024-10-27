@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Organization;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -51,10 +52,19 @@ class HandleInertiaRequests extends Middleware
 
     private function getOrganizationLogo()
     {
+        // if (Auth::check() && Auth::user()->organization) {
+        //     $organization = Auth::user()->organization;
+        //     if ($organization && $organization->logo) {
+        //         return asset('storage/' . $organization->logo);
+        //     }
+        // }
+        // return null;
+
         if (Auth::check() && Auth::user()->organization) {
-            $organization = Organization::where('name', Auth::user()->organization)->first();
-            if ($organization && $organization->logo) {
-                return asset('storage/' . $organization->logo);
+            $organizationLogo = Auth::user()->organization->logo;
+    
+            if ($organizationLogo) {
+                return asset('storage/' . $organizationLogo);
             }
         }
         return null;

@@ -17,7 +17,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'role',
-        'organization',
+        'organization_id',
         'position',
         'first_name',
         'last_name',
@@ -30,17 +30,17 @@ class User extends Authenticatable
         return $this->belongsTo(Organization::class);
     }
 
-    public function adminPosition() 
-    {
-        return $this->belongsTo(AdminPosition::class);
-    }
+    // public function adminPositions() 
+    // {
+    //     return $this->belongsTo(AdminPosition::class);
+    // }
 
-    public function organizationPosition() 
-    {
-        return $this->belongsTo(OrganizationPosition::class);
-    }
+    // public function organizationPositions() 
+    // {
+    //     return $this->belongsTo(OrganizationPosition::class);
+    // }
 
-    public function apf() 
+    public function activity_forms() 
     {
         return $this->hasMany(ActivityForm::class);
     }

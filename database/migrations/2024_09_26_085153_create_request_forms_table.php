@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('docs_link')->nullable();
-            $table->string('pdf_link')->nullable();
+            $table->string('xlsx_link')->nullable();
         });
     }
 

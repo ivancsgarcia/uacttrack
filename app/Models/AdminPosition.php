@@ -9,12 +9,17 @@ class AdminPosition extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-    ];
+    // protected $fillable = [
+    //     'name',
+    // ];
 
-    public function users() 
-    {
-        return $this->hasOne(User::class);
-    }
+    // public function users()
+    // {
+    //     return $this->hasMany(User::class);
+    // }
+
+    // public function organizations()
+    // {
+    //     return $this->hasMany(Organization::class, 'college_dean_position_id');
+    // }
 }

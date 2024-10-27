@@ -4,14 +4,14 @@ import { watch } from "vue";
 
 defineProps({
     organizations: Array,
-    admin_positions: Array,
-    organization_positions: Array,
+    // admin_positions: Array,
+    // organization_positions: Array,
 });
 
 const form = useForm({
-    role: "",
-    organization_id: "",
-    position: "",
+    role: '',
+    organization_id: '',
+    position: '',
     first_name: null,
     last_name: null,
     email: null,
@@ -40,6 +40,22 @@ const submit = () => {
         onError: () => form.reset("password", "password_confirmation"),
     });
 };
+
+const organization_positions = [
+    "President",
+    "Vice President",
+    "Secretary",
+    "Representative",
+];
+
+const admin_positions = [
+    "College Dean",
+    "VPAA",
+    "OSA",
+    "Finance Team Leader",
+    "Vice President for Finance",
+    "Vice President for Administration",
+];
 </script>
 
 <template>
@@ -74,30 +90,6 @@ const submit = () => {
                     {{ form.errors.role }}
                 </div>
 
-                <!-- Organization -->
-                <div v-if="form.role == 'Student Officer'" class="text-box">
-                    <select v-model="form.organization">
-                        <option value="" selected disabled>
-                            Select An Organization
-                        </option>
-                        <option
-                            v-for="org in organizations"
-                            :key="org.id"
-                            :value="org.id"
-                        >
-                            {{ org.name }}
-                        </option>
-                    </select>
-                    <font-awesome-icon
-                        :icon="['fas', 'angle-down']"
-                        size="2xl"
-                        class="dropdown-icon"
-                    />
-                </div>
-                <div v-if="form.errors.organization" class="error">
-                    {{ form.errors.organization }}
-                </div>
-
                 <!-- Student Officer Position -->
                 <div v-if="form.role == 'Student Officer'" class="text-box">
                     <select v-model="form.position">
@@ -106,10 +98,9 @@ const submit = () => {
                         </option>
                         <option
                             v-for="orgPos in organization_positions"
-                            :key="orgPos.id"
-                            :value="orgPos.id"
+                            :value="orgPos"
                         >
-                            {{ orgPos.name }}
+                            {{ orgPos }}
                         </option>
                     </select>
                     <font-awesome-icon
@@ -129,11 +120,10 @@ const submit = () => {
                             Select Your Position
                         </option>
                         <option
-                            v-for="pos in admin_positions"
-                            :key="pos.id"
-                            :value="pos.id"
+                            v-for="adPos in admin_positions"
+                            :value="adPos"
                         >
-                            {{ pos.name }}
+                            {{ adPos }}
                         </option>
                     </select>
                     <font-awesome-icon
@@ -144,6 +134,30 @@ const submit = () => {
                 </div>
                 <div v-if="form.errors.position" class="error">
                     {{ form.errors.position }}
+                </div>
+
+                <!-- Organization -->
+                <div v-if="form.role == 'Student Officer' || (form.role == 'Admin' && form.position == 'College Dean')" class="text-box">
+                    <select v-model="form.organization_id">
+                        <option value="" selected disabled>
+                            Select An Organization
+                        </option>
+                        <option
+                            v-for="org in organizations"
+                            :key="org.id"
+                            :value="org.id"
+                        >
+                            {{ org.name }}
+                        </option>
+                    </select>
+                    <font-awesome-icon
+                        :icon="['fas', 'angle-down']"
+                        size="2xl"
+                        class="dropdown-icon"
+                    />
+                </div>
+                <div v-if="form.errors.organization" class="error">
+                    {{ form.errors.organization }}
                 </div>
 
                 <!-- First Name -->

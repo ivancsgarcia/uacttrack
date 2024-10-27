@@ -29,9 +29,9 @@ class ActivityFormController extends Controller
             'food' => ['required', 'boolean'],
             'supplies' => ['required', 'boolean'],
             'reproduction' => ['required', 'boolean'],
-            'date' => ['required', 'date'], //'date_format:Y/m/d'
-            'from_time' => ['required'], //'date_format:H:i:s'
-            'to_time' => ['required'], //'date_format:H:i:s'
+            'date' => ['required', 'date'],
+            'from_time' => ['required'],
+            'to_time' => ['required'],
             'attendance_count' => ['required', 'integer', 'numeric'],
             'event_type' => ['required', 'string'],
             'venue' => ['required', 'max:255'],
@@ -46,10 +46,7 @@ class ActivityFormController extends Controller
             'others_file' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048']
         ]);
 
-        // $data['date'] = \Carbon\Carbon::createFromFormat('m/d/Y', $data['date'])->format('m-d-Y');
         $data['date'] = Carbon::parse($request->date)->format('Y-m-d');
-        // $data['from_time'] = Carbon::parse($request->from_time)->format('H:i:s');
-        // $data['to_time'] = Carbon::parse($request->to_time)->format('H:i:s');
 
         $data['created_by'] = Auth::id();
 
@@ -77,15 +74,13 @@ class ActivityFormController extends Controller
     public function show($activityId)
     {
 
-        // Get the organization of the authenticated user
         $org = Auth::user()->organization;
 
-        // Retrieve the activity form based on creator's organization and activity ID
         $activityForms = ActivityForm::whereHas('creator', function ($query) use ($org) {
             $query->where('organization', $org);
         })
-            ->where('id', $activityId) // Filter by activity ID
-            ->orderBy('created_at', 'desc') // Apply orderBy on the main query
+            ->where('id', $activityId)
+            ->orderBy('created_at', 'desc')
             ->firstOrFail();
 
         return Inertia::render('ActivityFormPreview', [
@@ -95,18 +90,12 @@ class ActivityFormController extends Controller
 
     public function fetchAll()
     {
+        $organizationId = Auth::user()->organization_id;
 
-        $org = Auth::user()->organization;
-
-        // Assuming ActivityForm has a user relationship
-        $activityForms = ActivityForm::whereHas('creator', function ($query) use ($org) {
-            $query->where('organization', $org)->orderBy('created_at', 'desc');
+        $activityForms = ActivityForm::where('status', 'PENDING')->whereHas('creator', function ($query) use ($organizationId) {
+            $query->where('organization_id', $organizationId);
         })->get();
 
-        // Fetch all activity forms from the database
-        // $activityForms = ActivityForm::where('created_by', Auth::id())->get();
-
-        // Return Inertia response with the activity forms data
         return Inertia::render('SubmittedAPF', [
             'activityForms' => $activityForms
         ]);
@@ -114,7 +103,11 @@ class ActivityFormController extends Controller
 
     public function fetchApproved()
     {
-        $approvedForms = ActivityForm::where('created_by', Auth::id())->where('status', 'approved')->get();
+        $organizationId = Auth::user()->organization_id;
+
+        $approvedForms = ActivityForm::where('status', 'APPROVED')->whereHas('creator', function ($query) use ($organizationId) {
+            $query->where('organization_id', $organizationId);
+        })->get();
 
         return Inertia::render('ApprovedAPF', [
             'approvedForms' => $approvedForms
@@ -123,7 +116,12 @@ class ActivityFormController extends Controller
 
     public function fetchRejected()
     {
-        $rejectedForms = ActivityForm::where('created_by', Auth::id())->where('status', 'rejected')->get();
+        $organizationId = Auth::user()->organization_id;
+
+        $rejectedForms = ActivityForm::where('status', 'REJECTED')->whereHas('creator', function ($query) use ($organizationId) {
+            $query->where('organization_id', $organizationId);
+        })->get();
+
         return Inertia::render('RejectedAPF', [
             'rejectedForms' => $rejectedForms
         ]);

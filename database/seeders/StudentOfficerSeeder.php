@@ -18,7 +18,7 @@ class StudentOfficerSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'role' => 'Student Officer',
-                'organization' => 'SSITE',
+                'organization_id' => 20,
                 'position' => 'Representative',
                 'first_name' => 'Ivan Christopher',
                 'last_name' => 'Garcia',

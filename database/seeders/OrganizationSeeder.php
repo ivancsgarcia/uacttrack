@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Organization;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class OrganizationSeeder extends Seeder
 {
@@ -13,161 +14,133 @@ class OrganizationSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('organizations')->insert([
+        if (!Storage::disk('public')->exists('org-logos')) {
+            Storage::disk('public')->makeDirectory('org-logos');
+        }
+
+        $organizations = [
             [
                 'name' => 'None',
-                'logo' => null,
+                'logo' => 'UA.png',
                 'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'AAA',
-                'logo' => 'org-logos/AAA.jpg',
+                'logo' => 'AAA.jpg',
                 'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'BACC',
-                'logo' => 'org-logos/BACC.jpg',
+                'logo' => 'BACC.jpg',
                 'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'BHSPHS',
-                'logo' => 'org-logos/BHSPHS.jpg',
+                'logo' => 'BHSPHS.jpg',
                 'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'CDW',
-                'logo' => 'org-logos/CDW.jpg',
+                'logo' => 'CDW.jpg',
                 'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'CHARMS',
-                'logo' => 'org-logos/CHARMS.jpg',
+                'logo' => 'CHARMS.jpg',
                 'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'CRYCYC',
-                'logo' => 'org-logos/CRYCYC.jpg'
+                'logo' => 'CRYCYC.jpg'
                 ,'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'CREATE',
-                'logo' => 'org-logos/CREATE.jpg',
+                'logo' => 'CREATE.jpg',
                 'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'ICPEP',
-                'logo' => 'org-logos/ICPEP.jpg'
+                'logo' => 'ICPEP.jpg'
                 ,'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'INA',
-                'logo' => 'org-logos/INA.jpg'
+                'logo' => 'INA.jpg'
                 ,'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'JPIA',
-                'logo' => 'org-logos/JPIA.jpg',
+                'logo' => 'JPIA.jpg',
                 'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'JPPHA',
-                'logo' => 'org-logos/JPPHA.jpg',
+                'logo' => 'JPPHA.jpg',
                 'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'LEAD',
-                'logo' => 'org-logos/LEAD.jpg',
+                'logo' => 'LEAD.jpg',
                 'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'LTSP',
-                'logo' => 'org-logos/LTSP.jpg',
+                'logo' => 'LTSP.jpg',
                 'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'MCSA',
-                'logo' => 'org-logos/MCSA.jpg',
+                'logo' => 'MCSA.jpg',
                 'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'NSC',
-                'logo' => 'org-logos/NSC.jpg',
+                'logo' => 'NSC.jpg',
                 'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'PICE',
-                'logo' => 'org-logos/PICE.jpg',
+                'logo' => 'PICE.jpg',
                 'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'PIIE',
-                'logo' => 'org-logos/PIIE.jpg',
+                'logo' => 'PIIE.png',
                 'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'PSYCHSOC',
-                'logo' => 'org-logos/PSYCHSOC.jpg',
+                'logo' => 'PSYCHSOC.jpg',
                 'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'SSITE',
-                'logo' => 'org-logos/SSITE.jpg',
+                'logo' => 'SSITE.jpg',
                 'description' => null,
-                'adviser_first_name' => 'Joey',
-                'adviser_last_name' => 'Suba'
             ],
             [
                 'name' => 'CSC',
-                'logo' => 'org-logos/CSC.jpg',
+                'logo' => 'UACSC.jpg',
                 'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
             [
                 'name' => 'SAO',
-                'logo' => 'org-logos/SAO.jpg',
+                'logo' => 'UASAO.jpg',
                 'description' => null,
-                'adviser_first_name' => null,
-                'adviser_last_name' => null,
             ],
-        ]);
+        ];
+
+        foreach ($organizations as $orgData) {
+            $logoPath = 'org-logos/' . $orgData['logo'];
+            Storage::disk('public')->put($logoPath, file_get_contents(database_path('seeders/logos/' . $orgData['logo'])));
+
+            Organization::create([
+                'name' => $orgData['name'],
+                'logo' => $logoPath,
+                'description' => $orgData['description'],
+            ]);
+        }
+
     }
 }
