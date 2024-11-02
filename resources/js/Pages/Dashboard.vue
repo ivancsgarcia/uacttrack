@@ -1,6 +1,7 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import { ref } from "vue";
+import MyCalendar from "../components/global/MyCalendar.vue";
 
 const props = defineProps({
     activityForms: Array,
@@ -19,6 +20,7 @@ const op = ref();
 const toggle = (event) => {
     op.value.toggle(event);
 };
+
 </script>
 
 <template>
@@ -57,6 +59,8 @@ const toggle = (event) => {
             </div>
 
             <div class="vertical-line"></div>
+
+            <MyCalendar />
 
             <div class="box-div">
                 <Link :href="route('submitted-apf')">

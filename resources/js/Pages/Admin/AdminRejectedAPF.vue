@@ -26,7 +26,7 @@
             <div class="h-0.5 bg-ua-blue mb-8"></div>
 
             <h1 class="text-center text-4xl mb-4 text-ua-blue">
-                Rejected Activity Proposal Form
+                Rejected Activity Proposal Forms
             </h1>
 
             <table class="w-full border-separate border-spacing-4">

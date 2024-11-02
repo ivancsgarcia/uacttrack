@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class VPAMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
          // Check if the authenticated user has the 'admin' role
-         if (Auth::check() && Auth::user()->role === 'Admin') {
+         if (Auth::check() && Auth::user()->role === 'Admin' && Auth::user()->position === 'Vice President for Administration') {
             return $next($request);
         }
 

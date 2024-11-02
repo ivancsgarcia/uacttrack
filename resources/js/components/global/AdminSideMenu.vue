@@ -26,19 +26,6 @@ import { Link } from "@inertiajs/vue3";
                 </div>
             </Link>
 
-            <Link :href="route('admin-revision')">
-                <div
-                    :class="
-                        route().current('admin-revision')
-                            ? '!bg-ua-blue !text-white'
-                            : ''
-                    "
-                    class="link"
-                >
-                    <p>Revisions</p>
-                </div>
-            </Link>
-
             <Link :href="route('admin-approved-apf')">
                 <div
                     :class="

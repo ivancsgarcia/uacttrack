@@ -13,11 +13,19 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         if ($user->position == 'College Dean') {
-            $activityForms = ActivityForm::where('college_dean_status', 'PENDING')->get();
+            // $activityForms = ActivityForm::where('college_dean_status', 'PENDING')->get();
+
+            $organizationUserIds = $user->organization->users->pluck('id'); // Get IDs of users in the same organization
+            $activityForms = ActivityForm::whereIn('created_by', $organizationUserIds)
+                ->where('college_dean_status', 'PENDING')
+                ->get();
         } elseif ($user->position == 'OSA') {
             $activityForms = ActivityForm::where('college_dean_status', 'APPROVED')->where('osa_status', 'PENDING')->get();
         } elseif ($user->position == 'VPAA') {
             $activityForms = ActivityForm::where('college_dean_status', 'APPROVED')->where('osa_status', 'APPROVED')->where('vpaa_status', 'PENDING')->get();
+        } else {
+            // Default: show all forms (for admins or higher-level roles)
+            $activityForms = ActivityForm::where('status', 'PENDING')->get();
         }
 
         return Inertia::render('Admin/AdminDashboard', [
@@ -104,11 +112,18 @@ class AdminController extends Controller
         return Inertia::location(url()->previous());
     }
 
-    public function revision() {
+    public function revision()
+    {
         return Inertia::render('Admin/AdminRevision');
     }
 
-    public function copyReceiveBy() {
-        return Inertia::render('Admin/AdminSendCopy');
+    public function copyReceiveBy()
+    {
+
+        $activityForms = ActivityForm::latest()->paginate(1);
+
+        return Inertia::render('Admin/AdminSendCopy', [
+            'activityForms' => $activityForms
+        ]);
     }
 }

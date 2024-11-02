@@ -124,20 +124,14 @@ const emit = defineEmits(["nextStep"]);
             </p>
         </div>
 
-        <div class="btns">
-            <!-- class="div-btn" -->
+        <!-- <div class="btns">
             <button @click="" class="form-btn">Forms</button>
-
-            <!-- class="div-btn bg-ua-blue text-white" -->
             <button @click="emit('nextStep')" class="next-btn">Next</button>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <style scoped>
-.part-one {
-}
-
 .head {
     display: flex;
     justify-content: center;

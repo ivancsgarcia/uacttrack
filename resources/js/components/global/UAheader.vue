@@ -1,12 +1,18 @@
 <script setup>
-import { router } from '@inertiajs/vue3'
+import { router } from "@inertiajs/vue3";
 
 const goBack = () => {
-    window.history.back();
+    const loginPage = "/login";
+
+    if (window.location.pathname === loginPage) {
+        window.location.href = "/";
+    } else {
+        window.history.back();
+    }
 };
 
 const goHome = () => {
-    router.get(route('home'));
+    router.get(route("home"));
 };
 </script>
 
@@ -14,8 +20,18 @@ const goHome = () => {
     <header>
         <div class="ua-header">
             <div class="icons-box">
-                <font-awesome-icon :icon="['fas', 'chevron-left']" @click="goBack" size="2xl" class="icon" />
-                <font-awesome-icon :icon="['fas', 'house']" @click="goHome" size="2xl" class="icon" />
+                <font-awesome-icon
+                    :icon="['fas', 'chevron-left']"
+                    @click="goBack"
+                    size="2xl"
+                    class="icon"
+                />
+                <font-awesome-icon
+                    :icon="['fas', 'house']"
+                    @click="goHome"
+                    size="2xl"
+                    class="icon"
+                />
             </div>
             <div class="logo-container">
                 <img

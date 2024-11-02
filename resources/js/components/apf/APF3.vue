@@ -1,10 +1,11 @@
 <script setup>
+import DatePicker from "primevue/datepicker";
+import { ref } from "vue";
+
 const props = defineProps({
     form: Object,
     venues: Array,
 });
-
-const emit = defineEmits(["previousStep", "submitForm"]);
 
 const handleFileUpload = (event, fieldName) => {
     const file = event.target.files[0];
@@ -13,7 +14,7 @@ const handleFileUpload = (event, fieldName) => {
 </script>
 
 <template>
-    <div class="part-three w-full">
+    <div class="p-4">
         <h1 class="text-5xl text-ua-blue text-center mb-8">
             Activity Proposal Form
         </h1>
@@ -74,14 +75,7 @@ const handleFileUpload = (event, fieldName) => {
                     v-model="form.date"
                     class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
                 /> -->
-                <Datepicker
-                    id="date"
-                    inputId="date"
-                    v-model="form.date"
-                    dateFormat="mm/dd/yy"
-                    showIcon
-                    iconDisplay="input"
-                />
+                <InputText id="date" type="date" v-model="form.date" />
             </div>
 
             <div class="flex flex-col w-1/4">
@@ -93,14 +87,7 @@ const handleFileUpload = (event, fieldName) => {
                     v-model="form.from_time"
                     class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
                 /> -->
-                <DatePicker
-                    id="from-time"
-                    inputId="from-time"
-                    v-model="form.from_time"
-                    timeOnly
-                    hourFormat="12"
-                    hideOnDateTimeSelect
-                />
+                <InputText id="from-time" type="time" v-model="form.from_time" />
             </div>
             <div class="flex flex-col w-1/4">
                 <label for="" class="text-ua-blue text-3xl">To Time</label>
@@ -111,14 +98,7 @@ const handleFileUpload = (event, fieldName) => {
                     v-model="form.to_time"
                     class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
                 /> -->
-                <DatePicker
-                    id="to-time"
-                    inputId="to-time"
-                    v-model="form.to_time"
-                    timeOnly
-                    hourFormat="12"
-                    hideOnDateTimeSelect
-                />
+                <InputText id="to-time" type="time" v-model="form.to_time" />
             </div>
         </div>
 
@@ -311,20 +291,6 @@ const handleFileUpload = (event, fieldName) => {
                     <!-- <p>{{ form.errors.othersFile }}</p> -->
                 </div>
             </div>
-        </div>
-
-        <div class="flex justify-center items-center gap-5 mb-10">
-            <button
-                @click="emit('previousStep')"
-                class="border border-black rounded-xl text-ua-blue text-2xl px-12 py-4"
-            >
-                Back
-            </button>
-            <button
-                class="border border-ua-blue rounded-xl bg-ua-blue text-white text-2xl px-12 py-4"
-            >
-                Submit
-            </button>
         </div>
     </div>
 </template>

@@ -24,10 +24,10 @@ import { Link } from "@inertiajs/vue3";
                 </div>
             </Link>
 
-            <Link :href="route('apf')">
+            <Link :href="route('activity-form')">
                 <div
                     :class="
-                        route().current('apf') ? '!bg-ua-blue !text-white' : ''
+                        route().current('activity-form') ? '!bg-ua-blue !text-white' : ''
                     "
                     class="link"
                 >
@@ -57,7 +57,7 @@ import { Link } from "@inertiajs/vue3";
                     "
                     class="link"
                 >
-                    <p>External Links</p>
+                    <p>Relevant Links</p>
                 </div>
             </Link>
         </div>

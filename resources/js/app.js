@@ -18,6 +18,14 @@ import Dialog from 'primevue/dialog';
 import Avatar from 'primevue/avatar';
 import Popover from 'primevue/popover';
 import Card from 'primevue/card';
+import ConfirmDialog from 'primevue/confirmdialog';
+import ConfirmationService from 'primevue/confirmationservice';
+import Toast from 'primevue/toast';
+import ToastService from 'primevue/toastservice';
+import Image from 'primevue/image';
+import 'primeicons/primeicons.css'
+
+
 
 
 
@@ -53,6 +61,8 @@ createInertiaApp({
                     preset: Aura,
                 },
             })
+            .use(ConfirmationService)
+            .use(ToastService)
             .component("font-awesome-icon", FontAwesomeIcon)
             .component("Account", Account)
             .component("SearchBar", SearchBar)
@@ -71,6 +81,9 @@ createInertiaApp({
             .component("Avatar", Avatar)
             .component("Popover", Popover)
             .component("Card", Card)
+            .component("ConfirmDialog", ConfirmDialog)
+            .component("Toast", Toast)
+            .component("Image", Image)
             .component("AdminSideMenu", AdminSideMenu)
             .mount(el);
     },

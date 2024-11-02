@@ -1,3 +1,7 @@
+<script setup>
+import { Link } from "@inertiajs/vue3";
+</script>
+
 <template>
     <div class="app">
         <UAHeader />
@@ -9,7 +13,7 @@
 
         <div class="main-content">
             <div class="account-section">
-                <Account/>
+                <Account />
 
                 <div class="icons-box">
                     <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
@@ -20,23 +24,60 @@
             <div class="vertical-line"></div>
 
             <div class="box-div">
-                <Box></Box>
-                <Box></Box>
-                <Box></Box>
-                <Box></Box>
-                <Box></Box>
-                <Box></Box>
-                <Box></Box>
-                <Box></Box>
-                <Box></Box>
+                <a href="https://www.ua.edu.ph" target="_blank">
+                    <Card>
+                        <template #content>
+                            <div>
+                                <Image
+                                    :src="'images/sys-logos/ua-logo.png'"
+                                    alt="ua-logo"
+                                    width="200"
+                                />
+                                <p>University of the Assumption Website</p>
+                            </div>
+                        </template>
+                    </Card>
+                </a>
+
+                <a href="http://serp.ua.edu.ph/serp/Gate/UASFP.Login.aspx" target="_blank">
+                    <Card>
+                        <template #content>
+                            <div>
+                                <Image
+                                    :src="'images/sys-logos/ua-logo.png'"
+                                    alt="ua-logo"
+                                    width="200"
+                                />
+                                <p>University of the Assumption SERP</p>
+                            </div>
+                        </template>
+                    </Card>
+                </a>
+
+                <Card>
+                    <template #content>
+                        <div>
+                            <Image
+                                :src="'images/sys-logos/ua-logo.png'"
+                                alt="rsointrack-logo"
+                                width="200"
+                            />
+                            <p>RSO in Track</p>
+                        </div>
+                    </template>
+                </Card>
+
+                <Card> </Card>
+                <Card> </Card>
+                <Card> </Card>
+
+                <Card> </Card>
+                <Card> </Card>
+                <Card> </Card>
             </div>
         </div>
     </div>
 </template>
-
-<script setup>
-import Box from "../components/recommendation/Box.vue";
-</script>
 
 <style scoped>
 .app {
@@ -90,8 +131,26 @@ import Box from "../components/recommendation/Box.vue";
 .box-div {
     flex: 1 1 calc(33.333% - 20px);
     display: flex;
+    /* flex-direction: column; */
     justify-content: center;
     flex-wrap: wrap;
     gap: 1rem;
+}
+
+.p-card {
+    padding: 1rem;
+    background-color: #272f5c;
+    color: white;
+    width: 400px;
+    height: 300px;
+}
+
+.p-card div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.5rem;
 }
 </style>
