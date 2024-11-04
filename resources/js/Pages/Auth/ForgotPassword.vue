@@ -1,24 +1,164 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link } from "@inertiajs/vue3";
 </script>
 
 <template>
-    <div class="flex flex-col justify-center items-center w-6/12 min-h-screen ">
-        <img src="../../../../public/images/UActTrack-logo.png" alt="uacttrack-logo" class="w-2/4 mb-10">
+    <div class="body">
+        <div class="bg-img">
+            <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+        </div>
+        <!-- <img src="../../../public/images/UActTrack-logo.png" alt="uacttrack-logo" class="w-2/4 mb-10"> -->
 
-        <div class="flex flex-col justify-center items-center bg-ua-blue w-9/12 py-10 rounded-3xl text-white">
-            <h1 class="text-5xl text-center mb-16">Forgot Password</h1>
+        <div class="content">
+            <div class="box">
+                <h1 class="">Forgot Password</h1>
 
-            <p class="mb-8 text-lg text-center">Enter your email address to get instructions to reset your password.</p>
+                <p class="instructions">
+                    Enter your email address to get instructions to reset your
+                    password.
+                </p>
 
-            <input type="text" placeholder="Email" class="mb-6 p-2 rounded text-ua-blue text-xl w-9/12 h-14 focus:outline-none">
-            <button class="text-ua-blue text-2xl bg-white rounded-lg mb-10 mx-48 w-1/3 h-14">Submit</button>
-            <Link :href="route('login')" class="mx-auto underline hover:text-blue-300">
-                <div class="flex items-center">
-                    <font-awesome-icon :icon="['fas', 'angle-left']" class="mr-2" />
-                    <p class="">Back to Login Page</p>
+                <div class="text-box">
+                    <div class="icon-box">
+                        <font-awesome-icon
+                            :icon="['fas', 'envelope']"
+                            size="2xl"
+                            color="gray"
+                        />
+                    </div>
+                    <div class="line"></div>
+                    <input type="email" placeholder="Email" />
                 </div>
-            </Link>
+
+                <button class="submit-btn">Submit</button>
+                <Link :href="route('login')" class="">
+                    <div class="">
+                        <font-awesome-icon
+                            :icon="['fas', 'angle-left']"
+                            class="mr-2"
+                        />
+                        <p class="login-link">Back to Login Page</p>
+                    </div>
+                </Link>
+            </div>
         </div>
     </div>
 </template>
+
+<style scoped>
+.body {
+    height: 100vh;
+    /* background-color: gray; */
+    position: relative;
+    display: flex;
+}
+
+.bg-img {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    margin-bottom: -3rem;
+    margin-right: -3rem;
+}
+
+.bg-img img {
+    transform: rotate(15deg);
+    width: 60rem;
+    filter: grayscale(100%);
+    opacity: 0.2;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+h1 {
+    color: white;
+    font-size: 3rem;
+    text-transform: uppercase;
+    text-shadow: 3px 2px black;
+    margin-bottom: 1rem;
+    letter-spacing: 0.1rem;
+}
+
+.instructions {
+    color: white;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #272f5c;
+    border-radius: 3rem;
+    padding: 4rem 4rem;
+    box-shadow: 8px 8px 15px black;
+    margin-top: 2rem;
+}
+
+.text-box {
+    display: flex;
+    background-color: #fff;
+    border-radius: 1.5rem;
+    margin-top: 2rem;
+    box-shadow: 2px 4px 10px black;
+}
+
+.line {
+    width: 0.16rem;
+    height: auto;
+    background-color: lightgray;
+}
+
+.icon-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 1rem 1rem 1.5rem;
+}
+
+input {
+    border-radius: 1.5rem;
+    width: 100%;
+    padding: 0 1rem;
+    font-size: 1.5rem;
+    color: #272f5c;
+}
+
+input:focus {
+    outline: none;
+}
+
+.submit-btn {
+    background-color: white;
+    color: #272f5c;
+    border-radius: 1.2rem;
+    padding: 0.8rem 3rem;
+    text-transform: uppercase;
+    margin-top: 2.5rem;
+    font-size: 1.5rem;
+    letter-spacing: 0.1rem;
+    font-weight: bold;
+}
+
+.submit-btn:hover {
+    background-color: #93c5fd;
+    color: white;
+}
+
+.login-link {
+    text-align: end;
+    width: 100%;
+    color: white;
+    margin-top: 0.1rem;
+    text-decoration: underline;
+}
+</style>

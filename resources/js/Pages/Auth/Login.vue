@@ -90,7 +90,6 @@ const submit = () => {
                 </Link> -->
             </Form>
         </div>
-        <div class="blank"></div>
     </div>
 </template>
 
@@ -113,7 +112,9 @@ const submit = () => {
 
 .bg-img img {
     transform: rotate(15deg);
-    width: 60rem;
+    width: 900px;
+    height: auto;
+    min-width: 200px;
     filter: grayscale(100%);
     opacity: 0.2;
 }
