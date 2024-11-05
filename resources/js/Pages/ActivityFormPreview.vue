@@ -5,353 +5,526 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="app pt-16">
+    <div class="app">
         <UAHeader />
 
         <div class="bg-img">
             <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
         </div>
-        
-        <div class="content">
-            <div class="part-1">
-                <h1>Activity Proposal Form</h1>
-                <p>
+
+        <div class="main-content p-4">
+            <div class="">
+                <h1 class="text-3xl text-center mb-8">
+                    Activity Proposal Form
+                </h1>
+                <p class="m-auto text-md">
                     (Approval Form for In-Campus Activities with corresponding
                     Logistics and Funding Requirements)
                 </p>
-                <p>
+                <p class="m-auto text-md mb-4">
                     Note: Deadline of Submission of activity form is three days
                     before the activity. Please ensure that the date in the
                     activity form that you will generate is correct because it
                     cannot be changed.
                 </p>
 
-                <div class="input-box">
-                    <label for="title">Activity Title</label>
+                <div class="flex flex-col mb-4">
+                    <label class="text-2xl">Activity Title</label>
                     <input
                         type="text"
                         name="title"
                         id="title"
                         v-model="activityForms.title"
                         disabled
+                        class="rounded-xl shadow bg-ua-blue/30 p-2"
                     />
                 </div>
 
-                <div class="horizontal">
-                    <div class="input-box">
-                        <label for="">Type Of Event</label>
+                <div class="flex mb-4 gap-4">
+                    <div class="flex flex-col w-2/4">
+                        <label class="text-2xl">Type of Event</label>
                         <input
                             type="text"
                             name="event"
                             id="event"
                             v-model="activityForms.event_type"
                             disabled
+                            class="rounded-xl shadow bg-ua-blue/30 p-2"
                         />
                     </div>
 
-                    <div class="input-box">
-                        <label for="desc">Activity Description</label>
+                    <div class="flex flex-col w-2/4">
+                        <label class="text-2xl">Activity Description</label>
                         <textarea
-                            name="desc"
-                            id="desc"
                             cols="30"
                             v-model="activityForms.title"
                             disabled
+                            class="rounded-xl shadow bg-ua-blue/30 p-2"
                         ></textarea>
                     </div>
                 </div>
 
-                <div class="horizontal">
-                    <div class="input-box">
-                        <label for="date">Date</label>
+                <div class="flex mb-4 gap-4">
+                    <div class="w-2/4 flex flex-col">
+                        <label class="text-2xl">Date</label>
                         <input
                             type="date"
-                            name="date"
-                            id="date"
                             v-model="activityForms.date"
                             disabled
+                            class="rounded-xl shadow bg-ua-blue/30 p-2"
                         />
                     </div>
 
-                    <div class="input-box">
-                        <label for="from-time">From Time</label>
+                    <div class="w-1/4 flex flex-col">
+                        <label class="text-2xl">From Time</label>
                         <input
                             type="time"
-                            name="from-time"
-                            id="from-time"
                             v-model="activityForms.from_time"
                             disabled
+                            class="rounded-xl shadow bg-ua-blue/30 p-2"
                         />
                     </div>
 
-                    <div class="input-box">
-                        <label for="">To Time</label>
+                    <div class="w-1/4 flex flex-col">
+                        <label class="text-2xl">To Time</label>
                         <input
                             type="time"
-                            name=""
-                            id=""
                             v-model="activityForms.to_time"
                             disabled
+                            class="rounded-xl shadow bg-ua-blue/30 p-2"
                         />
                     </div>
                 </div>
 
-                <div class="input-box">
-                    <label for="">Venue</label>
+                <div class="flex flex-col mb-4">
+                    <label class="text-2xl">Venue</label>
                     <select
-                        name=""
-                        id=""
                         v-model="activityForms.venue"
                         disabled
+                        class="rounded-xl shadow bg-ua-blue/30 p-2"
                     >
                         <option value=""></option>
                     </select>
                 </div>
 
-                <div class="horizontal">
-                    <div class="input-box">
-                        <label for="">Requirements / Resources Needed</label>
+                <div class="flex gap-4">
+                    <div class="flex flex-col w-2/4">
+                        <label class="text-2xl"
+                            >Requirements / Resources Needed</label
+                        >
                         <textarea
-                            name=""
-                            id=""
                             cols="30"
                             rows="8"
                             v-model="
                                 activityForms.requirements_or_resources_needed
                             "
                             disabled
+                            class="rounded-xl shadow bg-ua-blue/30 p-2"
                         ></textarea>
                     </div>
 
-                    <div class="vertical">
-                        <div class="input-box">
-                            <label for=""
+                    <div class="flex flex-col w-2/4">
+                        <div class="flex flex-col mb-4">
+                            <label class="text-2xl"
                                 >Participants - Department / Program / Grade or
                                 Year Level</label
                             >
                             <textarea
-                                name=""
-                                id=""
                                 cols="30"
                                 rows="4"
                                 v-model="activityForms.participant"
                                 disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
                             ></textarea>
                         </div>
 
-                        <div class="input-box">
-                            <label for="">Expected Number of Attendees</label>
+                        <div class="flex flex-col">
+                            <label class="text-2xl"
+                                >Expected Number of Attendees</label
+                            >
                             <input
                                 type="number"
-                                name=""
-                                id=""
                                 v-model="activityForms.attendance_count"
                                 disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
                             />
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="part-2">
-                <div class="title-box">
+            <div class="">
+                <div class="p-2 bg-black/20 text-center text-2xl my-8">
                     <h2>Projected Funding Needs</h2>
                 </div>
 
-                <div class="horizontal">
-                    <p class="pfn-title">Nature</p>
-                    <p class="pfn-title">Forms To Be Attached</p>
+                <div class="flex mb-4">
+                    <div class="w-2/4 text-center text-ua-blue text-2xl">
+                        Nature
+                    </div>
+                    <div class="w-2/4 text-center text-ua-blue text-2xl">
+                        Forms to be Attached
+                    </div>
                 </div>
 
-                <div class="horizontal">
-                    <div class="pfn-name">Check Payment / Cash</div>
-                    <div class="pfn-box">
-                        <p>
-                            Funding Request Form(FRF) for P 1,000 and above or
-                            Petty Cash Form(PCF) for amount below P 1,000.
+                <div class="flex gap-4 mb-4 text-xl">
+                    <div
+                        class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
+                    >
+                        Check Payment / Cash
+                    </div>
+                    <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
+                        <p class="text-center">
+                            Funding Request Form (FRF) for P1,000 and above or
+                            Petty Cash Form (PCF ) for amount below P1,000.
                         </p>
-                        <input type="file" name="" id="" />
+                        <div class="flex justify-center">
+                            <input
+                                type="file"
+                                @change="
+                                    handleFileUpload(
+                                        $event,
+                                        'payment_or_cash_file'
+                                    )
+                                "
+                            />
+                        </div>
                     </div>
                 </div>
 
-                <div class="horizontal">
-                    <div class="pfn-name">Food</div>
-                    <div class="pfn-box">
-                        <p>Request for Meals (RFM)</p>
-                        <input type="file" name="" id="" />
+                <div class="flex mx-auto gap-4 mb-4 text-xl">
+                    <div
+                        class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
+                    >
+                        Food
+                    </div>
+                    <div
+                        class="bg-ua-blue/30 w-2/4 flex flex-col justify-center items-center p-2 rounded-md"
+                    >
+                        <p class="text-center">Request for Meals (RFM)</p>
+                        <div class="flex justify-center">
+                            <input
+                                type="file"
+                                @change="handleFileUpload($event, 'food_file')"
+                            />
+                        </div>
                     </div>
                 </div>
 
-                <div class="horizontal">
-                    <div class="pfn-name">Supplies</div>
-                    <div class="pfn-box">
-                        <p>
+                <div class="flex mx-auto gap-4 mb-4 text-xl">
+                    <div
+                        class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
+                    >
+                        Supplies
+                    </div>
+                    <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
+                        <p class="text-center">
                             Requisition Form (RF) for supplies available at RMS
                             or Purchase Requisition (PR) for supplies to be
                             purchased
                         </p>
-                        <input type="file" name="" id="" />
+                        <div class="flex justify-center">
+                            <input
+                                type="file"
+                                @change="
+                                    handleFileUpload($event, 'supplies_file')
+                                "
+                            />
+                        </div>
                     </div>
                 </div>
 
-                <div class="horizontal">
-                    <div class="pfn-name">Reproduction</div>
-                    <div class="pfn-box">
-                        <p>Reproduction Form</p>
-                        <input type="file" name="" id="" />
+                <div class="flex mx-auto gap-4 mb-4 text-xl">
+                    <div
+                        class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
+                    >
+                        Reproduction
+                    </div>
+                    <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
+                        <p class="text-center">Reproduction Form</p>
+                        <div class="flex justify-center">
+                            <input
+                                type="file"
+                                @change="
+                                    handleFileUpload(
+                                        $event,
+                                        'reproduction_file'
+                                    )
+                                "
+                            />
+                        </div>
                     </div>
                 </div>
 
-                <div class="horizontal">
-                    <div class="pfn-name">Others</div>
-                    <div class="pfn-box">
-                        <p>If applicable:</p>
-                        <input type="file" name="" id="" />
+                <div class="flex gap-4 text-xl">
+                    <div
+                        class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
+                    >
+                        Others, specify
+                    </div>
+                    <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
+                        <p class="text-center">If applicable:</p>
+                        <div class="flex justify-center">
+                            <input
+                                type="file"
+                                @change="
+                                    handleFileUpload($event, 'others_file')
+                                "
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="part-3">
-                <div class="title-box">
+            <div class="">
+                <div class="p-2 bg-black/20 text-center text-2xl my-8">
                     <h2>Approvals</h2>
                 </div>
 
-                <div class="horizontal">
-                    <div>
-                        <div class="input-box">
-                            <label for="">Prepared By</label>
-                            <input type="text" name="" id="" />
+                <div class="flex justify-center gap-4">
+                    <div class="space-y-4">
+                        <div class="flex flex-col">
+                            <label>Prepared By</label>
+                            <input
+                                type="text"
+                                disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
+                            />
                         </div>
-                        <div class="input-box">
-                            <label for="">Activity Endorsed By</label>
-                            <input type="text" name="" id="" />
+                        <div class="flex flex-col">
+                            <label>Activity Endorsed By</label>
+                            <input
+                                type="text"
+                                disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
+                            />
                         </div>
-                        <div class="input-box">
-                            <label for="">Activity Endorsed By</label>
-                            <input type="text" name="" id="" />
+                        <div class="flex flex-col">
+                            <label>Activity Endorsed By</label>
+                            <input
+                                type="text"
+                                disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
+                            />
                         </div>
-                        <div class="input-box">
-                            <label for="">Activity Endorsed By</label>
-                            <input type="text" name="" id="" />
-                        </div>
-                    </div>
-                    <div>
-                        <div class="input-box">
-                            <label for="">Role</label>
-                            <input type="text" name="" id="" />
-                        </div>
-                        <div class="input-box">
-                            <label for="">Role</label>
-                            <input type="text" name="" id="" />
-                        </div>
-                        <div class="input-box">
-                            <label for="">Role</label>
-                            <input type="text" name="" id="" />
-                        </div>
-                        <div class="input-box">
-                            <label for="">Role</label>
-                            <input type="text" name="" id="" />
+                        <div class="flex flex-col">
+                            <label>Activity Endorsed By</label>
+                            <input
+                                type="text"
+                                disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
+                            />
                         </div>
                     </div>
-                    <div>
-                        <div class="input-box">
-                            <label for="">Status</label>
-                            <input type="text" name="" id="" />
+                    <div class="space-y-4">
+                        <div class="flex flex-col">
+                            <label>Role</label>
+                            <input
+                                type="text"
+                                disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
+                            />
                         </div>
-                        <div class="input-box">
-                            <label for="">Status</label>
-                            <input type="text" name="" id="" />
+                        <div class="flex flex-col">
+                            <label>Role</label>
+                            <input
+                                type="text"
+                                disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
+                            />
                         </div>
-                        <div class="input-box">
-                            <label for="">Status</label>
-                            <input type="text" name="" id="" />
+                        <div class="flex flex-col">
+                            <label>Role</label>
+                            <input
+                                type="text"
+                                disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
+                            />
                         </div>
-                        <div class="input-box">
-                            <label for="">Status</label>
-                            <input type="text" name="" id="" />
+                        <div class="flex flex-col">
+                            <label>Role</label>
+                            <input
+                                type="text"
+                                disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
+                            />
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex flex-col">
+                            <label>Status</label>
+                            <input
+                                type="text"
+                                disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
+                            />
+                        </div>
+                        <div class="flex flex-col">
+                            <label>Status</label>
+                            <input
+                                type="text"
+                                disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
+                            />
+                        </div>
+                        <div class="flex flex-col">
+                            <label>Status</label>
+                            <input
+                                type="text"
+                                disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
+                            />
+                        </div>
+                        <div class="flex flex-col">
+                            <label>Status</label>
+                            <input
+                                type="text"
+                                disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
+                            />
                         </div>
                     </div>
                 </div>
 
                 <div class="vertical-line"></div>
 
-                <div class="horizontal">
-                    <div>
-                        <div class="input-box">
-                            <label for="">Funding Needs Reviewed By</label>
-                            <input type="text" name="" id="" />
+                <div class="mx-auto flex justify-center gap-4">
+                    <div class="space-y-4">
+                        <div class="flex flex-col">
+                            <label>Funding Needs Reviewed By</label>
+                            <input
+                                type="text"
+                                disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
+                            />
                         </div>
-                        <div class="input-box">
-                            <label for="">Funding Needs Aprroved By</label>
-                            <input type="text" name="" id="" />
+                        <div class="flex flex-col">
+                            <label>Funding Needs Aprroved By</label>
+                            <input
+                                type="text"
+                                disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
+                            />
                         </div>
-                        <div class="input-box">
-                            <label for="">Funding Needs Aprroved By</label>
-                            <input type="text" name="" id="" />
+                        <div class="flex flex-col">
+                            <label>Funding Needs Aprroved By</label>
+                            <input
+                                type="text"
+                                disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
+                            />
                         </div>
                     </div>
-                    <div>
-                        <div class="input-box">
-                            <label for="">E-Sginature</label>
-                            <input type="text" name="" id="" />
+                    <div class="space-y-4">
+                        <div class="flex flex-col">
+                            <label>Signature</label>
+                            <input
+                                type="text"
+                                disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
+                            />
                         </div>
-                        <div class="input-box">
-                            <label for="">E-Sginature</label>
-                            <input type="text" name="" id="" />
+                        <div class="flex flex-col">
+                            <label>Signature</label>
+                            <input
+                                type="text"
+                                disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
+                            />
                         </div>
-                        <div class="input-box">
-                            <label for="">E-Sginature</label>
-                            <input type="text" name="" id="" />
+                        <div class="flex flex-col">
+                            <label>Signature</label>
+                            <input
+                                type="text"
+                                disabled
+                                class="rounded-xl shadow bg-ua-blue/30 p-2"
+                            />
                         </div>
                     </div>
                 </div>
 
                 <div class="vertical-line"></div>
 
-                <div class="copy-receive-section">
-                    <p class="name">Copy Received By:</p>
+                <div class="">
+                    <p class="text-center text-2xl mb-4">Copy Received By:</p>
 
-                    <div class="idk">
-                        <div>
-                            <div class="copy-receive-box">
-                                <p>Proponent</p>
-                                <input type="checkbox" name="" id="" />
+                    <div class="flex justify-center gap-4">
+                        <div class="space-y-4">
+                            <div class="text-center">
+                                <input
+                                    type="checkbox"
+                                    disabled
+                                    class="scale-150"
+                                />
+                                <p class="text-xl">Proponent</p>
                             </div>
-                            <div class="copy-receive-box">
-                                <p>PPGS</p>
-                                <input type="checkbox" name="" id="" />
+                            <div class="text-center">
+                                <input
+                                    type="checkbox"
+                                    disabled
+                                    class="scale-150"
+                                />
+                                <p class="text-xl">PPGS</p>
                             </div>
-                            <div class="copy-receive-box">
-                                <p>Sports</p>
-                                <input type="checkbox" name="" id="" />
-                            </div>
-                        </div>
-                        <div>
-                            <div class="copy-receive-box">
-                                <p>EAMO</p>
-                                <input type="checkbox" name="" id="" />
-                            </div>
-                            <div class="copy-receive-box">
-                                <p>Security</p>
-                                <input type="checkbox" name="" id="" />
-                            </div>
-                            <div class="copy-receive-box">
-                                <p>Hotel</p>
-                                <input type="checkbox" name="" id="" />
+                            <div class="text-center">
+                                <input
+                                    type="checkbox"
+                                    disabled
+                                    class="scale-150"
+                                />
+                                <p class="text-xl">Sports</p>
                             </div>
                         </div>
-                        <div>
-                            <div class="copy-receive-box">
-                                <p>PhotoLab</p>
-                                <input type="checkbox" name="" id="" />
+                        <div class="space-y-4">
+                            <div class="text-center">
+                                <input
+                                    type="checkbox"
+                                    disabled
+                                    class="scale-150"
+                                />
+                                <p class="text-xl">EAMO</p>
                             </div>
-                            <div class="copy-receive-box">
-                                <p>Janitorial</p>
-                                <input type="checkbox" name="" id="" />
+                            <div class="text-center">
+                                <input
+                                    type="checkbox"
+                                    disabled
+                                    class="scale-150"
+                                />
+                                <p class="text-xl">Security</p>
                             </div>
-                            <div class="copy-receive-box">
+                            <div class="text-center">
+                                <input
+                                    type="checkbox"
+                                    disabled
+                                    class="scale-150"
+                                />
+                                <p class="text-xl">Hotel</p>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="text-center">
+                                <input
+                                    type="checkbox"
+                                    disabled
+                                    class="scale-150"
+                                />
+                                <p class="text-xl">PhotoLab</p>
+                            </div>
+                            <div class="text-center">
+                                <input
+                                    type="checkbox"
+                                    disabled
+                                    class="scale-150"
+                                />
+                                <p class="text-xl">Janitorial</p>
+                            </div>
+                            <div class="text-center">
+                                <input
+                                    type="checkbox"
+                                    disabled
+                                    class="scale-150"
+                                />
                                 <p>Sound System</p>
-                                <input type="checkbox" name="" id="" />
                             </div>
                         </div>
                     </div>
@@ -362,13 +535,9 @@ const props = defineProps({
 </template>
 
 <style scoped>
-.content {
-    /* background-color: #d2d2d2; */
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; */
-    padding: 2rem 0;
+.app {
+    padding-top: 4rem;
+    width: 100%;
 }
 
 .bg-img {
@@ -382,148 +551,14 @@ const props = defineProps({
 
 .bg-img img {
     transform: rotate(15deg);
-    width: 60rem;
+    width: 40rem;
     filter: grayscale(100%);
     opacity: 0.1;
 }
 
-.part-1,
-.part-2,
-.part-3 {
-    width: 90%;
-    margin: 0 auto;
-}
-
-.part-1 h1 {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-}
-
-.part-1 h1,
-.part-1 p {
-    text-align: center;
-}
-
-.input-box {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    margin-top: 1rem;
-}
-
-.input-box label {
-    font-size: 1.5rem;
-}
-
-.part-1 .horizontal {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.part-1 .vertical {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-}
-
-.part-1 input,
-.part-1 select,
-.part-1 textarea {
-    background-color: lightsteelblue;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    font-size: 1.2rem;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-    outline: none;
-    border: none;
-}
-
-.part-2 {
-    margin: 2rem auto;
-}
-
-.title-box {
-    text-align: center;
-    padding: 0.5rem;
-    background-color: lightgray;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-}
-
-.part-2 .horizontal {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-.pfn-name,
-.pfn-box {
-    background-color: lightsteelblue;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    font-size: 1.2rem;
-}
-
-.pfn-name {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 35%;
-}
-
-.pfn-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 65%;
-}
-
-.part-3 .horizontal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-}
-
-.part-3 .horizontal > div {
-    flex-grow: 1;
-}
-
-.part-3 input {
-    background-color: lightsteelblue;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    font-size: 1.2rem;
-}
-
 .vertical-line {
-    height: 0.1rem;
-    background-color: black;
+    height: 0.125rem;
+    background-color: #272f5c;
     margin: 2rem 0;
-}
-
-.copy-receive-section .name {
-    font-size: 1.5rem;
-    text-align: center;
-}
-
-.idk {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.copy-receive-box {
-    display: flex;
-    justify-content: start;
-    align-items: center;
 }
 </style>

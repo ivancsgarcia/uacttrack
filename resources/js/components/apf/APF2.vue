@@ -1,7 +1,4 @@
 <script setup>
-import DatePicker from "primevue/datepicker";
-import { ref } from "vue";
-
 const props = defineProps({
     form: Object,
     venues: Array,
@@ -9,99 +6,112 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="p-4">
-        <div class="flex">
-            <div class="">
+    <div class="py-4">
+        <div class="flex gap-4">
+            <div class="w-2/4 space-y-2">
                 <div class="flex flex-col">
-                    <label for="date" class="text-ua-blue text-3xl">Date</label>
-                    <!-- <input
+                    <label for="date" class="text-ua-blue text-2xl">Date</label>
+                    <input
                         type="date"
                         name="date"
                         v-model="form.date"
-                        class="border-2 rounded-md bg-ua-blue/30 text-2xl p-4"
-                    /> -->
-                    <InputText id="date" type="date" v-model="form.date" />
-                </div>
-
-                <div class="flex flex-col">
-                    <label for="from-time" class="text-ua-blue text-3xl"
-                        >From Time</label
-                    >
-                    <!-- <input
-                        type="time"
-                        name="from-time"
-                        v-model="form.from_time"
-                        class="border-2 rounded-md bg-ua-blue/30 text-2xl p-4"
-                    /> -->
-                    <InputText id="from-time" type="time" v-model="form.from_time" />
-                </div>
-
-                <div class="flex flex-col">
-                    <label for="to-time" class="text-ua-blue text-3xl"
-                        >To Time</label
-                    >
-                    <!-- <input
-                        type="time"
-                        name="to-time"
-                        v-model="form.to_time"
-                        class="border-2 rounded-md bg-ua-blue/30 text-2xl p-4"
-                    /> -->
-                    <InputText id="to-time" type="time" v-model="form.to_time" />
-                </div>
-
-            </div>
-            <div class="">
-                <div>
-                    <label for="attendees">Number Of Attendees</label>
-                    <InputNumber
-                        inputId="attendees"
-                        v-model="form.attendance_count"
-                        :min="0"
-                        :max="10000"
-                        showButtons
+                        class="rounded-xl shadow bg-ua-blue/30 p-2"
                     />
                 </div>
 
-                <div>
-                    <label for="event">Type Of Event</label>
-                    <InputText id="event" v-model="form.event_type" />
+                <div class="flex flex-col">
+                    <label for="from-time" class="text-ua-blue text-2xl"
+                        >From Time</label
+                    >
+                    <input
+                        type="time"
+                        name="from-time"
+                        v-model="form.from_time"
+                        class="rounded-xl shadow bg-ua-blue/30 p-2"
+                    />
+                </div>
+
+                <div class="flex flex-col">
+                    <label for="to-time" class="text-ua-blue text-2xl"
+                        >To Time</label
+                    >
+                    <input
+                        type="time"
+                        name="to-time"
+                        v-model="form.to_time"
+                        class="rounded-xl shadow bg-ua-blue/30 p-2"
+                    />
+                </div>
+            </div>
+            <div class="w-2/4 space-y-2">
+                <div class="flex flex-col">
+                    <label for="attendees" class="text-ua-blue text-2xl"
+                        >Number of Attendees</label
+                    >
+                    <input
+                        type="number"
+                        id="attendees"
+                        v-model="form.attendance_count"
+                        min="0"
+                        max="5000"
+                        class="rounded-xl shadow bg-ua-blue/30 p-2"
+                    />
+                </div>
+
+                <div class="flex flex-col">
+                    <label for="event" class="text-ua-blue text-2xl"
+                        >Type of Event</label
+                    >
+                    <input
+                        type="text"
+                        id="event"
+                        v-model="form.event_type"
+                        class="rounded-xl shadow bg-ua-blue/30 p-2"
+                    />
                 </div>
             </div>
         </div>
 
         <div class="h-0.5 bg-black my-10"></div>
 
-        <div class="flex">
-            <div class="flex flex-col">
-                <label for="" class="text-ua-blue text-3xl"
+        <div class="flex gap-4">
+            <div class="flex flex-col w-2/4">
+                <label for="" class="text-ua-blue text-2xl"
                     >Available Venue (Recommended)</label
                 >
-                <Select
+                <select
                     v-model="form.venue"
-                    :options="venues"
-                    optionLabel="name"
-                    optionValue="name"
                     placeholder="Pick A Venue"
-                />
+                    class="rounded-xl shadow bg-ua-blue/30 p-2 mb-4"
+                >
+                    <option value="" selected disabled>Pick A Venue</option>
+                    <option
+                        v-for="venue in venues"
+                        :key="venue.id"
+                        :value="venue.name"
+                    >
+                        {{ venue.name }}
+                    </option>
+                </select>
 
-                <div
-                    class="text-center bg-ua-blue text-white text-3xl rounded-md"
+                <button
+                    class="text-center bg-ua-blue text-white text-xl rounded-xl shadow p-2"
                 >
                     Recommended Venue
-                </div>
+                </button>
             </div>
-            <div class="flex flex-col">
-                <label for="reqs" class="text-ua-blue text-3xl"
+
+            <div class="flex flex-col w-2/4">
+                <label for="reqs" class="text-ua-blue text-2xl"
                     >Requirements / Resources Needed</label
                 >
-                <Textarea
+                <textarea
+                    name="reqs"
+                    id="reqs"
                     v-model="form.requirements_or_resources_needed"
-                    rows="5"
-                    cols="30"
-                />
+                    class="rounded-xl shadow bg-ua-blue/30 p-2"
+                ></textarea>
             </div>
         </div>
     </div>
 </template>
-
-<style scoped></style>

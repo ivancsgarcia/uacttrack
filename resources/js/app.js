@@ -8,26 +8,22 @@ import Modal from "../js/components/global/Modal.vue";
 
 import Button from "primevue/button";
 import ToggleSwitch from "primevue/toggleswitch";
-import DatePicker from "primevue/datepicker";
-import InputText from "primevue/inputtext";
-import InputNumber from "primevue/inputnumber";
-import Select from "primevue/select";
-import Textarea from "primevue/textarea";
-import FileUpload from "primevue/fileupload";
-import Dialog from 'primevue/dialog';
-import Avatar from 'primevue/avatar';
-import Popover from 'primevue/popover';
-import Card from 'primevue/card';
-import ConfirmDialog from 'primevue/confirmdialog';
-import ConfirmationService from 'primevue/confirmationservice';
-import Toast from 'primevue/toast';
-import ToastService from 'primevue/toastservice';
-import Image from 'primevue/image';
-import 'primeicons/primeicons.css'
-
-
-
-
+// import DatePicker from "primevue/datepicker";
+// import InputText from "primevue/inputtext";
+// import InputNumber from "primevue/inputnumber";
+// import Select from "primevue/select";
+// import Textarea from "primevue/textarea";
+// import FileUpload from "primevue/fileupload";
+import Dialog from "primevue/dialog";
+import Avatar from "primevue/avatar";
+import Popover from "primevue/popover";
+import Card from "primevue/card";
+import ConfirmDialog from "primevue/confirmdialog";
+import ConfirmationService from "primevue/confirmationservice";
+import Toast from "primevue/toast";
+import ToastService from "primevue/toastservice";
+import Image from "primevue/image";
+import "primeicons/primeicons.css";
 
 /* import the fontawesome core */
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -71,12 +67,12 @@ createInertiaApp({
             .component("Modal", Modal)
             .component("Button", Button)
             .component("ToggleSwitch", ToggleSwitch)
-            .component("DatePicker", DatePicker)
-            .component("InputText", InputText)
-            .component("InputNumber", InputNumber)
-            .component("Select", Select)
-            .component("Textarea", Textarea)
-            .component("FileUpload", FileUpload)
+            // .component("DatePicker", DatePicker)
+            // .component("InputText", InputText)
+            // .component("InputNumber", InputNumber)
+            // .component("Select", Select)
+            // .component("Textarea", Textarea)
+            // .component("FileUpload", FileUpload)
             .component("Dialog", Dialog)
             .component("Avatar", Avatar)
             .component("Popover", Popover)

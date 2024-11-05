@@ -39,7 +39,10 @@ import { Link } from "@inertiajs/vue3";
                     </Card>
                 </a>
 
-                <a href="http://serp.ua.edu.ph/serp/Gate/UASFP.Login.aspx" target="_blank">
+                <a
+                    href="http://serp.ua.edu.ph/serp/Gate/UASFP.Login.aspx"
+                    target="_blank"
+                >
                     <Card>
                         <template #content>
                             <div>
@@ -96,7 +99,7 @@ import { Link } from "@inertiajs/vue3";
 
 .bg-img img {
     transform: rotate(15deg);
-    width: 60rem;
+    width: 40rem;
     filter: grayscale(100%);
     opacity: 0.1;
 }

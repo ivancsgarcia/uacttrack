@@ -116,8 +116,7 @@ const openForms = () => {
 
 const submit = () => {
     confirm.require({
-        message:
-            "Are you sure you want to submit the Form?",
+        message: "Are you sure you want to submit the Form?",
         header: "Download Forms",
         icon: "pi pi-info-circle",
         rejectProps: {
@@ -162,139 +161,146 @@ const submitForm = async () => {
 </script>
 
 <template>
-    <div>
+    <div class="app">
         <UAHeader />
 
         <div class="bg-img">
             <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
         </div>
 
-        <form @submit.prevent="submitForm" class="w-4/5 mx-auto py-28">
-            <Stepper value="1" linear>
-                <StepList>
-                    <Step value="1">Start</Step>
-                    <Step value="2">Part 1</Step>
-                    <Step value="3">Part 2</Step>
-                    <Step value="4">Part 3</Step>
-                </StepList>
-                <StepPanels>
-                    <StepPanel v-slot="{ activateCallback }" value="1">
-                        <div class="flex flex-col">
-                            <div
-                                class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                            >
-                                <APF />
+        <div class="main-content">
+            <form @submit.prevent="submitForm">
+                <Stepper value="1" linear>
+                    <StepList>
+                        <Step value="1">Start</Step>
+                        <Step value="2">Projected Funding Needs</Step>
+                        <Step value="3">Date and Venue Booking</Step>
+                        <Step value="4">Activity Form</Step>
+                    </StepList>
+                    <StepPanels>
+                        <StepPanel v-slot="{ activateCallback }" value="1">
+                            <div class="flex flex-col">
+                                <div
+                                    class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+                                >
+                                    <APF />
+                                </div>
                             </div>
-                        </div>
-                        <div class="flex pt-6 justify-between">
-                            <Button
-                                label="Cancel"
-                                severity="secondary"
-                                icon="pi pi-arrow-right"
-                                @click="cancel"
-                            />
-                            <Button
-                                label="Start"
-                                icon="pi pi-arrow-right"
-                                @click="activateCallback('2')"
-                            />
-                        </div>
-                    </StepPanel>
-                    <StepPanel v-slot="{ activateCallback }" value="2">
-                        <div class="flex flex-col">
-                            <div
-                                class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                            >
-                                <APF1 :form="form" />
-                            </div>
-                        </div>
-                        <div class="flex pt-6 justify-between">
-                            <Button
-                                label="Back"
-                                severity="secondary"
-                                icon="pi pi-arrow-right"
-                                @click="activateCallback('1')"
-                            />
-                            <Button
-                                label="Forms"
-                                severity="info"
-                                icon="pi pi-bars"
-                                @click="openForms"
-                            />
-                            <Button
-                                label="Next"
-                                icon="pi pi-arrow-right"
-                                @click="activateCallback('3')"
-                            />
-                        </div>
-                    </StepPanel>
-                    <StepPanel v-slot="{ activateCallback }" value="3">
-                        <div class="flex flex-col">
-                            <div
-                                class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                            >
-                                <APF2
-                                    :form="form"
-                                    @nextStep="nextStep"
-                                    @previousStep="previousStep"
-                                    :venues="props.venues"
+                            <div class="flex pt-6 justify-between">
+                                <Button
+                                    label="Cancel"
+                                    severity="secondary"
+                                    icon="pi pi-arrow-right"
+                                    @click="cancel"
+                                />
+                                <Button
+                                    label="Start"
+                                    icon="pi pi-arrow-right"
+                                    @click="activateCallback('2')"
                                 />
                             </div>
-                        </div>
-                        <div class="flex pt-6 justify-between">
-                            <Button
-                                label="Back"
-                                severity="secondary"
-                                icon="pi pi-arrow-left"
-                                @click="activateCallback('2')"
-                            />
-                            <Button
-                                label="Next"
-                                icon="pi pi-arrow-right"
-                                iconPos="right"
-                                @click="activateCallback('4')"
-                            />
-                        </div>
-                    </StepPanel>
-                    <StepPanel v-slot="{ activateCallback }" value="4">
-                        <div class="flex flex-col">
-                            <div
-                                class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                            >
-                                <APF3
-                                    :form="form"
-                                    @previousStep="previousStep"
-                                    @submitForm="submitForm"
-                                    :venues="props.venues"
+                        </StepPanel>
+                        <StepPanel v-slot="{ activateCallback }" value="2">
+                            <div class="flex flex-col">
+                                <div
+                                    class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+                                >
+                                    <APF1 :form="form" />
+                                </div>
+                            </div>
+                            <div class="flex pt-6 justify-between">
+                                <Button
+                                    label="Back"
+                                    severity="secondary"
+                                    icon="pi pi-arrow-right"
+                                    @click="activateCallback('1')"
+                                />
+                                <Button
+                                    label="Forms"
+                                    severity="info"
+                                    icon="pi pi-bars"
+                                    @click="openForms"
+                                />
+                                <Button
+                                    label="Next"
+                                    icon="pi pi-arrow-right"
+                                    @click="activateCallback('3')"
                                 />
                             </div>
-                        </div>
-                        <div class="flex pt-6 justify-between">
-                            <Button
-                                label="Back"
-                                severity="secondary"
-                                icon="pi pi-arrow-left"
-                                @click="activateCallback('3')"
-                            />
+                        </StepPanel>
+                        <StepPanel v-slot="{ activateCallback }" value="3">
+                            <div class="flex flex-col">
+                                <div
+                                    class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+                                >
+                                    <APF2
+                                        :form="form"
+                                        @nextStep="nextStep"
+                                        @previousStep="previousStep"
+                                        :venues="props.venues"
+                                    />
+                                </div>
+                            </div>
+                            <div class="flex pt-6 justify-between">
+                                <Button
+                                    label="Back"
+                                    severity="secondary"
+                                    icon="pi pi-arrow-left"
+                                    @click="activateCallback('2')"
+                                />
+                                <Button
+                                    label="Next"
+                                    icon="pi pi-arrow-right"
+                                    iconPos="right"
+                                    @click="activateCallback('4')"
+                                />
+                            </div>
+                        </StepPanel>
+                        <StepPanel v-slot="{ activateCallback }" value="4">
+                            <div class="flex flex-col">
+                                <div
+                                    class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+                                >
+                                    <APF3
+                                        :form="form"
+                                        @previousStep="previousStep"
+                                        @submitForm="submitForm"
+                                        :venues="props.venues"
+                                    />
+                                </div>
+                            </div>
+                            <div class="flex pt-6 justify-between">
+                                <Button
+                                    label="Back"
+                                    severity="secondary"
+                                    icon="pi pi-arrow-left"
+                                    @click="activateCallback('3')"
+                                />
 
-                            <Button
-                                label="Submit"
-                                icon="pi pi-arrow-right"
-                                iconPos="right"
-                                @click="submit"
-                            />
-                        </div>
-                    </StepPanel>
-                </StepPanels>
-            </Stepper>
-        </form>
+                                <Button
+                                    label="Submit"
+                                    icon="pi pi-arrow-right"
+                                    iconPos="right"
+                                    @click="submit"
+                                />
+                            </div>
+                        </StepPanel>
+                    </StepPanels>
+                </Stepper>
+            </form>
 
-        <ConfirmDialog></ConfirmDialog>
-        <Toast />
+            <ConfirmDialog></ConfirmDialog>
+            <Toast />
+        </div>
     </div>
 </template>
 
 <style scoped>
+.app {
+    padding-top: 4rem;
+    width: 100%;
+}
+
 .bg-img {
     position: fixed;
     right: 0;
@@ -309,5 +315,9 @@ const submitForm = async () => {
     width: 60rem;
     filter: grayscale(100%);
     opacity: 0.1;
+}
+
+.main-content {
+    padding: 1rem;
 }
 </style>

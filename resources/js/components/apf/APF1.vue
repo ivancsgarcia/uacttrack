@@ -7,132 +7,59 @@ const emit = defineEmits(["nextStep"]);
 </script>
 
 <template>
-    <div class="part-one">
-        <div class="head">
-            <p class="title">
+    <div class="p-4 text-xl">
+        <div class="flex justify-center items-center gap-4 mb-4">
+            <p class="w-2/4 p-2 text-center text-ua-blue">
                 Identify the funding requirements for your activity.
             </p>
-            <div class="bool">Yes</div>
-            <div class="bool">No</div>
+            <div class="w-1/4 bg-ua-blue shadow-lg p-4 text-center text-white">
+                Yes or No
+            </div>
         </div>
 
-        <div class="flex justify-center items-center gap-5">
-            <div class="name">Check Payment / Cash</div>
-            <!-- <div class="radio">
-                <input
-                    type="radio"
-                    name="cash"
-                    value="1"
-                    v-model="form.check_payment_or_cash"
-                    class=""
-                />
+        <div class="flex justify-center text-center mb-4 gap-4">
+            <div class="w-2/4 bg-slate-200 shadow-lg p-2">
+                Check Payment / Cash
             </div>
-            <div class="radio">
-                <input
-                    type="radio"
-                    name="cash"
-                    value="0"
-                    v-model="form.check_payment_or_cash"
-                    class=""
-                />
-            </div> -->
-            <div>
+            <div class="w-1/4 bg-ua-blue shadow-lg p-2">
                 <ToggleSwitch v-model="form.check_payment_or_cash" />
             </div>
         </div>
 
-        <div class="flex justify-center items-center gap-5">
-            <div class="name">Food</div>
-            <!-- <div class="radio">
-                <input
-                    type="radio"
-                    name="food"
-                    value="1"
-                    v-model="form.food"
-                    class=""
-                />
-            </div>
-            <div class="radio">
-                <input
-                    type="radio"
-                    name="food"
-                    value="0"
-                    v-model="form.food"
-                    class=""
-                />
-            </div> -->
-            <div>
+        <div class="flex justify-center text-center mb-4 gap-4">
+            <div class="w-2/4 bg-slate-200 shadow-lg p-2">Food</div>
+            <div class="w-1/4 bg-ua-blue shadow-lg p-2">
                 <ToggleSwitch v-model="form.food" />
             </div>
         </div>
 
-        <div class="flex justify-center items-center gap-5">
-            <div class="name">Supplies</div>
-            <!-- <div class="radio">
-                <input
-                    type="radio"
-                    name="supplies"
-                    value="1"
-                    v-model="form.supplies"
-                    class=""
-                />
-            </div>
-            <div class="radio">
-                <input
-                    type="radio"
-                    name="supplies"
-                    value="0"
-                    v-model="form.supplies"
-                    class=""
-                />
-            </div> -->
-            <div>
+        <div class="flex justify-center text-center mb-4 gap-4">
+            <div class="w-2/4 bg-slate-200 shadow-lg p-2">Supplies</div>
+            <div class="w-1/4 bg-ua-blue shadow-lg p-2">
                 <ToggleSwitch v-model="form.supplies" />
             </div>
         </div>
 
-        <div class="flex justify-center items-center gap-5">
-            <div class="name">Reproduction</div>
-            <!-- <div class="radio">
-                <input
-                    type="radio"
-                    name="reproduction"
-                    value="1"
-                    v-model="form.reproduction"
-                    class=""
-                />
-            </div>
-            <div class="radio">
-                <input
-                    type="radio"
-                    name="reproduction"
-                    value="0"
-                    v-model="form.reproduction"
-                    class=""
-                />
-            </div> -->
-            <div>
+        <div class="flex justify-center text-center mb-4 gap-4">
+            <div class="w-2/4 bg-slate-200 shadow-lg p-2">Reproduction</div>
+
+            <div class="w-1/4 bg-ua-blue shadow-lg p-2">
                 <ToggleSwitch v-model="form.reproduction" />
             </div>
         </div>
 
-        <div class="mx-14">
-            <p class="note">
+        <div class="mx-14 mt-4">
+            <p class="text-base">
                 Please download and complete any additional forms required based
                 on the funding requirements you selected, and attach them at the
                 end of this form.
             </p>
         </div>
-
-        <!-- <div class="btns">
-            <button @click="" class="form-btn">Forms</button>
-            <button @click="emit('nextStep')" class="next-btn">Next</button>
-        </div> -->
     </div>
 </template>
 
 <style scoped>
-.head {
+/* .head {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -201,5 +128,5 @@ const emit = defineEmits(["nextStep"]);
     border: 1px solid #272f5c;
     border-radius: 0.5rem;
     padding: 0.5rem;
-}
+} */
 </style>

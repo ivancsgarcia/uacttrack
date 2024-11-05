@@ -73,14 +73,7 @@ class ActivityFormController extends Controller
 
     public function show($activityId)
     {
-
-        $org = Auth::user()->organization;
-
-        $activityForms = ActivityForm::whereHas('creator', function ($query) use ($org) {
-            $query->where('organization', $org);
-        })
-            ->where('id', $activityId)
-            ->orderBy('created_at', 'desc')
+        $activityForms = ActivityForm::where('id', $activityId)
             ->firstOrFail();
 
         return Inertia::render('ActivityFormPreview', [

@@ -1,7 +1,4 @@
 <script setup>
-import DatePicker from "primevue/datepicker";
-import { ref } from "vue";
-
 const props = defineProps({
     form: Object,
     venues: Array,
@@ -15,14 +12,12 @@ const handleFileUpload = (event, fieldName) => {
 
 <template>
     <div class="p-4">
-        <h1 class="text-5xl text-ua-blue text-center mb-8">
-            Activity Proposal Form
-        </h1>
-        <p class="m-auto text-lg text-ua-blue">
+        <h1 class="text-3xl text-center mb-8">Activity Proposal Form</h1>
+        <p class="m-auto text-md">
             (Approval Form for In-Campus Activities with corresponding Logistics
             and Funding Requirements)
         </p>
-        <p class="m-auto text-lg text-ua-blue mb-4">
+        <p class="m-auto text-md mb-4">
             Note: Deadline of Submission of activity form is three days before
             the activity. Please ensure that the date in the activity form that
             you will generate is correct because
@@ -30,85 +25,65 @@ const handleFileUpload = (event, fieldName) => {
         </p>
 
         <div class="flex flex-col mb-4">
-            <label for="" class="text-ua-blue text-3xl">Activity Title</label>
-            <!-- <input
+            <label class="text-2xl">Activity Title</label>
+            <input
                 type="text"
                 v-model="form.title"
-                class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
-            /> -->
-            <InputText v-model="form.title" />
+                class="rounded-xl shadow bg-ua-blue/30 p-2"
+            />
         </div>
 
-        <div class="flex flex-row mx-auto mb-4 gap-10">
+        <div class="flex flex-row gap-4 mb-4">
             <div class="flex flex-col w-2/4">
-                <label for="" class="text-ua-blue text-3xl"
-                    >Type of Event</label
-                >
-                <!-- <input
+                <label class="text-2xl">Type of Event</label>
+                <input
                     type="text"
                     v-model="form.event_type"
-                    class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
-                /> -->
-                <InputText v-model="form.event_type" />
+                    class="rounded-xl shadow bg-ua-blue/30 p-2"
+                />
             </div>
             <div class="flex flex-col w-2/4">
-                <label for="" class="text-ua-blue text-3xl"
-                    >Activity Description</label
-                >
-                <!-- <textarea
-                    name=""
-                    id=""
+                <label class="text-2xl">Activity Description</label>
+                <textarea
                     v-model="form.description"
-                    class="border-2 rounded-md bg-ua-blue/30 h-40 text-2xl p-4"
-                ></textarea> -->
-                <Textarea v-model="form.description" rows="5" cols="30" />
+                    class="rounded-xl shadow bg-ua-blue/30 p-2"
+                ></textarea>
             </div>
         </div>
 
-        <div class="flex mx-auto mb-4 gap-10">
+        <div class="flex mx-auto gap-4 mb-4">
             <div class="flex flex-col w-2/4">
-                <label for="" class="text-ua-blue text-3xl">Date</label>
-                <!-- <input
+                <label class="text-2xl">Date</label>
+                <input
                     type="date"
-                    name=""
-                    id=""
                     v-model="form.date"
-                    class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
-                /> -->
-                <InputText id="date" type="date" v-model="form.date" />
+                    class="rounded-xl shadow bg-ua-blue/30 p-2"
+                />
             </div>
 
             <div class="flex flex-col w-1/4">
-                <label for="" class="text-ua-blue text-3xl">From Time</label>
-                <!-- <input
+                <label class="text-2xl">From Time</label>
+                <input
                     type="time"
-                    name=""
-                    id=""
                     v-model="form.from_time"
-                    class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
-                /> -->
-                <InputText id="from-time" type="time" v-model="form.from_time" />
+                    class="rounded-xl shadow bg-ua-blue/30 p-2"
+                />
             </div>
             <div class="flex flex-col w-1/4">
-                <label for="" class="text-ua-blue text-3xl">To Time</label>
-                <!-- <input
+                <label class="text-2xl">To Time</label>
+                <input
                     type="time"
-                    name=""
-                    id=""
                     v-model="form.to_time"
-                    class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
-                /> -->
-                <InputText id="to-time" type="time" v-model="form.to_time" />
+                    class="rounded-xl shadow bg-ua-blue/30 p-2"
+                />
             </div>
         </div>
 
         <div class="flex flex-col mx-auto mb-4">
-            <label for="" class="text-ua-blue text-3xl">Venue</label>
-            <!-- <select
-                name="vue"
-                id=""
+            <label class="text-2xl">Venue</label>
+            <select
                 v-model="form.venue"
-                class="border-2 rounded-md bg-ua-blue/30 h-20 text-2xl px-4"
+                class="rounded-xl shadow bg-ua-blue/30 p-2"
             >
                 <option
                     v-for="venue in venues"
@@ -117,86 +92,54 @@ const handleFileUpload = (event, fieldName) => {
                 >
                     {{ venue.name }}
                 </option>
-            </select> -->
-            <Select
-                v-model="form.venue"
-                :options="venues"
-                optionLabel="name"
-                optionValue="name"
-                placeholder="Pick A Venue"
-            />
+            </select>
         </div>
 
-        <div class="flex mx-auto mb-8 gap-10">
+        <div class="flex gap-4">
             <div class="flex flex-col w-2/4">
-                <label for="" class="text-ua-blue text-3xl"
-                    >Requirements / Resources Needed</label
-                >
-                <!-- <textarea
-                    name=""
-                    id=""
+                <label class="text-2xl">Requirements / Resources Needed</label>
+                <textarea
                     v-model="form.requirements_or_resources_needed"
-                    class="border-2 rounded-md bg-ua-blue/30 h-full p-4 text-2xl"
-                ></textarea> -->
-                <Textarea
-                    v-model="form.requirements_or_resources_needed"
-                    rows="5"
-                    cols="30"
-                />
+                    class="rounded-xl shadow bg-ua-blue/30 p-2"
+                ></textarea>
             </div>
             <div class="w-2/4">
                 <div class="flex flex-col mb-4">
-                    <label for="" class="text-ua-blue text-3xl"
+                    <label class="text-2xl"
                         >Participants - Department / Program / Grade or Year
                         Level</label
                     >
-                    <!-- <input
+                    <input
                         type="text"
-                        name=""
-                        id=""
                         v-model="form.participant"
-                        class="border-2 rounded-md bg-ua-blue/30 h-20 p-4 text-2xl"
-                    /> -->
-                    <InputText v-model="form.participant" />
+                        class="rounded-xl shadow bg-ua-blue/30 p-2"
+                    />
                 </div>
                 <div class="flex flex-col">
-                    <label for="" class="text-ua-blue text-3xl"
-                        >Expected Number of Attendees</label
-                    >
-                    <!-- <input
+                    <label class="text-2xl">Expected Number of Attendees</label>
+                    <input
                         type="number"
-                        name=""
-                        id=""
                         v-model="form.attendance_count"
-                        class="border-2 rounded-md bg-ua-blue/30 h-20 p-4 text-2xl"
-                    /> -->
-                    <InputNumber
-                        inputId="attendees"
-                        v-model="form.attendance_count"
-                        :min="0"
-                        :max="10000"
-                        showButtons
+                        min="0"
+                        max="5000"
+                        class="rounded-xl shadow bg-ua-blue/30 p-2"
                     />
                 </div>
             </div>
         </div>
 
-        <div class="bg-black/20 text-ua-blue p-4 text-center text-3xl mb-4">
+        <div class="bg-black/20 p-4 text-center text-2xl my-8">
             Projected Funding Needs
         </div>
 
-        <div class="flex mx-auto w-9/12 gap-8 mb-4">
-            <div class="w-2/4 text-center p-2 text-ua-blue text-3xl">
-                Nature
-            </div>
-            <div class="w-2/4 text-center p-2 text-ua-blue text-3xl">
-                Forms to be Attached
-            </div>
+        <div class="flex mb-4">
+            <div class="w-2/4 text-center text-2xl">Nature</div>
+            <div class="w-2/4 text-center text-2xl">Forms to be Attached</div>
         </div>
 
-        <div class="flex mx-auto w-9/12 gap-8 mb-4 text-xl">
+        <div class="flex gap-4 mb-4 text-xl">
             <div
-                class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md text-2xl"
+                class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
             >
                 Check Payment / Cash
             </div>
@@ -216,9 +159,9 @@ const handleFileUpload = (event, fieldName) => {
             </div>
         </div>
 
-        <div class="flex mx-auto w-9/12 gap-8 mb-4 text-xl">
+        <div class="flex mx-auto gap-4 mb-4 text-xl">
             <div
-                class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md text-2xl"
+                class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
             >
                 Food
             </div>
@@ -236,9 +179,9 @@ const handleFileUpload = (event, fieldName) => {
             </div>
         </div>
 
-        <div class="flex mx-auto w-9/12 gap-8 mb-4 text-xl">
+        <div class="flex mx-auto gap-4 mb-4 text-xl">
             <div
-                class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md text-2xl"
+                class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
             >
                 Supplies
             </div>
@@ -257,9 +200,9 @@ const handleFileUpload = (event, fieldName) => {
             </div>
         </div>
 
-        <div class="flex mx-auto w-9/12 gap-8 mb-4 text-xl">
+        <div class="flex mx-auto gap-4 mb-4 text-xl">
             <div
-                class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md text-2xl"
+                class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
             >
                 Reproduction
             </div>
@@ -275,9 +218,9 @@ const handleFileUpload = (event, fieldName) => {
             </div>
         </div>
 
-        <div class="flex mx-auto w-9/12 gap-8 mb-10 text-xl">
+        <div class="flex gap-4 text-xl">
             <div
-                class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md text-2xl"
+                class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
             >
                 Others, specify
             </div>

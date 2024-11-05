@@ -63,7 +63,7 @@ defineProps({
 
 .bg-img img {
     transform: rotate(15deg);
-    width: 60rem;
+    width: 40rem;
     filter: grayscale(100%);
     opacity: 0.1;
 }
@@ -133,7 +133,8 @@ tbody {
     background-color: #d9d9d9;
 }
 
-th, td {
+th,
+td {
     border: 1px;
     padding: 1.2rem;
     font-size: 1.4rem;
