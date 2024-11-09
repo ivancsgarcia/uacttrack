@@ -1,6 +1,6 @@
 <script setup>
 defineProps({
-    request_forms: Array,
+    requestForms: Array,
 });
 </script>
 
@@ -35,10 +35,14 @@ defineProps({
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="reqForm in request_forms" :key="reqForm.id">
+                    <tr v-for="reqForm in requestForms" :key="reqForm.id">
                         <td>{{ reqForm.name }}</td>
-                        <td>docx</td>
-                        <td>xlsx</td>
+                        <td class="underline">
+                            <a :href="reqForm.docx_url" download>docx</a>
+                        </td>
+                        <td class="underline">
+                            <a :href="reqForm.xlsx_url" download>xlsx</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>

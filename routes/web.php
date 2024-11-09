@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityFormController;
+use App\Http\Controllers\ActivityFormPDFController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthenticateController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -39,21 +40,22 @@ Route::middleware("auth")->group(function () {
     Route::post('/activity-form', [ActivityFormController::class, 'store']);
 
     Route::get('/activity-form-preview/{activityId}', [ActivityFormController::class, 'show'])->name('activity-form-preview');
-    // Route::inertia('/APF-whole', 'APFWhole')->name('apf-whole');
+
+    Route::get('/activity-form-pdf/{activityId}', [ActivityFormPDFController::class, 'generatePDF'])->name('activity-form-pdf');
+
 
     Route::middleware(['admin'])->group(function () {
-        Route::get('/admin-dashboard', [AdminController::class, 'getPending'])->name('admin-dashboard');
+        Route::get('/admin-dashboard', [AdminController::class, 'dashboard'])->name('admin-dashboard');
         Route::post('/activity-forms/{id}/status', [AdminController::class, 'updateStatus']);
-    
+
+        Route::get('/admin-pending-apf', [AdminController::class, 'getPending'])->name('admin-pending-apf');
         Route::get('/admin-approved-apf', [AdminController::class, 'getApproved'])->name('admin-approved-apf');
         Route::get('/admin-rejected-apf', [AdminController::class, 'getRejected'])->name('admin-rejected-apf');
     });
-    
+
     Route::middleware(['vpa'])->group(function () {
         Route::get('/admin-send-copy', [AdminController::class, 'copyReceiveBy'])->name('admin-send-copy');
     });
 
     Route::inertia('/{pathMatch}', 'notFound')->where('pathMatch', ".*");
 });
-
-

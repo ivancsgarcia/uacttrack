@@ -40,9 +40,10 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => fn () => $request->user()
-                ? $request->user()->only('first_name', 'last_name')
-                : null,
+                'user' => fn() => $request->user()
+                    ? $request->user()->only('first_name', 'last_name', 'position')
+                    : null,
+                'isVPA' => fn() => $request->user() && $request->user()->position === 'Vice President for Administration',
             ],
             'organization' => [
                 'logo' => fn() => $this->getOrganizationLogo(),
@@ -52,17 +53,9 @@ class HandleInertiaRequests extends Middleware
 
     private function getOrganizationLogo()
     {
-        // if (Auth::check() && Auth::user()->organization) {
-        //     $organization = Auth::user()->organization;
-        //     if ($organization && $organization->logo) {
-        //         return asset('storage/' . $organization->logo);
-        //     }
-        // }
-        // return null;
-
         if (Auth::check() && Auth::user()->organization) {
             $organizationLogo = Auth::user()->organization->logo;
-    
+
             if ($organizationLogo) {
                 return asset('storage/' . $organizationLogo);
             }

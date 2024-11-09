@@ -20,7 +20,7 @@ class VenueSeeder extends Seeder
             ],
             [
                 'name' => 'UA Conference Room',
-                'capacity' => null
+                'capacity' => 100
             ],
             [
                 'name' => 'UA Cafe Maria',
@@ -32,7 +32,7 @@ class VenueSeeder extends Seeder
             ],
             [
                 'name' => 'UA Chapel',
-                'capacity' => null
+                'capacity' => 500
             ],
             [
                 'name' => 'Swimming Pool',
@@ -40,30 +40,38 @@ class VenueSeeder extends Seeder
             ],
             [
                 'name' => 'Social Hall',
-                'capacity' => null
+                'capacity' => 100
             ],
             [
                 'name' => 'Multi-Purpose Room',
-                'capacity' => null
+                'capacity' => 300
             ],
             [
                 'name' => 'Gymnasium',
-                'capacity' => null
+                'capacity' => 4000
             ],
             [
                 'name' => 'Auditorium',
-                'capacity' => null
+                'capacity' => 540
             ],
             [
                 'name' => 'St. Thomas Aquinas Courtyard',
-                'capacity' => null
+                'capacity' => 3000
             ],
             [
                 'name' => 'Covered Court 1',
-                'capacity' => null
+                'capacity' => 800
             ],
             [
                 'name' => 'Covered Court 2',
+                'capacity' => 800
+            ],
+            [
+                'name' => 'Cinense Library',
+                'capacity' => null
+            ],
+            [
+                'name' => 'Classroom',
                 'capacity' => null
             ],
 

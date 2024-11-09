@@ -9,26 +9,39 @@ use Inertia\Inertia;
 
 class AdminController extends Controller
 {
+    public function dashboard()
+    {
+        $activityForms = ActivityForm::all();
+
+        return Inertia::render('Admin/AdminDashboard', [
+            'activityForms' => $activityForms
+        ]);
+    }
+
     public function getPending()
     {
         $user = Auth::user();
         if ($user->position == 'College Dean') {
-            // $activityForms = ActivityForm::where('college_dean_status', 'PENDING')->get();
-
-            $organizationUserIds = $user->organization->users->pluck('id'); // Get IDs of users in the same organization
+            $organizationUserIds = $user->organization->users->pluck('id');
             $activityForms = ActivityForm::whereIn('created_by', $organizationUserIds)
                 ->where('college_dean_status', 'PENDING')
+                ->orderBy('id', 'desc')
                 ->get();
-        } elseif ($user->position == 'OSA') {
-            $activityForms = ActivityForm::where('college_dean_status', 'APPROVED')->where('osa_status', 'PENDING')->get();
-        } elseif ($user->position == 'VPAA') {
-            $activityForms = ActivityForm::where('college_dean_status', 'APPROVED')->where('osa_status', 'APPROVED')->where('vpaa_status', 'PENDING')->get();
+        } elseif ($user->position == 'Office of Student Affairs') {
+            $activityForms = ActivityForm::where('osa_status', 'PENDING')->orderBy('id', 'desc')
+                ->get();
+        } elseif ($user->position == 'Vice President for Academic Affairs') {
+            $activityForms = ActivityForm::where('college_dean_status', 'APPROVED')->where('osa_status', 'APPROVED')->where('vpaa_status', 'PENDING')->orderBy('id', 'desc')
+                ->get();
+        } elseif ($user->position == 'Vice President for Administration') {
+            $activityForms = ActivityForm::where('college_dean_status', 'APPROVED')->where('osa_status', 'APPROVED')->where('vpaa_status', 'APPROVED')->where('vpa_status', 'PENDING')->orderBy('id', 'desc')
+                ->get();
         } else {
-            // Default: show all forms (for admins or higher-level roles)
-            $activityForms = ActivityForm::where('status', 'PENDING')->get();
+            // $activityForms = ActivityForm::where('status', 'PENDING')->get();
+            $activityForms = null;
         }
 
-        return Inertia::render('Admin/AdminDashboard', [
+        return Inertia::render('Admin/AdminPendingAPF', [
             'activityForms' => $activityForms,
             'position' => $user->position
         ]);
@@ -38,17 +51,17 @@ class AdminController extends Controller
         $user = Auth::user();
 
         if ($user->position == 'College Dean') {
-            $approvedForms = ActivityForm::where('college_dean_status', 'APPROVED')->get();
-        } elseif ($user->position == 'OSA') {
-            $approvedForms = ActivityForm::where('osa_status', 'APPROVED')->get();
-        } elseif ($user->position == 'VPAA') {
-            $approvedForms = ActivityForm::where('vpaa_status', 'APPROVED')->get();
+            $approvedForms = ActivityForm::where('college_dean_status', 'APPROVED')->orderBy('id', 'desc')->get();
+        } elseif ($user->position == 'Office of Student Affairs') {
+            $approvedForms = ActivityForm::where('osa_status', 'APPROVED')->orderBy('id', 'desc')->get();
+        } elseif ($user->position == 'Vice President for Academic Affairs') {
+            $approvedForms = ActivityForm::where('vpaa_status', 'APPROVED')->orderBy('id', 'desc')->get();
+        } elseif ($user->position == 'Vice President for Administration') {
+            $approvedForms = ActivityForm::where('vpa_status', 'APPROVED')->orderBy('id', 'desc')->get();
         } else {
-            // Default: show all forms (for admins or higher-level roles)
-            $approvedForms = ActivityForm::all();
+            $approvedForms = null;
         }
 
-        // Return Inertia response with the activity forms data
         return Inertia::render('Admin/AdminApprovedAPF', [
             'approvedForms' => $approvedForms
         ]);
@@ -59,14 +72,17 @@ class AdminController extends Controller
         $user = Auth::user();
 
         if ($user->position == 'College Dean') {
-            $rejectedForms = ActivityForm::where('college_dean_status', 'REJECTED')->get();
-        } elseif ($user->position == 'OSA') {
-            $rejectedForms = ActivityForm::where('osa_status', 'REJECTED')->get();
-        } elseif ($user->position == 'VPAA') {
-            $rejectedForms = ActivityForm::where('vpaa_status', 'REJECTED')->get();
+            $rejectedForms = ActivityForm::where('college_dean_status', 'REJECTED')->orderBy('id', 'desc')->get();
+        } elseif ($user->position == 'Office of Student Affairs') {
+            $rejectedForms = ActivityForm::where('osa_status', 'REJECTED')->orderBy('id', 'desc')->get();
+        } elseif ($user->position == 'Vice President for Academic Affairs') {
+            $rejectedForms = ActivityForm::where('vpaa_status', 'REJECTED')->orderBy('id', 'desc')->get();
+        } elseif ($user->position == 'Vice President for Administration') {
+            $rejectedForms = ActivityForm::where('vpa_status', 'REJECTED')->orderBy('id', 'desc')->get();
+        } else {
+            $rejectedForms = null;
         }
 
-        // Return Inertia response with the activity forms data
         return Inertia::render('Admin/AdminRejectedAPF', [
             'rejectedForms' => $rejectedForms
         ]);
@@ -82,11 +98,14 @@ class AdminController extends Controller
             case 'College Dean':
                 $activityForm->college_dean_status = $request->status;
                 break;
-            case 'OSA':
+            case 'Office of Student Affairs':
                 $activityForm->osa_status = $request->status;
                 break;
-            case 'VPAA':
+            case 'Vice President for Academic Affairs':
                 $activityForm->vpaa_status = $request->status;
+                break;
+            case 'Vice President for Administration':
+                $activityForm->vpa_status = $request->status;
                 break;
             default:
                 return response()->json(['message' => 'Unauthorized'], 403);
@@ -95,14 +114,16 @@ class AdminController extends Controller
         if (
             $activityForm->college_dean_status === 'APPROVED' &&
             $activityForm->osa_status === 'APPROVED' &&
-            $activityForm->vpaa_status === 'APPROVED'
+            $activityForm->vpaa_status === 'APPROVED' &&
+            $activityForm->vpa_status === 'APPROVED'
         ) {
             // Set the main status to "APPROVED"
             $activityForm->status = 'APPROVED';
         } else if (
             $activityForm->college_dean_status === 'REJECTED' ||
             $activityForm->osa_status === 'REJECTED' ||
-            $activityForm->vpaa_status === 'REJECTED'
+            $activityForm->vpaa_status === 'REJECTED' ||
+            $activityForm->vpa_status === 'REJECTED'
         ) {
             // Set the main status to "REJECTED"
             $activityForm->status = 'REJECTED';
@@ -110,11 +131,6 @@ class AdminController extends Controller
 
         $activityForm->save();
         return Inertia::location(url()->previous());
-    }
-
-    public function revision()
-    {
-        return Inertia::render('Admin/AdminRevision');
     }
 
     public function copyReceiveBy()

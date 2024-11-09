@@ -20,7 +20,7 @@ const submit = () => {
         <div class="bg-img">
             <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
         </div>
-        
+
         <div class="content">
             <img
                 :src="'images/sys-logos/UActTrack-logo.png'"
@@ -47,7 +47,7 @@ const submit = () => {
                     />
                 </div>
                 <div v-if="form.errors.email" class="error">
-                    {{ form.errors.email }}
+                    * {{ form.errors.email }}
                 </div>
 
                 <!-- Password -->
@@ -67,7 +67,7 @@ const submit = () => {
                     />
                 </div>
                 <div v-if="form.errors.password" class="error">
-                    {{ form.errors.password }}
+                    * {{ form.errors.password }}
                 </div>
 
                 <!-- Forgot Password -->
@@ -112,11 +112,10 @@ const submit = () => {
 
 .bg-img img {
     transform: rotate(15deg);
-    width: 900px;
+    width: 40rem;
     height: auto;
-    min-width: 200px;
     filter: grayscale(100%);
-    opacity: 0.2;
+    opacity: 0.1;
 }
 
 .content {
@@ -127,6 +126,12 @@ const submit = () => {
     width: 50%;
 }
 
+.content img {
+    width: 20rem;
+    height: auto;
+    margin-bottom: 0.5rem;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -134,25 +139,24 @@ form {
     align-items: center;
     background-color: #272f5c;
     border-radius: 3rem;
-    padding: 4rem 4rem;
-    box-shadow: 8px 8px 15px black;
-    margin-top: 2rem;
+    padding: 3rem;
+    box-shadow: 8px 8px 15px gray;
 }
 
 h1 {
     color: white;
-    font-size: 3rem;
+    font-size: 2rem;
     text-transform: uppercase;
     text-shadow: 3px 2px black;
-    margin-bottom: 1.5rem;
+    /* margin-bottom: 1rem; */
     letter-spacing: 0.1rem;
 }
 
 .text-box {
     display: flex;
     background-color: #fff;
-    border-radius: 1.5rem;
-    margin-top: 2rem;
+    border-radius: 1rem;
+    margin-top: 1.2rem;
     box-shadow: 2px 4px 10px black;
 }
 
@@ -160,13 +164,13 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1rem 1rem 1rem 1.5rem;
+    padding: 0.5rem 0.8rem 0.5rem 1rem;
 }
 
 input {
     border-radius: 1.5rem;
     width: 100%;
-    padding: 0 1rem;
+    padding: 0.5rem 1rem;
     font-size: 1.5rem;
     color: #272f5c;
 }
@@ -190,12 +194,12 @@ input:focus {
     text-align: end;
     width: 100%;
     color: white;
-    margin-top: 0.1rem;
+    margin-top: 0.4rem;
 }
 
 .forgot-password .link {
     text-decoration: underline;
-    letter-spacing: 0.1rem;
+    /* letter-spacing: 0.1rem; */
 }
 
 .forgot-password .link:hover {
@@ -206,7 +210,7 @@ input:focus {
     background-color: white;
     color: #272f5c;
     border-radius: 1.2rem;
-    padding: 0.8rem 3rem;
+    padding: 0.5rem 2rem;
     text-transform: uppercase;
     margin-top: 2.5rem;
     font-size: 1.5rem;
@@ -215,7 +219,11 @@ input:focus {
 }
 
 .login-btn:hover {
-    background-color: #93c5fd;
+    background-color: #5b649a;
     color: white;
+}
+
+::placeholder {
+    opacity: 0.4;
 }
 </style>

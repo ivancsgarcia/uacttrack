@@ -26,7 +26,7 @@ class AdminSeeder extends Seeder
             [
                 'role' => 'Admin',
                 'organization_id' => 1,
-                'position' => 'OSA',
+                'position' => 'Office of Student Affairs',
                 'first_name' => 'Precious Bernadette',
                 'last_name' => 'Estrada',
                 'email' => 'osa@email.com',
@@ -35,28 +35,10 @@ class AdminSeeder extends Seeder
             [
                 'role' => 'Admin',
                 'organization_id' => 1,
-                'position' => 'VPAA',
+                'position' => 'Vice President for Academic Affairs',
                 'first_name' => 'Arnel',
                 'last_name' => 'Sicat',
                 'email' => 'vpaa@email.com',
-                'password' => bcrypt('123')
-            ],
-            [
-                'role' => 'Admin',
-                'organization_id' => 1,
-                'position' => 'Finance Team Leader',
-                'first_name' => 'idk',
-                'last_name' => 'idk',
-                'email' => 'ftl@email.com',
-                'password' => bcrypt('123')
-            ],
-            [
-                'role' => 'Admin',
-                'organization_id' => 1,
-                'position' => 'Vice President for Finance',
-                'first_name' => 'Khriselle Anne',
-                'last_name' => 'Castillo',
-                'email' => 'vpf@email.com',
                 'password' => bcrypt('123')
             ],
             [

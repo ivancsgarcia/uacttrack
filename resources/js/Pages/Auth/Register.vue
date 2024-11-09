@@ -9,9 +9,9 @@ defineProps({
 });
 
 const form = useForm({
-    role: '',
-    organization_id: '',
-    position: '',
+    role: "",
+    organization_id: "",
+    position: "",
     first_name: null,
     last_name: null,
     email: null,
@@ -50,10 +50,8 @@ const organization_positions = [
 
 const admin_positions = [
     "College Dean",
-    "VPAA",
-    "OSA",
-    "Finance Team Leader",
-    "Vice President for Finance",
+    "Vice President for Academic Affairs",
+    "Office of Student Affairs",
     "Vice President for Administration",
 ];
 </script>
@@ -119,10 +117,7 @@ const admin_positions = [
                         <option value="" selected disabled>
                             Select Your Position
                         </option>
-                        <option
-                            v-for="adPos in admin_positions"
-                            :value="adPos"
-                        >
+                        <option v-for="adPos in admin_positions" :value="adPos">
                             {{ adPos }}
                         </option>
                     </select>
@@ -137,7 +132,14 @@ const admin_positions = [
                 </div>
 
                 <!-- Organization -->
-                <div v-if="form.role == 'Student Officer' || (form.role == 'Admin' && form.position == 'College Dean')" class="text-box">
+                <div
+                    v-if="
+                        form.role == 'Student Officer' ||
+                        (form.role == 'Admin' &&
+                            form.position == 'College Dean')
+                    "
+                    class="text-box"
+                >
                     <select v-model="form.organization_id">
                         <option value="" selected disabled>
                             Select An Organization

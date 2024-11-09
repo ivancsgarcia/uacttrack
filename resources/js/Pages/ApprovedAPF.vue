@@ -1,4 +1,6 @@
 <script setup>
+import { Link } from "@inertiajs/vue3";
+
 defineProps({
     approvedForms: Array,
 });
@@ -59,7 +61,11 @@ defineProps({
                     :key="form.id"
                 >
                     <td class="bg-ua-gray w-1/5 border">{{ form.id }}</td>
-                    <td class="bg-ua-gray w-3/5 border">{{ form.title }}</td>
+                    <td class="bg-ua-gray w-3/5 border underline">
+                        <Link :href="route('activity-form-preview', form.id)">{{
+                            form.title
+                        }}</Link>
+                    </td>
                     <td class="bg-ua-gray w-1/5 border">
                         {{
                             new Date(form.created_at).toLocaleDateString(

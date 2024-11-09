@@ -8,19 +8,19 @@ const props = defineProps({
     collegeDeanName: String,
     osaName: String,
     vpaaName: String,
+    vpaName: String,
 });
 
 const showCollegeDean = ref(false);
 const showOSA = ref(false);
 const showVPAA = ref(false);
-const showFundings = ref(false);
+const showVPA = ref(false);
 const copyReceive = ref(false);
 const op = ref();
 
 const toggle = (event) => {
     op.value.toggle(event);
 };
-
 </script>
 
 <template>
@@ -60,7 +60,7 @@ const toggle = (event) => {
 
             <div class="vertical-line"></div>
 
-            <MyCalendar />
+            <MyCalendar :activityForms="props.activityForms" />
 
             <div class="box-div">
                 <Link :href="route('submitted-apf')">
@@ -113,9 +113,9 @@ const toggle = (event) => {
                     </template>
                 </Card>
 
-                <Card @click="showFundings = true">
+                <Card @click="showVPA = true">
                     <template #content>
-                        <p>Funding Needs Reviewed</p>
+                        <p>VPA Approval</p>
                     </template>
                 </Card>
 
@@ -196,31 +196,23 @@ const toggle = (event) => {
             </Dialog>
 
             <Dialog
-                v-model:visible="showFundings"
-                header="Fundings Approval Status"
+                v-model:visible="showVPA"
+                header="VPA Approval Status"
                 modal
             >
                 <table>
-                    <tbody>
+                    <thead>
                         <tr>
                             <th>Transaction Number</th>
-                            <td>00</td>
-                        </tr>
-                        <tr>
-                            <th>Funding Needs Approval</th>
+                            <th>VPA</th>
                             <th>Status</th>
                         </tr>
-                        <tr>
-                            <td>Finance FMS Team Leader</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Vice President For Finance</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Vice President For Administration</td>
-                            <td></td>
+                    </thead>
+                    <tbody>
+                        <tr v-for="form in activityForms" :key="form.id">
+                            <td>{{ form.id }}</td>
+                            <td>{{ vpaName }}</td>
+                            <td>{{ form.vpa_status }}</td>
                         </tr>
                     </tbody>
                 </table>

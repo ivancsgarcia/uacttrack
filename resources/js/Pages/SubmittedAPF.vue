@@ -57,7 +57,6 @@ defineProps({
                 </thead>
 
                 <tbody>
-                    <!-- fetch data -->
                     <tr
                         class="text-center h-20"
                         v-for="form in activityForms"

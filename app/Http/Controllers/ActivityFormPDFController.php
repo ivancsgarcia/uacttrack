@@ -2,24 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 use App\Models\ActivityForm;
 use App\Models\Organization;
 use App\Models\User;
-use Inertia\Inertia;
+use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
-class DashboardController extends Controller
+class ActivityFormPDFController extends Controller
 {
-    public function create()
+    public function generatePDF($activityId)
     {
+        $activityForms = ActivityForm::with('creator')->where('id', $activityId)
+            ->firstOrFail();
 
         $organizationId = Auth::user()->organization_id;
-        $activityForms = ActivityForm::whereHas('creator', function ($query) use ($organizationId) {
-            $query->where('organization_id', $organizationId);
-        })
-            ->orderBy('id', 'desc')
-            ->get();
-
         // College Dean
         $collegeDean = Organization::where('id', $organizationId)
             ->with('collegeDean')
@@ -48,15 +46,15 @@ class DashboardController extends Controller
             $vpaName = $vpa->first_name . ' ' . $vpa->last_name;
         }
 
-        $calendarActivityForms = ActivityForm::get();
-
-
-        return Inertia::render('Dashboard', [
+        $data = [
             'activityForms' => $activityForms,
             'collegeDeanName' => $collegeDeanName,
             'osaName' => $osaName,
             'vpaaName' => $vpaaName,
             'vpaName' => $vpaName
-        ]);
+        ];
+
+        $pdf = Pdf::loadView('activityForm', $data);
+        return $pdf->download('activity-form-' . $activityId . '.pdf');
     }
 }

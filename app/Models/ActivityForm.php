@@ -16,6 +16,7 @@ class ActivityForm extends Model
         'food',
         'supplies',
         'reproduction',
+        'others',
         'date',
         'from_time',
         'to_time',
@@ -31,12 +32,9 @@ class ActivityForm extends Model
         'supplies_file',
         'reproduction_file',
         'others_file',
-        'college_dean_status', 
-        'osa_status', 
+        'college_dean_status',
+        'osa_status',
         'vpaa_status',
-        'college_dean_remarks', 
-        'osa_remarks', 
-        'vpaa_remarks',
     ];
 
     public function creator()

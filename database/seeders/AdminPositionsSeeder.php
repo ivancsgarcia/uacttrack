@@ -15,10 +15,8 @@ class AdminPositionsSeeder extends Seeder
     {
         DB::table('admin_positions')->insert([
             ['name' => 'College Dean'],
-            ['name' => 'VPAA'],
-            ['name' => 'OSA'],
-            ['name' => 'Finance Team Leader'],
-            ['name' => 'Vice President For Finance'],
+            ['name' => 'Vice President for Academic Affairs'],
+            ['name' => 'Office of Student Affairs'],
             ['name' => 'Vice President For Administration'],
         ]);
     }

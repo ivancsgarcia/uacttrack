@@ -48,6 +48,14 @@ const emit = defineEmits(["nextStep"]);
             </div>
         </div>
 
+        <div class="flex justify-center text-center mb-4 gap-4">
+            <div class="w-2/4 bg-slate-200 shadow-lg p-2">Others</div>
+
+            <div class="w-1/4 bg-ua-blue shadow-lg p-2">
+                <ToggleSwitch v-model="form.others" />
+            </div>
+        </div>
+
         <div class="mx-14 mt-4">
             <p class="text-base">
                 Please download and complete any additional forms required based

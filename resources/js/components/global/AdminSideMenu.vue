@@ -1,5 +1,8 @@
 <script setup>
-import { Link } from "@inertiajs/vue3";
+import { Link, usePage } from "@inertiajs/vue3";
+
+const page = usePage();
+const isVPA = page.props.auth.isVPA;
 </script>
 
 <template>
@@ -17,6 +20,19 @@ import { Link } from "@inertiajs/vue3";
                 <div
                     :class="
                         route().current('admin-dashboard')
+                            ? '!bg-ua-blue !text-white'
+                            : ''
+                    "
+                    class="link"
+                >
+                    <p>Dashboard</p>
+                </div>
+            </Link>
+
+            <Link :href="route('admin-pending-apf')">
+                <div
+                    :class="
+                        route().current('admin-pending-apf')
                             ? '!bg-ua-blue !text-white'
                             : ''
                     "
@@ -52,7 +68,7 @@ import { Link } from "@inertiajs/vue3";
                 </div>
             </Link>
 
-            <Link :href="route('admin-send-copy')">
+            <Link v-if="isVPA" :href="route('admin-send-copy')">
                 <div
                     :class="
                         route().current('admin-send-copy')

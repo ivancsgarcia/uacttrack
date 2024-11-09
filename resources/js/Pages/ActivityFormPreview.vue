@@ -1,7 +1,13 @@
 <script setup>
 const props = defineProps({
     activityForms: Object,
+    logoPath: String,
 });
+
+const downloadPDF = (activityId) => {
+    const url = `/activity-form-pdf/${activityId}`;
+    window.open(url, "_blank");
+};
 </script>
 
 <template>
@@ -9,7 +15,7 @@ const props = defineProps({
         <UAHeader />
 
         <div class="bg-img">
-            <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+            <img :src="logoPath" alt="UA-logo" />
         </div>
 
         <div class="main-content p-4">
@@ -158,16 +164,16 @@ const props = defineProps({
                     <h2>Projected Funding Needs</h2>
                 </div>
 
-                <div class="flex mb-4">
+                <!-- <div class="flex mb-4">
                     <div class="w-2/4 text-center text-ua-blue text-2xl">
                         Nature
                     </div>
                     <div class="w-2/4 text-center text-ua-blue text-2xl">
                         Forms to be Attached
                     </div>
-                </div>
+                </div> -->
 
-                <div class="flex gap-4 mb-4 text-xl">
+                <!-- <div class="flex gap-4 mb-4 text-xl">
                     <div
                         class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
                     >
@@ -190,9 +196,9 @@ const props = defineProps({
                             />
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="flex mx-auto gap-4 mb-4 text-xl">
+                <!-- <div class="flex mx-auto gap-4 mb-4 text-xl">
                     <div
                         class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
                     >
@@ -209,9 +215,9 @@ const props = defineProps({
                             />
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="flex mx-auto gap-4 mb-4 text-xl">
+                <!-- <div class="flex mx-auto gap-4 mb-4 text-xl">
                     <div
                         class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
                     >
@@ -232,9 +238,9 @@ const props = defineProps({
                             />
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="flex mx-auto gap-4 mb-4 text-xl">
+                <!-- <div class="flex mx-auto gap-4 mb-4 text-xl">
                     <div
                         class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
                     >
@@ -254,9 +260,9 @@ const props = defineProps({
                             />
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="flex gap-4 text-xl">
+                <!-- <div class="flex gap-4 text-xl">
                     <div
                         class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
                     >
@@ -273,10 +279,10 @@ const props = defineProps({
                             />
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
-            <div class="">
+            <!-- <div class="">
                 <div class="p-2 bg-black/20 text-center text-2xl my-8">
                     <h2>Approvals</h2>
                 </div>
@@ -529,7 +535,8 @@ const props = defineProps({
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
+            <button @click="downloadPDF(activityForms.id)">Download PDF</button>
         </div>
     </div>
 </template>

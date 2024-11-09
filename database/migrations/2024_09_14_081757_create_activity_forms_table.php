@@ -20,6 +20,7 @@ return new class extends Migration
             $table->boolean('food');
             $table->boolean('supplies');
             $table->boolean('reproduction');
+            $table->boolean('others');
 
             $table->date('date');
             $table->time('from_time');
@@ -41,9 +42,7 @@ return new class extends Migration
             $table->enum('college_dean_status', ['PENDING', 'APPROVED', 'REJECTED', 'FOR_REVISION'])->default('PENDING');
             $table->enum('osa_status', ['PENDING', 'APPROVED', 'REJECTED', 'FOR_REVISION'])->default('PENDING');
             $table->enum('vpaa_status', ['PENDING', 'APPROVED', 'REJECTED', 'FOR_REVISION'])->default('PENDING');
-            $table->text('college_dean_remarks')->nullable();
-            $table->text('osa_remarks')->nullable();
-            $table->text('vpaa_remarks')->nullable();
+            $table->enum('vpa_status', ['PENDING', 'APPROVED', 'REJECTED', 'FOR_REVISION'])->default('PENDING');
 
             $table->timestamps();
         });

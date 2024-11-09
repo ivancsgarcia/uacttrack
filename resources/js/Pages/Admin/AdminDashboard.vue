@@ -1,71 +1,9 @@
 <script setup>
-import AdminSideMenu from "../../components/global/AdminSideMenu.vue";
+import MyCalendar from "../../components/global/MyCalendar.vue";
 
-defineProps({
-  activityForms: Array
-})
-
-import { ref } from "vue";
-import { router, usePage } from "@inertiajs/vue3";
-
-// Get the props passed from the Laravel controller
-const { activityForms, position } = usePage().props;
-
-// Track the status updates
-const formStatuses = ref({});
-
-// Initialize the form statuses based on the existing data
-activityForms.forEach((form) => {
-    formStatuses.value[form.id] = getInitialStatus(form, position);
+const props = defineProps({
+    activityForms: Array,
 });
-
-// Determine the initial status based on the user's position
-function getInitialStatus(form, position) {
-    if (position === "College Dean") return form.college_dean_status;
-    if (position === "OSA") return form.osa_status;
-    if (position === "VPAA") return form.vpaa_status;
-    return form.status;
-}
-
-// Method to update the status in the database
-const updateStatus = (formId) => {
-    router.post(`/activity-forms/${formId}/status`, {
-        status: formStatuses.value[formId],
-        position: position, // Pass the current user's position
-    });
-};
-
-const changeStatus = () => {
-    confirm.require({
-        header: "Confirmation",
-        icon: "pi pi-info-circle",
-        message: "Are you sure you want to change the status?",
-        rejectProps: {
-            label: "Cancel",
-            severity: "secondary",
-            outlined: true,
-        },
-        acceptProps: {
-            label: "Save",
-            severity: "success",
-        },
-        accept: () => {
-            // updateStatus(form.id)
-            toast.add({
-                severity: "success",
-                summary: "Confirmed",
-                life: 3000,
-            });
-        },
-        reject: () => {
-            toast.add({
-                severity: "error",
-                summary: "Cancelled",
-                life: 3000,
-            });
-        },
-    });
-};
 </script>
 
 <template>
@@ -89,61 +27,12 @@ const changeStatus = () => {
 
             <div class="h-0.5 bg-ua-blue mb-8"></div>
 
-            <h1 class="text-center text-4xl mb-4 text-ua-blue">
-                Pending Activity Proposal Forms
-            </h1>
-
-            <table class="w-full border-separate border-spacing-4">
-                <thead>
-                    <tr class="bg-ua-blue text-white h-20">
-                        <th class="w-1/5 border">Transaction Number</th>
-                        <th class="w-1/5 border">Date</th>
-                        <th>Activity Proposal Form</th>
-                        <th class="w-1/5 border">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr
-                        v-for="form in activityForms"
-                        :key="form.id"
-                        class="text-center h-20"
-                    >
-                        <td class="bg-ua-gray text-ua-blue">{{ form.id }}</td>
-                        <td class="bg-ua-gray text-ua-blue">
-                            {{
-                                new Date(form.created_at).toLocaleDateString(
-                                    "en-US"
-                                )
-                            }}
-                        </td>
-                        <td class="bg-ua-gray text-ua-blue">
-                            {{ form.title }}
-                        </td>
-                        <td class="bg-ua-gray text-ua-blue p-0">
-                            <select
-                                v-model="formStatuses[form.id]"
-                                @change="changeStatus"
-                                class="w-full h-20 bg-ua-gray p-2"
-                            >
-                                <option value="PENDING" selected disabled>
-                                    Pending
-                                </option>
-                                <option value="APPROVED">Approved</option>
-                                <option value="REJECTED">Rejected</option>
-                            </select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <MyCalendar :activityForms="props.activityForms" />
         </div>
     </div>
 </template>
 
 <style scoped>
-/* .main-content {
-      min-height: calc(100vh - 64px);
-    } */
-
 .bg-img {
     position: fixed;
     right: 0;
@@ -155,12 +44,8 @@ const changeStatus = () => {
 
 .bg-img img {
     transform: rotate(15deg);
-    width: 60rem;
+    width: 40rem;
     filter: grayscale(100%);
     opacity: 0.1;
-}
-
-.approval-boxes {
-    flex: 1 1 calc(33.333% - 20px);
 }
 </style>

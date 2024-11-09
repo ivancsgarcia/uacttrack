@@ -1,7 +1,5 @@
 <script setup>
-import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
-import { router } from "@inertiajs/vue3";
 import APF from "../components/apf/APF.vue";
 import APF1 from "../components/apf/APF1.vue";
 import APF2 from "../components/apf/APF2.vue";
@@ -19,6 +17,7 @@ import { useToast } from "primevue/usetoast";
 
 const props = defineProps({
     venues: Object,
+    images: Array,
 });
 
 const form = useForm({
@@ -26,10 +25,11 @@ const form = useForm({
     food: false,
     supplies: false,
     reproduction: false,
+    others: false,
     date: null,
-    from_time: null,
-    to_time: null,
-    attendance_count: null,
+    from_time: new Date(),
+    to_time: new Date(),
+    attendance_count: 0,
     event_type: null,
     venue: null,
     requirements_or_resources_needed: null,
@@ -61,7 +61,6 @@ const cancel = () => {
             severity: "danger",
         },
         accept: () => {
-            // router.get(route("home"));
             window.location.href = route("home");
             toast.add({
                 severity: "success",
@@ -172,10 +171,38 @@ const submitForm = async () => {
             <form @submit.prevent="submitForm">
                 <Stepper value="1" linear>
                     <StepList>
-                        <Step value="1">Start</Step>
-                        <Step value="2">Projected Funding Needs</Step>
-                        <Step value="3">Date and Venue Booking</Step>
-                        <Step value="4">Activity Form</Step>
+                        <Step
+                            value="1"
+                            :pt="{
+                                number: '!text-ua-blue',
+                                title: ' !text-ua-blue',
+                            }"
+                            >Start</Step
+                        >
+                        <Step
+                            value="2"
+                            :pt="{
+                                number: '!text-ua-blue',
+                                title: ' !text-ua-blue',
+                            }"
+                            >Projected Funding Needs</Step
+                        >
+                        <Step
+                            value="3"
+                            :pt="{
+                                number: '!text-ua-blue',
+                                title: ' !text-ua-blue',
+                            }"
+                            >Date and Venue Booking</Step
+                        >
+                        <Step
+                            value="4"
+                            :pt="{
+                                number: '!text-ua-blue',
+                                title: ' !text-ua-blue',
+                            }"
+                            >Activity Form</Step
+                        >
                     </StepList>
                     <StepPanels>
                         <StepPanel v-slot="{ activateCallback }" value="1">
@@ -183,19 +210,25 @@ const submitForm = async () => {
                                 <div
                                     class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
                                 >
-                                    <APF />
+                                    <APF :images="images" />
                                 </div>
                             </div>
                             <div class="flex pt-6 justify-between">
                                 <Button
                                     label="Cancel"
                                     severity="secondary"
-                                    icon="pi pi-arrow-right"
+                                    icon="pi pi-arrow-left"
                                     @click="cancel"
                                 />
                                 <Button
                                     label="Start"
+                                    :pt="{
+                                        root: {
+                                            class: '!bg-ua-blue !outline-none !border-none !hover:bg-ua-blue/80 !hover:border-2',
+                                        },
+                                    }"
                                     icon="pi pi-arrow-right"
+                                    iconPos="right"
                                     @click="activateCallback('2')"
                                 />
                             </div>
@@ -212,18 +245,24 @@ const submitForm = async () => {
                                 <Button
                                     label="Back"
                                     severity="secondary"
-                                    icon="pi pi-arrow-right"
+                                    icon="pi pi-arrow-left"
                                     @click="activateCallback('1')"
                                 />
                                 <Button
                                     label="Forms"
-                                    severity="info"
+                                    :pt="{
+                                        root: '!bg-ua-yellow !text-ua-blue !outline-none !border-none',
+                                    }"
                                     icon="pi pi-bars"
                                     @click="openForms"
                                 />
                                 <Button
                                     label="Next"
+                                    :pt="{
+                                        root: '!bg-ua-blue !outline-none !border-none',
+                                    }"
                                     icon="pi pi-arrow-right"
+                                    iconPos="right"
                                     @click="activateCallback('3')"
                                 />
                             </div>
@@ -250,6 +289,9 @@ const submitForm = async () => {
                                 />
                                 <Button
                                     label="Next"
+                                    :pt="{
+                                        root: '!bg-ua-blue !outline-none !border-none',
+                                    }"
                                     icon="pi pi-arrow-right"
                                     iconPos="right"
                                     @click="activateCallback('4')"
@@ -279,6 +321,9 @@ const submitForm = async () => {
 
                                 <Button
                                     label="Submit"
+                                    :pt="{
+                                        root: '!bg-ua-blue !outline-none !border-none',
+                                    }"
                                     icon="pi pi-arrow-right"
                                     iconPos="right"
                                     @click="submit"

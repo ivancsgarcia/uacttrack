@@ -1,4 +1,6 @@
 <script setup>
+import { Link } from "@inertiajs/vue3";
+
 defineProps({
     rejectedForms: Array,
 });
@@ -55,15 +57,17 @@ defineProps({
                 </thead>
 
                 <tbody>
-                    <!-- fetch data -->
                     <tr
                         class="text-center h-20"
                         v-for="form in rejectedForms"
                         :key="form.id"
                     >
                         <td class="bg-ua-gray w-1/5 border">{{ form.id }}</td>
-                        <td class="bg-ua-gray w-3/5 border">
-                            {{ form.title }}
+                        <td class="bg-ua-gray w-3/5 border underline">
+                            <Link
+                                :href="route('activity-form-preview', form.id)"
+                                >{{ form.title }}</Link
+                            >
                         </td>
                         <td class="bg-ua-gray w-1/5 border">
                             {{

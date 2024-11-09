@@ -16,8 +16,23 @@ class ActivityFormController extends Controller
     {
         $venues = Venue::all();
 
+        $imageFiles = [];
+        $directoryPath = public_path('images/ua-events');
+        if (is_dir($directoryPath)) {
+            foreach (scandir($directoryPath) as $file) {
+                if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif'])) {
+                    $imageFiles[] = [
+                        'itemImageSrc' => asset("images/ua-events/{$file}"), // Full path for the Galleria item
+                        'thumbnailImageSrc' => asset("images/ua-events/{$file}"), // Thumbnail path
+                        'alt' => pathinfo($file, PATHINFO_FILENAME), // Use the filename as alt text
+                    ];
+                }
+            }
+        }
+
         return Inertia::render('ActivityForm', [
             'venues' => $venues,
+            'images' => $imageFiles,
         ]);
     }
 
@@ -25,28 +40,33 @@ class ActivityFormController extends Controller
     {
 
         $data = $request->validate([
-            'check_payment_or_cash' => ['required', 'boolean'],
-            'food' => ['required', 'boolean'],
-            'supplies' => ['required', 'boolean'],
-            'reproduction' => ['required', 'boolean'],
-            'date' => ['required', 'date'],
-            'from_time' => ['required'],
-            'to_time' => ['required'],
-            'attendance_count' => ['required', 'integer', 'numeric'],
-            'event_type' => ['required', 'string'],
-            'venue' => ['required', 'max:255'],
-            'requirements_or_resources_needed' => ['required', 'string'],
-            'title' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            'participant' => ['required', 'string'],
-            'payment_or_cash_file' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048'],
-            'food_file' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048'],
-            'supplies_file' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048'],
-            'reproduction_file' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048'],
-            'others_file' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:2048']
+            'check_payment_or_cash' => 'required|boolean',
+            'food' => 'required|boolean',
+            'supplies' => 'required|boolean',
+            'reproduction' => 'required|boolean',
+            'others' => 'required|boolean',
+
+            'date' => 'required|date',
+            'from_time' => 'required|date',
+            'to_time' => 'required|date',
+            'attendance_count' => 'required|integer|numeric|min:1|max:5000',
+            'event_type' => 'required|string',
+            'venue' => 'required|max:255',
+            'requirements_or_resources_needed' => 'required|string',
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'participant' => 'required|string',
+
+            'payment_or_cash_file' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
+            'food_file' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
+            'supplies_file' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
+            'reproduction_file' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
+            'others_file' => 'nullable|file|mimes:pdf,jpg,png|max:2048'
         ]);
 
         $data['date'] = Carbon::parse($request->date)->format('Y-m-d');
+        $data['from_time'] = Carbon::parse($request->from_time)->format('h:i');
+        $data['to_time'] = Carbon::parse($request->to_time)->format('h:i');
 
         $data['created_by'] = Auth::id();
 
@@ -78,6 +98,7 @@ class ActivityFormController extends Controller
 
         return Inertia::render('ActivityFormPreview', [
             'activityForms' => $activityForms,
+            'logoPath' => asset('images/sys-logos/ua-logo.png')
         ]);
     }
 
@@ -87,7 +108,8 @@ class ActivityFormController extends Controller
 
         $activityForms = ActivityForm::where('status', 'PENDING')->whereHas('creator', function ($query) use ($organizationId) {
             $query->where('organization_id', $organizationId);
-        })->get();
+        })->orderBy('id', 'desc')
+            ->get();
 
         return Inertia::render('SubmittedAPF', [
             'activityForms' => $activityForms
@@ -100,7 +122,8 @@ class ActivityFormController extends Controller
 
         $approvedForms = ActivityForm::where('status', 'APPROVED')->whereHas('creator', function ($query) use ($organizationId) {
             $query->where('organization_id', $organizationId);
-        })->get();
+        })->orderBy('id', 'desc')
+            ->get();
 
         return Inertia::render('ApprovedAPF', [
             'approvedForms' => $approvedForms
@@ -113,7 +136,8 @@ class ActivityFormController extends Controller
 
         $rejectedForms = ActivityForm::where('status', 'REJECTED')->whereHas('creator', function ($query) use ($organizationId) {
             $query->where('organization_id', $organizationId);
-        })->get();
+        })->orderBy('id', 'desc')
+            ->get();
 
         return Inertia::render('RejectedAPF', [
             'rejectedForms' => $rejectedForms
