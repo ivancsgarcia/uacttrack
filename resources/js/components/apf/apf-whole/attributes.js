@@ -1,11 +1,4 @@
-<script setup>
-import { ref, onMounted } from "vue";
-
-const props = defineProps({
-    activityForms: Array,
-});
-
-const attrs = ref([
+export const attrs = [
     { key: "today", highlight: true, dates: new Date() },
     {
         highlight: {
@@ -308,73 +301,4 @@ const attrs = ref([
             label: "3rd Semester Final Exams (Graduating Students)",
         },
     },
-]);
-
-const disabledDates = ref([
-    {
-        start: new Date(),
-        end: new Date(new Date().setDate(new Date().getDate() + 7)),
-    }, // cant make an APF 1week from today
-    { start: new Date(2024, 8, 8), end: new Date(2024, 8, 15) },
-    { start: new Date(2024, 9, 20), end: new Date(2024, 9, 27) },
-    { start: new Date(2024, 11, 1), end: new Date(2024, 11, 11) },
-    { start: new Date(2025, 1, 16), end: new Date(2025, 1, 23) },
-    { start: new Date(2025, 2, 30), end: new Date(2025, 3, 6) },
-    { start: new Date(2025, 4, 11), end: new Date(2025, 4, 25) },
-    { start: new Date(2025, 5, 28), end: new Date(2025, 5, 30) },
-    { start: new Date(2025, 6, 13), end: new Date(2025, 5, 18) },
-    { start: new Date(2024, 11, 11), end: new Date(2025, 0, 8) }, // Christmas Break
-    { start: new Date(2025, 4, 25), end: new Date(2025, 6, 8) }, // Summer Break
-    { start: new Date(2024, 7, 21), end: new Date(2024, 7, 21) },
-    { start: new Date(2024, 7, 26), end: new Date(2024, 7, 26) },
-    { start: new Date(2024, 10, 1), end: new Date(2024, 10, 1) },
-    { start: new Date(2024, 10, 2), end: new Date(2024, 10, 2) },
-    { start: new Date(2024, 10, 30), end: new Date(2024, 10, 30) },
-    { start: new Date(2024, 11, 8), end: new Date(2024, 11, 8) },
-    { start: new Date(2024, 11, 11), end: new Date(2024, 11, 11) },
-    { start: new Date(2024, 11, 25), end: new Date(2024, 11, 25) },
-    { start: new Date(2024, 11, 30), end: new Date(2024, 11, 30) },
-    { start: new Date(2025, 0, 1), end: new Date(2025, 0, 1) },
-    { start: new Date(2025, 0, 29), end: new Date(2025, 0, 29) },
-    { start: new Date(2025, 1, 25), end: new Date(2025, 1, 25) },
-    { start: new Date(2025, 2, 30), end: new Date(2025, 2, 30) },
-    { start: new Date(2025, 3, 9), end: new Date(2025, 3, 9) },
-    { start: new Date(2025, 3, 14), end: new Date(2025, 3, 18) },
-    { start: new Date(2025, 4, 1), end: new Date(2025, 4, 1) },
-    { start: new Date(2025, 4, 7), end: new Date(2025, 4, 7) },
-    { start: new Date(2025, 4, 12), end: new Date(2025, 4, 12) },
-    { start: new Date(2025, 5, 6), end: new Date(2025, 5, 6) },
-    { start: new Date(2025, 5, 12), end: new Date(2025, 5, 12) },
-    { start: new Date(2025, 5, 15), end: new Date(2025, 5, 15) },
-]);
-
-onMounted(() => {
-    if (props.activityForms?.length > 0) {
-        const activityAttrs = props.activityForms
-            .filter((apf) => apf.status === "APPROVED")
-            .map((apf) => ({
-                key: apf.id,
-                bar: {
-                    style: {
-                        backgroundColor: "orange",
-                    },
-                },
-                popover: {
-                    label: `${apf.from_time.slice(0, 5)} -
-                        ${apf.to_time.slice(0, 5)}:
-                        ${apf.title} (${apf.venue})`,
-                },
-                dates: new Date(apf.date),
-            }));
-        attrs.value.push(...activityAttrs);
-    }
-});
-</script>
-
-<template>
-    <div class="bg-gray-300 rounded-lg">
-        <VCalendar expanded transparent :attributes="attrs" />
-    </div>
-</template>
-
-<style scoped></style>
+];

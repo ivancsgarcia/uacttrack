@@ -17,13 +17,10 @@ class RegisterController extends Controller
     public function create()
     {
         $organizations = Organization::all(['id', 'name']);
-        // $admin_positions = AdminPosition::all(['id', 'name']);
-        // $organization_positions = OrganizationPosition::all(['id', 'name']);
 
         return Inertia::render('Auth/Register', [
             'organizations' => $organizations,
-            // 'admin_positions' => $admin_positions,
-            // 'organization_positions' => $organization_positions
+
         ]);
     }
 
@@ -33,8 +30,7 @@ class RegisterController extends Controller
         $credentials = $request->validate([
             'role' => ['required'],
             'organization_id' => ['exists:organizations,id', 'nullable'],
-            'position' => ['required', 'string'], //'exists:organization_positions,id'
-            // 'admin_position' => ['string', 'nullable'], //'exists:admin_positions,id'
+            'position' => ['required', 'string'],
             'first_name' => ['required', 'max:255'],
             'last_name' => ['required', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
@@ -43,7 +39,7 @@ class RegisterController extends Controller
 
         $user = User::create($credentials);
 
-        Auth::login($user);
+        // Auth::login($user);
 
         // Redirect based on the role of the newly created user
         if ($user->role === 'Admin') {
@@ -51,6 +47,6 @@ class RegisterController extends Controller
             return redirect()->route('admin-dashboard');
         }
 
-        return redirect()->route('home')->with('success', 'Activity created successfully!');
+        return redirect()->route('register')->with('success', 'Activity created successfully!');
     }
 }

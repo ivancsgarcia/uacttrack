@@ -4,8 +4,6 @@ import { watch } from "vue";
 
 defineProps({
     organizations: Array,
-    // admin_positions: Array,
-    // organization_positions: Array,
 });
 
 const form = useForm({
@@ -36,7 +34,7 @@ watch(
 
 const submit = () => {
     form.post(route("register"), {
-        onFinish: () => form.reset("password", "password_confirmation"),
+        onFinish: () => form.reset(),
         onError: () => form.reset("password", "password_confirmation"),
     });
 };
@@ -57,195 +55,231 @@ const admin_positions = [
 </script>
 
 <template>
-    <div class="body">
-        <div class="bg-img">
-            <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+    <!-- Background Image -->
+    <div class="bg-img">
+        <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+    </div>
+
+    <!-- Header -->
+    <UAHeader />
+
+    <!-- Sidebar -->
+    <SystemSideMenu />
+
+    <!-- Content -->
+    <div class="main-content">
+        <div class="account-section">
+            <Account />
         </div>
-        <div class="content">
-            <img
-                :src="'images/sys-logos/UActTrack-no-logo.png'"
-                alt="uacttrack-logo"
-                class="uacttrack-logo"
-            />
 
-            <form @submit.prevent="submit">
-                <h1>Registration</h1>
+        <div class="vertical-line"></div>
 
-                <!-- Register As -->
-                <div class="text-box">
-                    <select v-model="form.role">
-                        <option value="" selected disabled>Register As</option>
-                        <option value="Admin">Admin</option>
-                        <option value="Student Officer">Student Officer</option>
-                    </select>
-                    <font-awesome-icon
-                        :icon="['fas', 'angle-down']"
-                        size="2xl"
-                        class="dropdown-icon"
-                    />
-                </div>
-                <div v-if="form.errors.role" class="error">
-                    {{ form.errors.role }}
-                </div>
+        <div class="flex">
+            <div class="w-1/2">
+                <img
+                    :src="'images/sys-logos/UActTrack-no-logo.png'"
+                    alt="uacttrack-logo"
+                    class="w-3/4 m-auto"
+                />
 
-                <!-- Student Officer Position -->
-                <div v-if="form.role == 'Student Officer'" class="text-box">
-                    <select v-model="form.position">
-                        <option value="" selected disabled>
-                            Select Your Position
-                        </option>
-                        <option
-                            v-for="orgPos in organization_positions"
-                            :value="orgPos"
-                        >
-                            {{ orgPos }}
-                        </option>
-                    </select>
-                    <font-awesome-icon
-                        :icon="['fas', 'angle-down']"
-                        size="2xl"
-                        class="dropdown-icon"
-                    />
-                </div>
-                <div v-if="form.errors.position" class="error">
-                    {{ form.errors.role }}
-                </div>
+                <form @submit.prevent="submit">
+                    <h1>Registration</h1>
 
-                <!-- Admin Position -->
-                <div v-if="form.role == 'Admin'" class="text-box">
-                    <select v-model="form.position">
-                        <option value="" selected disabled>
-                            Select Your Position
-                        </option>
-                        <option v-for="adPos in admin_positions" :value="adPos">
-                            {{ adPos }}
-                        </option>
-                    </select>
-                    <font-awesome-icon
-                        :icon="['fas', 'angle-down']"
-                        size="2xl"
-                        class="dropdown-icon"
-                    />
-                </div>
-                <div v-if="form.errors.position" class="error">
-                    {{ form.errors.position }}
-                </div>
+                    <!-- Register As -->
+                    <div class="text-box">
+                        <select v-model="form.role">
+                            <option value="" selected disabled>
+                                Register As
+                            </option>
+                            <option value="Admin">Admin</option>
+                            <option value="Student Officer">
+                                Student Officer
+                            </option>
+                        </select>
+                        <font-awesome-icon
+                            :icon="['fas', 'angle-down']"
+                            size="2xl"
+                            class="dropdown-icon"
+                        />
+                    </div>
+                    <div v-if="form.errors.role" class="error">
+                        {{ form.errors.role }}
+                    </div>
 
-                <!-- Organization -->
-                <div
-                    v-if="
-                        form.role == 'Student Officer' ||
-                        (form.role == 'Admin' &&
-                            form.position == 'College Dean')
-                    "
-                    class="text-box"
-                >
-                    <select v-model="form.organization_id">
-                        <option value="" selected disabled>
-                            Select An Organization
-                        </option>
-                        <option
-                            v-for="org in organizations"
-                            :key="org.id"
-                            :value="org.id"
-                        >
-                            {{ org.name }}
-                        </option>
-                    </select>
-                    <font-awesome-icon
-                        :icon="['fas', 'angle-down']"
-                        size="2xl"
-                        class="dropdown-icon"
-                    />
-                </div>
-                <div v-if="form.errors.organization" class="error">
-                    {{ form.errors.organization }}
-                </div>
+                    <!-- Student Officer Position -->
+                    <div v-if="form.role == 'Student Officer'" class="text-box">
+                        <select v-model="form.position">
+                            <option value="" selected disabled>
+                                Select Your Position
+                            </option>
+                            <option
+                                v-for="orgPos in organization_positions"
+                                :value="orgPos"
+                            >
+                                {{ orgPos }}
+                            </option>
+                        </select>
+                        <font-awesome-icon
+                            :icon="['fas', 'angle-down']"
+                            size="2xl"
+                            class="dropdown-icon"
+                        />
+                    </div>
+                    <div v-if="form.errors.position" class="error">
+                        {{ form.errors.role }}
+                    </div>
 
-                <!-- First Name -->
-                <div class="text-box">
-                    <input
-                        type="text"
-                        v-model="form.first_name"
-                        placeholder="First Name"
-                    />
-                </div>
-                <div v-if="form.errors.first_name" class="error">
-                    {{ form.errors.first_name }}
-                </div>
+                    <!-- Admin Position -->
+                    <div v-if="form.role == 'Admin'" class="text-box">
+                        <select v-model="form.position">
+                            <option value="" selected disabled>
+                                Select Your Position
+                            </option>
+                            <option
+                                v-for="adPos in admin_positions"
+                                :value="adPos"
+                            >
+                                {{ adPos }}
+                            </option>
+                        </select>
+                        <font-awesome-icon
+                            :icon="['fas', 'angle-down']"
+                            size="2xl"
+                            class="dropdown-icon"
+                        />
+                    </div>
+                    <div v-if="form.errors.position" class="error">
+                        {{ form.errors.position }}
+                    </div>
 
-                <!-- Last Name -->
-                <div class="text-box">
-                    <input
-                        type="text"
-                        v-model="form.last_name"
-                        placeholder="Last Name"
-                    />
-                </div>
-                <div v-if="form.errors.last_name" class="error">
-                    {{ form.errors.last_name }}
-                </div>
+                    <!-- Organization -->
+                    <div
+                        v-if="
+                            form.role == 'Student Officer' ||
+                            (form.role == 'Admin' &&
+                                form.position == 'College Dean')
+                        "
+                        class="text-box"
+                    >
+                        <select v-model="form.organization_id">
+                            <option value="" selected disabled>
+                                Select An Organization
+                            </option>
+                            <option
+                                v-for="org in organizations"
+                                :key="org.id"
+                                :value="org.id"
+                            >
+                                {{ org.name }}
+                            </option>
+                        </select>
+                        <font-awesome-icon
+                            :icon="['fas', 'angle-down']"
+                            size="2xl"
+                            class="dropdown-icon"
+                        />
+                    </div>
+                    <div v-if="form.errors.organization" class="error">
+                        {{ form.errors.organization }}
+                    </div>
 
-                <!-- Email -->
-                <div class="text-box">
-                    <input
-                        type="email"
-                        v-model="form.email"
-                        placeholder="Email"
-                    />
-                </div>
-                <div v-if="form.errors.email" class="error">
-                    {{ form.errors.email }}
-                </div>
+                    <!-- First Name -->
+                    <div class="text-box">
+                        <input
+                            type="text"
+                            v-model="form.first_name"
+                            placeholder="First Name"
+                        />
+                    </div>
+                    <div v-if="form.errors.first_name" class="error">
+                        {{ form.errors.first_name }}
+                    </div>
 
-                <!-- Password -->
-                <div class="text-box">
-                    <input
-                        type="password"
-                        v-model="form.password"
-                        placeholder="Password"
-                    />
-                </div>
-                <div v-if="form.errors.password" class="error">
-                    {{ form.errors.password }}
-                </div>
+                    <!-- Last Name -->
+                    <div class="text-box">
+                        <input
+                            type="text"
+                            v-model="form.last_name"
+                            placeholder="Last Name"
+                        />
+                    </div>
+                    <div v-if="form.errors.last_name" class="error">
+                        {{ form.errors.last_name }}
+                    </div>
 
-                <!-- Confirm Password -->
-                <div class="text-box">
-                    <input
-                        type="password"
-                        v-model="form.password_confirmation"
-                        placeholder="Confirm Password"
-                    />
-                </div>
+                    <!-- Email -->
+                    <div class="text-box">
+                        <input
+                            type="email"
+                            v-model="form.email"
+                            placeholder="Email"
+                        />
+                    </div>
+                    <div v-if="form.errors.email" class="error">
+                        {{ form.errors.email }}
+                    </div>
 
-                <!-- Register Button -->
-                <button :disabled="form.processing" class="register-btn">
-                    Register
-                </button>
+                    <!-- Password -->
+                    <div class="text-box">
+                        <input
+                            type="password"
+                            v-model="form.password"
+                            placeholder="Password"
+                        />
+                    </div>
+                    <div v-if="form.errors.password" class="error">
+                        {{ form.errors.password }}
+                    </div>
 
-                <!-- Login Page Link -->
-                <!-- <Link :href="route('login')">
-                <div class="flex items-center">
-                    <font-awesome-icon
-                        :icon="['fas', 'angle-left']"
-                        class="mr-2"
-                    />
-                    <p>Back to Login Page</p>
-                </div>
-            </Link> -->
-            </form>
+                    <!-- Confirm Password -->
+                    <div class="text-box">
+                        <input
+                            type="password"
+                            v-model="form.password_confirmation"
+                            placeholder="Confirm Password"
+                        />
+                    </div>
+
+                    <!-- Register Button -->
+                    <button :disabled="form.processing" class="register-btn">
+                        Register
+                    </button>
+                </form>
+            </div>
+            <div class="w-1/2"></div>
         </div>
-        <div class="blank"></div>
     </div>
 </template>
 
 <style scoped>
-.body {
-    /* height: 100vh; */
-    /* background-color: gray; */
-    position: relative;
+.main-content {
+    margin-left: 16rem;
+    padding: 1rem;
+}
+
+.account-section {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem;
+}
+
+.icons-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.icon:hover {
+    cursor: pointer;
+    color: gold;
+}
+
+.vertical-line {
+    height: 0.125rem;
+    background-color: #272f5c;
+    margin-bottom: 3rem;
 }
 
 .bg-img {
@@ -259,48 +293,33 @@ const admin_positions = [
 
 .bg-img img {
     transform: rotate(15deg);
-    width: 60rem;
+    width: 40rem;
     filter: grayscale(100%);
-    opacity: 0.2;
-}
-
-.content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
-    padding: 2rem 0;
-}
-
-.uacttrack-logo {
-    width: 30rem;
+    opacity: 0.1;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     background-color: #272f5c;
-    border-radius: 3rem;
-    padding: 4rem 4rem;
-    box-shadow: 8px 8px 15px black;
+    border-radius: 2rem;
+    padding: 2rem 0;
+    box-shadow: 8px 8px 15px gray;
     margin-top: 2rem;
 }
 
 h1 {
     color: white;
-    font-size: 3rem;
+    font-size: 2rem;
     text-transform: uppercase;
     text-shadow: 3px 2px black;
-    margin-bottom: 1.3rem;
+    margin-bottom: 0.5rem;
     letter-spacing: 0.1rem;
+    text-align: center;
 }
 
 .text-box {
+    margin: auto;
     display: flex;
-    width: 30rem;
+    width: 80%;
     background-color: #fff;
     border-radius: 1.5rem;
     margin-top: 1.2rem;
@@ -311,7 +330,7 @@ h1 {
 select {
     border-radius: 1.5rem;
     width: 100%;
-    padding: 1rem;
+    padding: 0.5rem 1rem;
     font-size: 1.5rem;
     color: #272f5c;
     appearance: none;
@@ -332,7 +351,7 @@ select {
 input {
     border-radius: 1.5rem;
     width: 100%;
-    padding: 1rem;
+    padding: 0.5rem 1rem;
     font-size: 1.5rem;
     color: #272f5c;
 }
@@ -349,18 +368,19 @@ input:focus {
 
 .register-btn {
     background-color: white;
+    display: block;
     color: #272f5c;
     border-radius: 1.2rem;
-    padding: 0.8rem 3rem;
+    padding: 0.5rem 2rem;
     text-transform: uppercase;
-    margin-top: 2.5rem;
+    margin: 2rem auto 0;
     font-size: 1.5rem;
     letter-spacing: 0.1rem;
     font-weight: bold;
 }
 
 .register-btn:hover {
-    background-color: #93c5fd;
+    background-color: #6375bf;
     color: white;
 }
 </style>

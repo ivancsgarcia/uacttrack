@@ -6,117 +6,108 @@ const isVPA = page.props.auth.isVPA;
 </script>
 
 <template>
-    <div class="side-menu">
-        <div class="profile-section">
-            <img
-                :src="'images/sys-logos/UActTrack-logo.png'"
-                alt="uacttrack-logo"
-                class="mt-8 mb-12 mx-auto w-60"
-            />
-        </div>
-
-        <div class="menu-items">
-            <Link :href="route('admin-dashboard')">
-                <div
-                    :class="
-                        route().current('admin-dashboard')
-                            ? '!bg-ua-blue !text-white'
-                            : ''
-                    "
-                    class="link"
-                >
-                    <p>Dashboard</p>
-                </div>
-            </Link>
-
-            <Link :href="route('admin-pending-apf')">
-                <div
-                    :class="
-                        route().current('admin-pending-apf')
-                            ? '!bg-ua-blue !text-white'
-                            : ''
-                    "
-                    class="link"
-                >
-                    <p>To Be Approved</p>
-                </div>
-            </Link>
-
-            <Link :href="route('admin-approved-apf')">
-                <div
-                    :class="
-                        route().current('admin-approved-apf')
-                            ? '!bg-ua-blue !text-white'
-                            : ''
-                    "
-                    class="link"
-                >
-                    <p>Approved APF</p>
-                </div>
-            </Link>
-
-            <Link :href="route('admin-rejected-apf')">
-                <div
-                    :class="
-                        route().current('admin-rejected-apf')
-                            ? '!bg-ua-blue !text-white'
-                            : ''
-                    "
-                    class="link"
-                >
-                    <p>Rejected APF</p>
-                </div>
-            </Link>
-
-            <Link v-if="isVPA" :href="route('admin-send-copy')">
-                <div
-                    :class="
-                        route().current('admin-send-copy')
-                            ? '!bg-ua-blue !text-white'
-                            : ''
-                    "
-                    class="link"
-                >
-                    <p>Send Copies</p>
-                </div>
-            </Link>
-        </div>
-
-        <Link :href="route('logout')" method="post" as="button">
-            <div class="logout-section">
-                <div>
-                    <p>Log Out</p>
-                </div>
+    <div class="sidebar">
+        <div class="sidebar-content">
+            <div class="image">
+                <img
+                    :src="'images/sys-logos/UActTrack-logo.png'"
+                    alt="uacttrack-logo"
+                />
             </div>
-        </Link>
+
+            <div class="menu-items">
+                <Link :href="route('admin-dashboard')">
+                    <div
+                        :class="
+                            route().current('admin-dashboard')
+                                ? '!bg-ua-blue !text-white'
+                                : ''
+                        "
+                        class="link"
+                    >
+                        <p>Dashboard</p>
+                    </div>
+                </Link>
+
+                <Link :href="route('admin-pending-apf')">
+                    <div
+                        :class="
+                            route().current('admin-pending-apf')
+                                ? '!bg-ua-blue !text-white'
+                                : ''
+                        "
+                        class="link"
+                    >
+                        <p>To Be Approved</p>
+                    </div>
+                </Link>
+
+                <Link :href="route('admin-approved-apf')">
+                    <div
+                        :class="
+                            route().current('admin-approved-apf')
+                                ? '!bg-ua-blue !text-white'
+                                : ''
+                        "
+                        class="link"
+                    >
+                        <p>Approved APF</p>
+                    </div>
+                </Link>
+
+                <Link :href="route('admin-rejected-apf')">
+                    <div
+                        :class="
+                            route().current('admin-rejected-apf')
+                                ? '!bg-ua-blue !text-white'
+                                : ''
+                        "
+                        class="link"
+                    >
+                        <p>Rejected APF</p>
+                    </div>
+                </Link>
+
+                <Link v-if="isVPA" :href="route('admin-send-copy')">
+                    <div
+                        :class="
+                            route().current('admin-send-copy')
+                                ? '!bg-ua-blue !text-white'
+                                : ''
+                        "
+                        class="link"
+                    >
+                        <p>Send Copies</p>
+                    </div>
+                </Link>
+            </div>
+
+            <div class="logout-section">
+                <Link :href="route('logout')" method="post">
+                    <div class="logout">
+                        <p>Log Out</p>
+                    </div>
+                </Link>
+            </div>
+        </div>
     </div>
 </template>
 
 <style scoped>
-.side-menu {
-    height: calc(100vh - 64px);
+.sidebar {
+    height: 100%;
     width: 16rem;
     position: fixed;
-    top: 70px;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    overflow: auto;
     background-color: rgb(39 47 92 / 0.1);
 }
 
-.profile-section {
-    text-align: center;
-    margin-bottom: 1.25rem;
-}
-
-.image {
-    margin: 2rem auto 3rem auto;
-    width: 15rem;
+.sidebar-content {
+    min-height: 100%;
+    position: relative;
 }
 
 .menu-items {
-    flex-grow: 1;
     color: #272f5c;
     text-align: center;
     font-size: 1.25rem;
@@ -124,7 +115,7 @@ const isVPA = page.props.auth.isVPA;
 
 .menu-items div {
     background-color: #d9d9d9;
-    padding: 12px 16px;
+    padding: 12px 0;
     margin: 5px auto;
 }
 
@@ -134,16 +125,19 @@ const isVPA = page.props.auth.isVPA;
 }
 
 .logout-section {
+    position: absolute;
+    bottom: 62px;
+    width: 100%;
+}
+
+.logout {
     background-color: #272f5c;
     text-align: center;
-}
-
-.logout-section:hover {
-    background-color: #c41e3a;
-}
-
-.logout-section div {
     padding: 12px 16px;
     color: white;
+}
+
+.logout:hover {
+    background-color: #c41e3a;
 }
 </style>

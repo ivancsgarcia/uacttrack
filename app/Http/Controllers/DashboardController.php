@@ -17,8 +17,8 @@ class DashboardController extends Controller
         $activityForms = ActivityForm::whereHas('creator', function ($query) use ($organizationId) {
             $query->where('organization_id', $organizationId);
         })
-            ->orderBy('id', 'desc')
-            ->get();
+            ->latest()
+            ->paginate(5);
 
         // College Dean
         $collegeDean = Organization::where('id', $organizationId)

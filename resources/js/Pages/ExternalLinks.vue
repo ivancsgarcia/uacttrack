@@ -3,91 +3,89 @@ import { Link } from "@inertiajs/vue3";
 </script>
 
 <template>
-    <div class="app">
-        <UAHeader />
-        <SideMenu />
+    <!-- Background Image -->
+    <div class="bg-img">
+        <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+    </div>
 
-        <div class="bg-img">
-            <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+    <!-- Header -->
+    <UAHeader />
+
+    <!-- Sidebar -->
+    <SideMenu />
+
+    <!-- Content -->
+    <div class="main-content">
+        <div class="account-section">
+            <Account />
+
+            <div class="icons-box">
+                <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
+                <font-awesome-icon :icon="['fas', 'bell']" size="2xl" />
+            </div>
         </div>
 
-        <div class="main-content">
-            <div class="account-section">
-                <Account />
+        <div class="vertical-line"></div>
 
-                <div class="icons-box">
-                    <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
-                    <font-awesome-icon :icon="['fas', 'bell']" size="2xl" />
-                </div>
-            </div>
-
-            <div class="vertical-line"></div>
-
-            <div class="box-div">
-                <a href="https://www.ua.edu.ph" target="_blank">
-                    <Card>
-                        <template #content>
-                            <div>
-                                <Image
-                                    :src="'images/sys-logos/ua-logo.png'"
-                                    alt="ua-logo"
-                                    width="200"
-                                />
-                                <p>University of the Assumption Website</p>
-                            </div>
-                        </template>
-                    </Card>
-                </a>
-
-                <a
-                    href="http://serp.ua.edu.ph/serp/Gate/UASFP.Login.aspx"
-                    target="_blank"
-                >
-                    <Card>
-                        <template #content>
-                            <div>
-                                <Image
-                                    :src="'images/sys-logos/ua-logo.png'"
-                                    alt="ua-logo"
-                                    width="200"
-                                />
-                                <p>University of the Assumption SERP</p>
-                            </div>
-                        </template>
-                    </Card>
-                </a>
-
+        <div class="box-div">
+            <a href="https://www.ua.edu.ph" target="_blank">
                 <Card>
                     <template #content>
                         <div>
                             <Image
                                 :src="'images/sys-logos/ua-logo.png'"
-                                alt="rsointrack-logo"
-                                width="200"
+                                alt="ua-logo"
+                                width="180"
                             />
-                            <p>RSO in Track</p>
+                            <p>University of the Assumption Website</p>
                         </div>
                     </template>
                 </Card>
+            </a>
 
-                <Card> </Card>
-                <Card> </Card>
-                <Card> </Card>
+            <a
+                href="http://serp.ua.edu.ph/serp/Gate/UASFP.Login.aspx"
+                target="_blank"
+            >
+                <Card>
+                    <template #content>
+                        <div>
+                            <Image
+                                :src="'images/sys-logos/ua-logo.png'"
+                                alt="ua-logo"
+                                width="180"
+                            />
+                            <p>University of the Assumption SERP</p>
+                        </div>
+                    </template>
+                </Card>
+            </a>
 
-                <Card> </Card>
-                <Card> </Card>
-                <Card> </Card>
-            </div>
+            <Card>
+                <template #content>
+                    <div>
+                        <Image
+                            :src="'images/sys-logos/ua-logo.png'"
+                            alt="rsointrack-logo"
+                            width="180"
+                        />
+                        <p>RSO in Track</p>
+                    </div>
+                </template>
+            </Card>
+
+            <Card> </Card>
+            <Card> </Card>
+            <Card> </Card>
+
+            <Card> </Card>
+            <Card> </Card>
+            <Card> </Card>
         </div>
     </div>
 </template>
 
 <style scoped>
-.app {
-    display: flex;
-    padding-top: 4rem;
-}
-
 .bg-img {
     position: fixed;
     right: 0;
@@ -112,8 +110,6 @@ import { Link } from "@inertiajs/vue3";
 }
 
 .main-content {
-    min-height: calc(100vh - 64px);
-    width: 100vw;
     margin-left: 16rem;
     padding: 1rem;
 }
@@ -144,7 +140,7 @@ import { Link } from "@inertiajs/vue3";
     padding: 1rem;
     background-color: #272f5c;
     color: white;
-    width: 400px;
+    width: 350px;
     height: 300px;
 }
 

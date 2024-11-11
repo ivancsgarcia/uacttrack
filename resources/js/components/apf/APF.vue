@@ -19,8 +19,6 @@ const responsiveOptions = ref([
 </script>
 
 <template>
-    <UAHeader />
-
     <div class="card">
         <Galleria
             :value="images"

@@ -2,93 +2,87 @@
 import { Link } from "@inertiajs/vue3";
 
 defineProps({
-    rejectedForms: Array,
+    rejectedForms: Object,
 });
 </script>
 
 <template>
-    <div class="app">
-        <UAHeader />
-        <SideMenu />
+    <!-- Background Image -->
+    <div class="bg-img">
+        <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+    </div>
 
-        <div class="bg-img">
-            <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
-        </div>
+    <!-- Header -->
+    <UAHeader />
 
-        <div class="main-content">
-            <div class="account-section">
-                <Account />
+    <!-- Sidebar -->
+    <SideMenu />
 
-                <div class="icons-box">
-                    <div>
-                        <font-awesome-icon
-                            :icon="['fas', 'envelope']"
-                            size="2xl"
-                            class="icon"
-                        />
-                    </div>
-                    <div>
-                        <font-awesome-icon
-                            @click="toggle"
-                            :icon="['fas', 'bell']"
-                            size="2xl"
-                            class="icon"
-                        />
-                        <Popover ref="op">
-                            <div>hi</div>
-                        </Popover>
-                    </div>
+    <!-- Content -->
+    <div class="main-content">
+        <div class="account-section">
+            <Account />
+
+            <div class="icons-box">
+                <div>
+                    <font-awesome-icon
+                        :icon="['fas', 'envelope']"
+                        size="2xl"
+                        class="icon"
+                    />
+                </div>
+                <div>
+                    <font-awesome-icon
+                        @click="toggle"
+                        :icon="['fas', 'bell']"
+                        size="2xl"
+                        class="icon"
+                    />
+                    <Popover ref="op">
+                        <div>hi</div>
+                    </Popover>
                 </div>
             </div>
-
-            <div class="vertical-line"></div>
-
-            <h1 class="text-center text-4xl mb-4 text-ua-blue">
-                Rejected Activity Proposal Form
-            </h1>
-
-            <table class="w-full border-separate border-spacing-4">
-                <thead>
-                    <tr class="bg-ua-blue text-white h-20">
-                        <th class="w-1/5 border">Transaction Number</th>
-                        <th class="w-3/5 border">Activity Title</th>
-                        <th class="w-1/5 border">Date</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr
-                        class="text-center h-20"
-                        v-for="form in rejectedForms"
-                        :key="form.id"
-                    >
-                        <td class="bg-ua-gray w-1/5 border">{{ form.id }}</td>
-                        <td class="bg-ua-gray w-3/5 border underline">
-                            <Link
-                                :href="route('activity-form-preview', form.id)"
-                                >{{ form.title }}</Link
-                            >
-                        </td>
-                        <td class="bg-ua-gray w-1/5 border">
-                            {{
-                                new Date(form.created_at).toLocaleDateString(
-                                    "en-US"
-                                )
-                            }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
+
+        <div class="vertical-line"></div>
+
+        <h1 class="text-center text-4xl mb-4 text-ua-blue">
+            Rejected Activity Proposal Form
+        </h1>
+
+        <table class="w-full border-separate border-spacing-4">
+            <thead>
+                <tr class="bg-ua-blue text-white h-20">
+                    <th class="w-1/5 border">Transaction Number</th>
+                    <th class="w-3/5 border">Activity Title</th>
+                    <th class="w-1/5 border">Date</th>
+                </tr>
+            </thead>
+
+            <tbody v-for="form in rejectedForms.data" :key="form.id">
+                <tr class="text-center h-20">
+                    <td class="bg-ua-gray w-1/5 border">{{ form.id }}</td>
+                    <td class="bg-ua-gray w-3/5 border underline">
+                        <Link :href="route('activity-form.show', form.id)">{{
+                            form.title
+                        }}</Link>
+                    </td>
+                    <td class="bg-ua-gray w-1/5 border">
+                        {{
+                            new Date(form.created_at).toLocaleDateString(
+                                "en-US"
+                            )
+                        }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <PaginationLinks :paginator="rejectedForms" />
     </div>
 </template>
 
 <style scoped>
-.app {
-    padding-top: 4rem;
-    width: 100%;
-}
-
 .bg-img {
     position: fixed;
     right: 0;

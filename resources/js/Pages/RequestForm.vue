@@ -5,57 +5,55 @@ defineProps({
 </script>
 
 <template>
-    <div class="app">
-        <UAHeader />
-        <SideMenu />
+    <!-- Background Image -->
+    <div class="bg-img">
+        <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+    </div>
 
-        <div class="bg-img">
-            <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
-        </div>
+    <!-- Header -->
+    <UAHeader />
 
-        <div class="main-content">
-            <div class="account-section">
-                <Account />
+    <!-- Sidebar -->
+    <SideMenu />
 
-                <div class="icons-box">
-                    <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
-                    <font-awesome-icon :icon="['fas', 'bell']" size="2xl" />
-                </div>
+    <!-- Content -->
+    <div class="main-content">
+        <div class="account-section">
+            <Account />
+
+            <div class="icons-box">
+                <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
+                <font-awesome-icon :icon="['fas', 'bell']" size="2xl" />
             </div>
-
-            <div class="vertical-line"></div>
-
-            <h2>University of the Assumption Forms</h2>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Form Titles</th>
-                        <th colspan="2">Download File</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="reqForm in requestForms" :key="reqForm.id">
-                        <td>{{ reqForm.name }}</td>
-                        <td class="underline">
-                            <a :href="reqForm.docx_url" download>docx</a>
-                        </td>
-                        <td class="underline">
-                            <a :href="reqForm.xlsx_url" download>xlsx</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
+
+        <div class="vertical-line"></div>
+
+        <h2>University of the Assumption Forms</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Form Titles</th>
+                    <th colspan="2">Download File</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="reqForm in requestForms" :key="reqForm.id">
+                    <td>{{ reqForm.name }}</td>
+                    <td class="underline">
+                        <a :href="reqForm.docx_url" download>docx</a>
+                    </td>
+                    <td class="underline">
+                        <a :href="reqForm.xlsx_url" download>xlsx</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 
 <style scoped>
-.app {
-    display: flex;
-    padding-top: 4rem;
-}
-
 .bg-img {
     position: fixed;
     right: 0;
@@ -73,8 +71,6 @@ defineProps({
 }
 
 .main-content {
-    min-height: calc(100vh - 64px);
-    width: 100vw;
     margin-left: 16rem;
     padding: 1rem;
 }

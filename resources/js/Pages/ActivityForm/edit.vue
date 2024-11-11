@@ -1,9 +1,9 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3";
-import APF from "../components/apf/APF.vue";
-import APF1 from "../components/apf/APF1.vue";
-import APF2 from "../components/apf/APF2.vue";
-import APF3 from "../components/apf/APF3.vue";
+import APF from "../../components/apf/APF.vue";
+import APF1 from "../../components/apf/APF1.vue";
+import APF2 from "../../components/apf/APF2.vue";
+import APF3 from "../../components/apf/APF3.vue";
 
 import Stepper from "primevue/stepper";
 import StepList from "primevue/steplist";
@@ -16,26 +16,28 @@ import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 
 const props = defineProps({
+    activityForms: Object,
+    logoPath: String,
     venues: Object,
-    images: Array,
 });
 
 const form = useForm({
-    check_payment_or_cash: false,
-    food: false,
-    supplies: false,
-    reproduction: false,
-    others: false,
-    date: null,
-    from_time: new Date(),
-    to_time: new Date(),
-    attendance_count: 0,
-    event_type: null,
-    venue: null,
-    requirements_or_resources_needed: null,
-    title: null,
-    description: null,
-    participant: null,
+    check_payment_or_cash: props.activityForms.check_payment_or_cash,
+    food: props.activityForms.food,
+    supplies: props.activityForms.supplies,
+    reproduction: props.activityForms.reproduction,
+    others: props.activityForms.others,
+    date: props.activityForms.date,
+    from_time: props.activityForms.from_time,
+    to_time: props.activityForms.to_time,
+    attendance_count: props.activityForms.attendance_count,
+    event_type: props.activityForms.event_type,
+    venue: props.activityForms.venue,
+    requirements_or_resources_needed:
+        props.activityForms.requirements_or_resources_needed,
+    title: props.activityForms.title,
+    description: props.activityForms.description,
+    participant: props.activityForms.participant,
     payment_or_cash_file: null,
     food_file: null,
     supplies_file: null,
@@ -114,51 +116,73 @@ const openForms = () => {
 };
 
 const submit = () => {
-    confirm.require({
-        message: "Are you sure you want to submit the Form?",
-        header: "Download Forms",
-        icon: "pi pi-info-circle",
-        rejectProps: {
-            label: "Cancel",
-            severity: "secondary",
-            outlined: true,
-        },
-        acceptProps: {
-            label: "Submit",
-            severity: "success",
-        },
-        accept: () => {
-            toast.add({
+    try {
+        confirm.require({
+            message: "Are you sure you want to submit the Form?",
+            header: "Download Forms",
+            icon: "pi pi-info-circle",
+            rejectProps: {
+                label: "Cancel",
+                severity: "secondary",
+                outlined: true,
+            },
+            acceptProps: {
+                label: "Submit",
                 severity: "success",
-                summary: "Confirmed",
-                detail: "Form Created.",
-                life: 3000,
-            });
-            submitForm();
-        },
-        reject: () => {
-            toast.add({
-                severity: "info",
-                summary: "Cancelled",
-                detail: "You cancelled.",
-                life: 3000,
-            });
-        },
-    });
+            },
+            accept: async () => {
+                try {
+                    await submitForm();
+                    toast.add({
+                        severity: "success",
+                        summary: "Confirmed",
+                        detail: "Form Created.",
+                        life: 3000,
+                    });
+                } catch (error) {
+                    console.error("Error submitting form:", error);
+                    toast.add({
+                        severity: "error",
+                        summary: "Error",
+                        detail: "Failed to create form. Please try again.",
+                        life: 3000,
+                    });
+                }
+            },
+            reject: () => {
+                toast.add({
+                    severity: "info",
+                    summary: "Cancelled",
+                    detail: "You cancelled.",
+                    life: 3000,
+                });
+            },
+        });
+    } catch (error) {
+        console.error("Error showing confirmation dialog:", error);
+        toast.add({
+            severity: "error",
+            summary: "Error",
+            detail: "Something went wrong. Please try again.",
+            life: 3000,
+        });
+    }
 };
 
 const submitForm = async () => {
     form.processing = true;
     try {
-        await form.post(route("activity-form"));
+        const response = await form.post(route("activity-form"));
+        return response;
     } catch (error) {
-        console.error(error);
+        console.error("Form submission error:", error);
+        throw error;
     } finally {
         form.processing = false;
     }
 };
 </script>
-
+<!-- @submit.prevent="submitForm" -->
 <template>
     <div class="app">
         <UAHeader />
@@ -168,7 +192,7 @@ const submitForm = async () => {
         </div>
 
         <div class="main-content">
-            <form @submit.prevent="submitForm">
+            <form>
                 <Stepper value="1" linear>
                     <StepList>
                         <Step
@@ -320,7 +344,8 @@ const submitForm = async () => {
                                 />
 
                                 <Button
-                                    label="Submit"
+                                    label="Update"
+                                    :disabled="form.processing"
                                     :pt="{
                                         root: '!bg-ua-blue !outline-none !border-none',
                                     }"
@@ -357,7 +382,7 @@ const submitForm = async () => {
 
 .bg-img img {
     transform: rotate(15deg);
-    width: 60rem;
+    width: 40rem;
     filter: grayscale(100%);
     opacity: 0.1;
 }

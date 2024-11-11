@@ -17,51 +17,49 @@ const goHome = () => {
 </script>
 
 <template>
-    <header>
-        <div class="ua-header">
-            <div class="icons-box">
-                <font-awesome-icon
-                    :icon="['fas', 'chevron-left']"
-                    @click="goBack"
-                    size="2xl"
-                    class="icon"
-                />
-                <font-awesome-icon
-                    :icon="['fas', 'house']"
-                    @click="goHome"
-                    size="2xl"
-                    class="icon"
-                />
-            </div>
-            <div class="logo-container">
-                <img
-                    :src="`images/sys-logos/ua-logo.png`"
-                    alt="ua-logo"
-                    class="logo"
-                />
-            </div>
-            <div><h1>University of the Assumption</h1></div>
+    <div class="header">
+        <!-- <div class="icons-box">
+            <font-awesome-icon
+                :icon="['fas', 'chevron-left']"
+                @click="goBack"
+                size="2xl"
+                class="icon"
+            />
+            <font-awesome-icon
+                :icon="['fas', 'house']"
+                @click="goHome"
+                size="2xl"
+                class="icon"
+            />
+        </div> -->
+        <div class="container">
+            <img
+                :src="`images/sys-logos/ua-logo.png`"
+                alt="ua-logo"
+                class="logo"
+            />
+            <h1>University of the Assumption</h1>
         </div>
-    </header>
+    </div>
 </template>
 
 <style scoped>
-header {
+/* header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 50;
-}
+} */
 
-.ua-header {
-    display: flex;
-    justify-content: center;
-    align-self: center;
+.header {
+    width: 100%;
     padding: 0.5rem 0;
     background-color: #272f5c;
     color: #fff;
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .icons-box {
@@ -78,12 +76,16 @@ header {
     color: lightblue;
 }
 
-.logo-container {
-    margin-right: 0.5rem;
+.container {
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    margin: auto;
+    gap: 1rem;
 }
 
 .logo {
-    width: 3.5rem;
+    width: 3rem;
 }
 
 h1 {

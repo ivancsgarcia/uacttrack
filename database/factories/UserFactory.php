@@ -30,19 +30,24 @@ class UserFactory extends Factory
         $role = $this->faker->randomElement(['Admin', 'Student Officer']);
 
         // Conditionally assign organization_id if the role is 'Student Officer'
-        $organization = $role === 'Student Officer' ? Organization::inRandomOrder()->value('name') : null;
+        $organization = $role === 'Student Officer' ? Organization::inRandomOrder()->first()->id : null;
 
-        $position = $role === 'Admin' ? AdminPosition::inRandomOrder()->value('name') : OrganizationPosition::inRandomOrder()->value('name');
+        $organization_positions = [
+            "President",
+            "Vice President",
+            "Secretary",
+            "Representative",
+        ];
 
         return [
-            'role' => $role,
-            'organization' => $organization,
-            'position' => $position,
+            'role' => 'Student Officer',
+            'organization_id' => $organization,
+            'position' => $organization_positions,
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             // 'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('123'),
+            'password' => Hash::make('123'),
             // 'remember_token' => Str::random(10),
             'created_at' => now(),
             'updated_at' => now(),
@@ -54,7 +59,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }

@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\ActivityForm;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
-        $activityForms = ActivityForm::all();
+        $activityForms = ActivityForm::latest()->paginate(5);
 
         return Inertia::render('Admin/AdminDashboard', [
             'activityForms' => $activityForms
@@ -20,72 +22,128 @@ class AdminController extends Controller
 
     public function getPending()
     {
-        $user = Auth::user();
-        if ($user->position == 'College Dean') {
-            $organizationUserIds = $user->organization->users->pluck('id');
-            $activityForms = ActivityForm::whereIn('created_by', $organizationUserIds)
-                ->where('college_dean_status', 'PENDING')
-                ->orderBy('id', 'desc')
-                ->get();
-        } elseif ($user->position == 'Office of Student Affairs') {
-            $activityForms = ActivityForm::where('osa_status', 'PENDING')->orderBy('id', 'desc')
-                ->get();
-        } elseif ($user->position == 'Vice President for Academic Affairs') {
-            $activityForms = ActivityForm::where('college_dean_status', 'APPROVED')->where('osa_status', 'APPROVED')->where('vpaa_status', 'PENDING')->orderBy('id', 'desc')
-                ->get();
-        } elseif ($user->position == 'Vice President for Administration') {
-            $activityForms = ActivityForm::where('college_dean_status', 'APPROVED')->where('osa_status', 'APPROVED')->where('vpaa_status', 'APPROVED')->where('vpa_status', 'PENDING')->orderBy('id', 'desc')
-                ->get();
-        } else {
-            // $activityForms = ActivityForm::where('status', 'PENDING')->get();
-            $activityForms = null;
-        }
+        try {
+            $user = Auth::user();
+            $activityForms = collect();
 
-        return Inertia::render('Admin/AdminPendingAPF', [
-            'activityForms' => $activityForms,
-            'position' => $user->position
-        ]);
+            switch ($user->position) {
+                case 'College Dean':
+                    $organizationUserIds = $user->organization->users->pluck('id');
+                    $activityForms = ActivityForm::whereIn('created_by', $organizationUserIds)
+                        ->where('college_dean_status', 'PENDING');
+                    break;
+
+                case 'Office of Student Affairs':
+                    $activityForms = ActivityForm::where('osa_status', 'PENDING');
+                    break;
+
+                case 'Vice President for Academic Affairs':
+                    $activityForms = ActivityForm::where([
+                        ['college_dean_status', 'APPROVED'],
+                        ['osa_status', 'APPROVED'],
+                        ['vpaa_status', 'PENDING'],
+                    ]);
+                    break;
+
+                case 'Vice President for Administration':
+                    $activityForms = ActivityForm::where([
+                        ['college_dean_status', 'APPROVED'],
+                        ['osa_status', 'APPROVED'],
+                        ['vpaa_status', 'APPROVED'],
+                        ['vpa_status', 'PENDING'],
+                    ]);
+                    break;
+            }
+            $activityForms = $activityForms->latest()->paginate(5);
+
+            return Inertia::render('Admin/AdminPendingAPF', [
+                'activityForms' => $activityForms,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error fetching pending forms: ' . $e->getMessage());
+
+            return Inertia::render('Admin/AdminPendingAPF', [
+                'activityForms' => collect([]),
+                'error' => 'Failed to fetch pending forms'
+            ]);
+        }
     }
     public function getApproved()
     {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
+            $approvedForms = collect();
 
-        if ($user->position == 'College Dean') {
-            $approvedForms = ActivityForm::where('college_dean_status', 'APPROVED')->orderBy('id', 'desc')->get();
-        } elseif ($user->position == 'Office of Student Affairs') {
-            $approvedForms = ActivityForm::where('osa_status', 'APPROVED')->orderBy('id', 'desc')->get();
-        } elseif ($user->position == 'Vice President for Academic Affairs') {
-            $approvedForms = ActivityForm::where('vpaa_status', 'APPROVED')->orderBy('id', 'desc')->get();
-        } elseif ($user->position == 'Vice President for Administration') {
-            $approvedForms = ActivityForm::where('vpa_status', 'APPROVED')->orderBy('id', 'desc')->get();
-        } else {
-            $approvedForms = null;
+            switch ($user->position) {
+                case 'College Dean':
+                    $approvedForms = ActivityForm::where('college_dean_status', 'APPROVED');
+                    break;
+
+                case 'Office of Student Affairs':
+                    $approvedForms = ActivityForm::where('osa_status', 'APPROVED');
+                    break;
+
+                case 'Vice President for Academic Affairs':
+                    $approvedForms = ActivityForm::where('vpaa_status', 'APPROVED');
+                    break;
+
+                case 'Vice President for Administration':
+                    $approvedForms = ActivityForm::where('vpa_status', 'APPROVED');
+                    break;
+            }
+
+            $approvedForms = $approvedForms->latest()->paginate(5);
+
+            return Inertia::render('Admin/AdminApprovedAPF', [
+                'approvedForms' => $approvedForms
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error fetching aprroved forms: ' . $e->getMessage());
+
+            return Inertia::render('Admin/AdminApprovedAPF', [
+                'approvedForms' => collect([]),
+                'error' => 'Failed to fetch aprroved forms'
+            ]);
         }
-
-        return Inertia::render('Admin/AdminApprovedAPF', [
-            'approvedForms' => $approvedForms
-        ]);
     }
 
     public function getRejected()
     {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
+            $rejectedForms = collect([]);
 
-        if ($user->position == 'College Dean') {
-            $rejectedForms = ActivityForm::where('college_dean_status', 'REJECTED')->orderBy('id', 'desc')->get();
-        } elseif ($user->position == 'Office of Student Affairs') {
-            $rejectedForms = ActivityForm::where('osa_status', 'REJECTED')->orderBy('id', 'desc')->get();
-        } elseif ($user->position == 'Vice President for Academic Affairs') {
-            $rejectedForms = ActivityForm::where('vpaa_status', 'REJECTED')->orderBy('id', 'desc')->get();
-        } elseif ($user->position == 'Vice President for Administration') {
-            $rejectedForms = ActivityForm::where('vpa_status', 'REJECTED')->orderBy('id', 'desc')->get();
-        } else {
-            $rejectedForms = null;
+            switch ($user->position) {
+                case 'College Dean':
+                    $rejectedForms = ActivityForm::where('college_dean_status', 'REJECTED');
+                    break;
+
+                case 'Office of Student Affairs':
+                    $rejectedForms = ActivityForm::where('osa_status', 'REJECTED');
+                    break;
+
+                case 'Vice President for Academic Affairs':
+                    $rejectedForms = ActivityForm::where('vpaa_status', 'REJECTED');
+                    break;
+
+                case 'Vice President for Administration':
+                    $rejectedForms = ActivityForm::where('vpa_status', 'REJECTED');
+                    break;
+            }
+
+            $rejectedForms = $rejectedForms->latest()->paginate(5);
+
+            return Inertia::render('Admin/AdminRejectedAPF', [
+                'rejectedForms' => $rejectedForms
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error fetching rejected forms: ' . $e->getMessage());
+
+            return Inertia::render('Admin/AdminRejectedAPF', [
+                'rejectedForms' => collect([]),
+                'error' => 'Failed to fetch rejected forms'
+            ]);
         }
-
-        return Inertia::render('Admin/AdminRejectedAPF', [
-            'rejectedForms' => $rejectedForms
-        ]);
     }
 
     public function updateStatus(Request $request, $id)

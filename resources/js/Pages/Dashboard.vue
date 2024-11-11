@@ -4,7 +4,7 @@ import { ref } from "vue";
 import MyCalendar from "../components/global/MyCalendar.vue";
 
 const props = defineProps({
-    activityForms: Array,
+    activityForms: Object,
     collegeDeanName: String,
     osaName: String,
     vpaaName: String,
@@ -24,215 +24,239 @@ const toggle = (event) => {
 </script>
 
 <template>
-    <div class="app">
-        <UAHeader />
-        <SideMenu />
+    <!-- Background Image -->
+    <div class="bg-img">
+        <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+    </div>
 
-        <div class="bg-img">
-            <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
-        </div>
+    <!-- Header -->
+    <UAHeader />
 
-        <div class="main-content">
-            <div class="account-section">
-                <Account />
+    <!-- Sidebar -->
+    <SideMenu />
 
-                <div class="icons-box">
-                    <div>
-                        <font-awesome-icon
-                            :icon="['fas', 'envelope']"
-                            size="2xl"
-                            class="icon"
-                        />
-                    </div>
-                    <div>
-                        <font-awesome-icon
-                            @click="toggle"
-                            :icon="['fas', 'bell']"
-                            size="2xl"
-                            class="icon"
-                        />
-                        <Popover ref="op">
-                            <div>hi</div>
-                        </Popover>
-                    </div>
+    <!-- Content -->
+    <div class="main-content">
+        <div class="account-section">
+            <Account />
+
+            <div class="icons-box">
+                <div>
+                    <font-awesome-icon
+                        :icon="['fas', 'envelope']"
+                        size="2xl"
+                        class="icon"
+                    />
+                </div>
+                <div>
+                    <font-awesome-icon
+                        @click="toggle"
+                        :icon="['fas', 'bell']"
+                        size="2xl"
+                        class="icon"
+                    />
+                    <Popover ref="op">
+                        <div>hi</div>
+                    </Popover>
                 </div>
             </div>
-
-            <div class="vertical-line"></div>
-
-            <MyCalendar :activityForms="props.activityForms" />
-
-            <div class="box-div">
-                <Link :href="route('submitted-apf')">
-                    <Card class="top">
-                        <template #content>
-                            <p>Submitted</p>
-                            <p>Activity Proposal Form</p>
-                        </template>
-                    </Card>
-                </Link>
-
-                <Link :href="route('approved-apf')">
-                    <Card class="top">
-                        <template #content>
-                            <p>Approved</p>
-                            <p>Activity Proposal Form</p>
-                        </template>
-                    </Card>
-                </Link>
-
-                <Link :href="route('rejected-apf')">
-                    <Card class="top">
-                        <template #content>
-                            <p>Rejected</p>
-                            <p>Activity Proposal Form</p>
-                        </template>
-                    </Card>
-                </Link>
-            </div>
-
-            <div class="vertical-line"></div>
-
-            <h2>Approval</h2>
-            <div class="box2-div">
-                <Card @click="showCollegeDean = true">
-                    <template #content>
-                        <p>College Dean</p>
-                    </template>
-                </Card>
-
-                <Card @click="showOSA = true">
-                    <template #content>
-                        <p>Office of Student Affairs</p>
-                    </template>
-                </Card>
-
-                <Card @click="showVPAA = true">
-                    <template #content>
-                        <p>VPAA Approval</p>
-                    </template>
-                </Card>
-
-                <Card @click="showVPA = true">
-                    <template #content>
-                        <p>VPA Approval</p>
-                    </template>
-                </Card>
-
-                <Card @click="copyReceive = true">
-                    <template #content>
-                        <p>Copy Received by</p>
-                    </template>
-                </Card>
-            </div>
-
-            <Dialog
-                v-model:visible="showCollegeDean"
-                header="College Dean Approval Status"
-                modal
-            >
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Transaction Number</th>
-                            <th>College Dean</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="form in activityForms" :key="form.id">
-                            <td>{{ form.id }}</td>
-                            <td>{{ collegeDeanName }}</td>
-                            <td>{{ form.college_dean_status }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </Dialog>
-
-            <Dialog
-                v-model:visible="showOSA"
-                header="OSA Approval Status"
-                modal
-            >
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Transaction Number</th>
-                            <th>OSA</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="form in activityForms" :key="form.id">
-                            <td>{{ form.id }}</td>
-                            <td>{{ osaName }}</td>
-                            <td>{{ form.osa_status }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </Dialog>
-
-            <Dialog
-                v-model:visible="showVPAA"
-                header="VPAA Approval Status"
-                modal
-            >
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Transaction Number</th>
-                            <th>VPAA</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="form in activityForms" :key="form.id">
-                            <td>{{ form.id }}</td>
-                            <td>{{ vpaaName }}</td>
-                            <td>{{ form.vpaa_status }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </Dialog>
-
-            <Dialog
-                v-model:visible="showVPA"
-                header="VPA Approval Status"
-                modal
-            >
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Transaction Number</th>
-                            <th>VPA</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="form in activityForms" :key="form.id">
-                            <td>{{ form.id }}</td>
-                            <td>{{ vpaName }}</td>
-                            <td>{{ form.vpa_status }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </Dialog>
-
-            <Dialog
-                v-model:visible="copyReceive"
-                header="Copy Received By"
-                modal
-            >
-                <div>Copy Receive</div>
-            </Dialog>
         </div>
+
+        <div class="vertical-line"></div>
+
+        <h2>UA Academic Calendar and School Events</h2>
+        <MyCalendar :activityForms="props.activityForms" />
+
+        <div class="box-div">
+            <Link :href="route('submitted-apf')">
+                <Card class="top">
+                    <template #content>
+                        <p>Submitted</p>
+                        <p>Activity Proposal Form</p>
+                    </template>
+                </Card>
+            </Link>
+
+            <Link :href="route('approved-apf')">
+                <Card class="top">
+                    <template #content>
+                        <p>Approved</p>
+                        <p>Activity Proposal Form</p>
+                    </template>
+                </Card>
+            </Link>
+
+            <Link :href="route('rejected-apf')">
+                <Card class="top">
+                    <template #content>
+                        <p>Rejected</p>
+                        <p>Activity Proposal Form</p>
+                    </template>
+                </Card>
+            </Link>
+        </div>
+
+        <div class="vertical-line"></div>
+
+        <h2>Approval</h2>
+        <div class="box2-div">
+            <Card @click="showCollegeDean = true">
+                <template #content>
+                    <p>College Dean</p>
+                </template>
+            </Card>
+
+            <Card @click="showOSA = true">
+                <template #content>
+                    <p>Office of Student Affairs</p>
+                </template>
+            </Card>
+
+            <Card @click="showVPAA = true">
+                <template #content>
+                    <p>VPAA Approval</p>
+                </template>
+            </Card>
+
+            <Card @click="showVPA = true">
+                <template #content>
+                    <p>VPA Approval</p>
+                </template>
+            </Card>
+
+            <Card @click="copyReceive = true">
+                <template #content>
+                    <p>Copy Received by</p>
+                </template>
+            </Card>
+        </div>
+
+        <Dialog
+            v-model:visible="showCollegeDean"
+            header="College Dean Approval Status"
+            modal
+        >
+            <table>
+                <thead>
+                    <tr>
+                        <th>Transaction Number</th>
+                        <th>Activity Title</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="form in activityForms.data" :key="form.id">
+                        <td>{{ form.id }}</td>
+                        <td>{{ form.title }}</td>
+                        <td
+                            :class="{
+                                'text-green-500':
+                                    form.college_dean_status === 'APPROVED',
+                                'text-red-500':
+                                    form.college_dean_status === 'REJECTED',
+                            }"
+                        >
+                            {{ form.college_dean_status }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <PaginationLinks :paginator="activityForms" />
+        </Dialog>
+
+        <Dialog v-model:visible="showOSA" header="OSA Approval Status" modal>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Transaction Number</th>
+                        <th>Activity Title</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="form in activityForms.data" :key="form.id">
+                        <td>{{ form.id }}</td>
+                        <td>{{ form.title }}</td>
+                        <td
+                            :class="{
+                                'text-green-500':
+                                    form.osa_status === 'APPROVED',
+                                'text-red-500': form.osa_status === 'REJECTED',
+                            }"
+                        >
+                            {{ form.osa_status }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <PaginationLinks :paginator="activityForms" />
+        </Dialog>
+
+        <Dialog v-model:visible="showVPAA" header="VPAA Approval Status" modal>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Transaction Number</th>
+                        <th>Activity Title</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="form in activityForms.data" :key="form.id">
+                        <td>{{ form.id }}</td>
+                        <td>{{ form.title }}</td>
+                        <td
+                            :class="{
+                                'text-green-500':
+                                    form.vpaa_status === 'APPROVED',
+                                'text-red-500': form.vpaa_status === 'REJECTED',
+                            }"
+                        >
+                            {{ form.vpaa_status }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <PaginationLinks :paginator="activityForms" />
+        </Dialog>
+
+        <Dialog v-model:visible="showVPA" header="VPA Approval Status" modal>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Transaction Number</th>
+                        <th>Activity Title</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="form in activityForms.data" :key="form.id">
+                        <td>{{ form.id }}</td>
+                        <td>{{ form.title }}</td>
+                        <td
+                            :class="{
+                                'text-green-500':
+                                    form.vpa_status === 'APPROVED',
+                                'text-red-500': form.vpa_status === 'REJECTED',
+                            }"
+                        >
+                            {{ form.vpa_status }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <PaginationLinks :paginator="activityForms" />
+        </Dialog>
+
+        <Dialog v-model:visible="copyReceive" header="Copy Received By" modal>
+            <div>Copy Receive</div>
+        </Dialog>
     </div>
 </template>
 
 <style scoped>
 .app {
-    padding-top: 4rem;
-    width: 100%;
+    display: flex;
 }
 
 .bg-img {
@@ -286,7 +310,7 @@ const toggle = (event) => {
     justify-content: center;
     flex-wrap: wrap;
     gap: 1rem;
-    margin: 1rem 0 3rem;
+    margin: 2rem 0 3rem;
 }
 
 h2 {

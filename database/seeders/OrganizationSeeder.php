@@ -51,8 +51,8 @@ class OrganizationSeeder extends Seeder
             ],
             [
                 'name' => 'CRYCYC',
-                'logo' => 'CRYCYC.jpg'
-                ,'description' => null,
+                'logo' => 'CRYCYC.jpg',
+                'description' => null,
             ],
             [
                 'name' => 'CREATE',
@@ -61,13 +61,13 @@ class OrganizationSeeder extends Seeder
             ],
             [
                 'name' => 'ICPEP',
-                'logo' => 'ICPEP.jpg'
-                ,'description' => null,
+                'logo' => 'ICPEP.jpg',
+                'description' => null,
             ],
             [
                 'name' => 'INA',
-                'logo' => 'INA.jpg'
-                ,'description' => null,
+                'logo' => 'INA.jpg',
+                'description' => null,
             ],
             [
                 'name' => 'JPIA',
@@ -141,6 +141,5 @@ class OrganizationSeeder extends Seeder
                 'description' => $orgData['description'],
             ]);
         }
-
     }
 }

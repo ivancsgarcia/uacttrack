@@ -5,59 +5,25 @@ import { Link } from "@inertiajs/vue3";
 <template>
     <div class="sidebar">
         <div class="sidebar-content">
-            <div class="image">
+            <div class="profile-section">
                 <img
                     :src="'images/sys-logos/UActTrack-logo.png'"
                     alt="uacttrack-logo"
+                    class="image"
                 />
             </div>
 
             <div class="menu-items">
-                <Link :href="route('home')">
+                <Link :href="route('register')">
                     <div
                         :class="
-                            route().current('home')
+                            route().current('register')
                                 ? '!bg-ua-blue !text-white'
                                 : ''
                         "
+                        class="link"
                     >
-                        <p>Dashboard</p>
-                    </div>
-                </Link>
-
-                <Link :href="route('activity-form.create')">
-                    <div
-                        :class="
-                            route().current('activity-form.create')
-                                ? '!bg-ua-blue !text-white'
-                                : ''
-                        "
-                    >
-                        <p>Activity Proposal Form</p>
-                    </div>
-                </Link>
-
-                <Link :href="route('request-form')">
-                    <div
-                        :class="
-                            route().current('request-form')
-                                ? '!bg-ua-blue !text-white'
-                                : ''
-                        "
-                    >
-                        <p>Request Forms</p>
-                    </div>
-                </Link>
-
-                <Link :href="route('recommendation')">
-                    <div
-                        :class="
-                            route().current('recommendation')
-                                ? '!bg-ua-blue !text-white'
-                                : ''
-                        "
-                    >
-                        <p>Relevant Links</p>
+                        <p>Register</p>
                     </div>
                 </Link>
             </div>

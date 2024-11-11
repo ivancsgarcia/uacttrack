@@ -28,10 +28,10 @@
         "@fortawesome/vue-fontawesome": "^3.0.8",
         "@inertiajs/vue3": "^1.2.0",
         "@popperjs/core": "^2.11.8",
-        "@primevue/themes": "^4.0.7",
+        "@primevue/themes": "^4.2.1",
         "@vueuse/core": "^11.0.1",
         "primeicons": "^7.0.0",
-        "primevue": "^4.1.1",
+        "primevue": "^4.2.1",
         "tailwindcss-primeui": "^0.3.4",
         "v-calendar": "^3.1.2"
     }

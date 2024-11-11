@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware("guest")->group(function () {
     // Register
-    Route::get('/register', [RegisterController::class, 'create'])->name('register');
-    Route::post('/register', [RegisterController::class, 'store']);
+
 
     // Login
     Route::get('/login', [AuthenticateController::class, 'create'])->name('login');
@@ -23,6 +22,9 @@ Route::middleware("guest")->group(function () {
 });
 
 Route::middleware("auth")->group(function () {
+
+    Route::get('/register', [RegisterController::class, 'create'])->name('register');
+    Route::post('/register', [RegisterController::class, 'store']);
     // Logout
     Route::post('/logout', [AuthenticateController::class, 'destroy'])->name('logout');
 
@@ -35,11 +37,10 @@ Route::middleware("auth")->group(function () {
     Route::get('/approved-apf', [ActivityFormController::class, 'fetchApproved'])->name('approved-apf');
     Route::get('/rejected-apf', [ActivityFormController::class, 'fetchRejected'])->name('rejected-apf');
 
-    Route::inertia('/APF', 'APF')->name('apf');
-    Route::get('/activity-form', [ActivityFormController::class, 'create'])->name('activity-form');
-    Route::post('/activity-form', [ActivityFormController::class, 'store']);
-
-    Route::get('/activity-form-preview/{activityId}', [ActivityFormController::class, 'show'])->name('activity-form-preview');
+    Route::get('/activity-form', [ActivityFormController::class, 'create'])->name('activity-form.create');
+    Route::post('/activity-form', [ActivityFormController::class, 'store'])->name('activity-form.store');
+    Route::get('/activity-form/{activityId}', [ActivityFormController::class, 'show'])->name('activity-form.show');
+    Route::get('/activity-form/{activityId}/edit', [ActivityFormController::class, 'edit'])->name('activity-form.edit');
 
     Route::get('/activity-form-pdf/{activityId}', [ActivityFormPDFController::class, 'generatePDF'])->name('activity-form-pdf');
 

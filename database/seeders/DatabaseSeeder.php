@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\ActivityForm;
 use App\Models\User;
+use Database\Factories\ActivityFormFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,7 +22,7 @@ class DatabaseSeeder extends Seeder
         //     'password' => '123456'
         // ]);
 
-        
+
 
 
         $this->call([
@@ -30,9 +32,10 @@ class DatabaseSeeder extends Seeder
             RequestFormSeeder::class,
             // OrganizationPositionSeeder::class,
             AdminSeeder::class,
-            StudentOfficerSeeder::class, 
+            StudentOfficerSeeder::class,
         ]);
 
-        // User::factory(100)->create();
+        // User::factory(2)->create();
+        // ActivityForm::factory(20)->create();
     }
 }

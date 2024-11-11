@@ -1,12 +1,11 @@
 <script setup>
-import AdminSideMenu from "../../components/global/AdminSideMenu.vue";
 import { ref } from "vue";
 import { Link, router, usePage } from "@inertiajs/vue3";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 
-defineProps({
-    activityForms: Array,
+const props = defineProps({
+    activityForms: Object,
 });
 
 const confirm = useConfirm();
@@ -20,16 +19,18 @@ const formStatuses = ref({});
 let previousStatus = null;
 
 // Initialize the form statuses based on the existing data
-activityForms.forEach((form) => {
+activityForms.data.forEach((form) => {
     formStatuses.value[form.id] = getInitialStatus(form, position);
 });
 
 // Determine the initial status based on the user's position
 function getInitialStatus(form, position) {
     if (position === "College Dean") return form.college_dean_status;
-    if (position === "OSA") return form.osa_status;
-    if (position === "VPAA") return form.vpaa_status;
-    if (position === "VPAA") return form.vpa_status;
+    if (position === "Office of Student Affairs") return form.osa_status;
+    if (position === "Vice President for Academic Affairs")
+        return form.vpaa_status;
+    if (position === "Vice President for Administration")
+        return form.vpa_status;
     return form.status;
 }
 
@@ -77,30 +78,35 @@ const changeStatus = (form) => {
 </script>
 
 <template>
-    <div class="app flex pt-16">
-        <UAHeader />
-        <AdminSideMenu />
+    <!-- Background Image -->
+    <div class="bg-img">
+        <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+    </div>
 
-        <div class="bg-img">
-            <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+    <!-- Header -->
+    <UAHeader />
+
+    <!-- Sidebar -->
+    <AdminSideMenu />
+
+    <!-- Content -->
+    <div class="main-content">
+        <div class="flex justify-between items-center mt-5 mx-12 mb-4">
+            <Account class="account" />
+
+            <div class="flex justify-center items-center gap-5">
+                <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
+                <font-awesome-icon :icon="['fas', 'bell']" size="2xl" />
+            </div>
         </div>
 
-        <div class="main-content w-screen ml-64 p-5">
-            <div class="flex justify-between items-center mt-5 mx-12 mb-4">
-                <Account class="account" />
+        <div class="h-0.5 bg-ua-blue mb-8"></div>
 
-                <div class="flex justify-center items-center gap-5">
-                    <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
-                    <font-awesome-icon :icon="['fas', 'bell']" size="2xl" />
-                </div>
-            </div>
+        <h1 class="text-center text-4xl mb-4 text-ua-blue">
+            Pending Activity Proposal Forms
+        </h1>
 
-            <div class="h-0.5 bg-ua-blue mb-8"></div>
-
-            <h1 class="text-center text-4xl mb-4 text-ua-blue">
-                Pending Activity Proposal Forms
-            </h1>
-
+        <div v-if="activityForms.data && activityForms.data.length > 0">
             <table class="w-full border-separate border-spacing-4">
                 <thead>
                     <tr class="bg-ua-blue text-white h-20">
@@ -112,11 +118,13 @@ const changeStatus = (form) => {
                 </thead>
                 <tbody>
                     <tr
-                        v-for="form in activityForms"
+                        v-for="form in activityForms.data"
                         :key="form.id"
                         class="text-center h-20"
                     >
-                        <td class="bg-ua-gray text-ua-blue">{{ form.id }}</td>
+                        <td class="bg-ua-gray text-ua-blue">
+                            {{ form.id }}
+                        </td>
                         <td class="bg-ua-gray text-ua-blue">
                             {{
                                 new Date(form.created_at).toLocaleDateString(
@@ -126,7 +134,7 @@ const changeStatus = (form) => {
                         </td>
                         <td class="bg-ua-gray text-ua-blue underline">
                             <Link
-                                :href="route('activity-form-preview', form.id)"
+                                :href="route('activity-form.show', form.id)"
                                 >{{ form.title }}</Link
                             >
                         </td>
@@ -146,9 +154,16 @@ const changeStatus = (form) => {
                     </tr>
                 </tbody>
             </table>
-            <ConfirmDialog></ConfirmDialog>
-            <Toast />
         </div>
+        <div v-else class="text-center mt-8 text-ua-blue">
+            No approved activity proposal forms available.
+        </div>
+        <PaginationLinks
+            v-if="activityForms.links"
+            :paginator="activityForms"
+        />
+        <ConfirmDialog></ConfirmDialog>
+        <Toast />
     </div>
 </template>
 
@@ -167,6 +182,11 @@ const changeStatus = (form) => {
     width: 40rem;
     filter: grayscale(100%);
     opacity: 0.1;
+}
+
+.main-content {
+    margin-left: 16rem;
+    padding: 1rem;
 }
 
 .approval-boxes {

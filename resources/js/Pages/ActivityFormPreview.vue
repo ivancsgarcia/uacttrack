@@ -536,7 +536,23 @@ const downloadPDF = (activityId) => {
                     </div>
                 </div>
             </div> -->
-            <button @click="downloadPDF(activityForms.id)">Download PDF</button>
+            <div class="flex justify-center gap-8">
+                <div class="bg-red-300 rounded-md px-8 py-2">
+                    <button>Cancel</button>
+                </div>
+                <div class="bg-yellow-300 rounded-md px-8 py-2">
+                    <button
+                        :href="route('activity-form.edit', activityForms.id)"
+                    >
+                        Edit
+                    </button>
+                </div>
+                <div v-if="activityForms.status === 'APPROVED'">
+                    <button @click="downloadPDF(activityForms.id)">
+                        Download PDF
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </template>

@@ -14,7 +14,21 @@ class ActivityFormController extends Controller
 
     public function create()
     {
-        $venues = Venue::all();
+        $approvedForms = ActivityForm::where('status', 'APPROVED')->get();
+        $venues = Venue::orderBy('name')->get();
+
+        $events = [
+            'Seminar',
+            'Meeting',
+            'Workshop',
+            'Symposium',
+            'Conference',
+            'Orientation',
+            'Training',
+            'Forum',
+            'Webinar',
+            'Others'
+        ];
 
         $imageFiles = [];
         $directoryPath = public_path('images/ua-events');
@@ -22,17 +36,19 @@ class ActivityFormController extends Controller
             foreach (scandir($directoryPath) as $file) {
                 if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif'])) {
                     $imageFiles[] = [
-                        'itemImageSrc' => asset("images/ua-events/{$file}"), // Full path for the Galleria item
-                        'thumbnailImageSrc' => asset("images/ua-events/{$file}"), // Thumbnail path
-                        'alt' => pathinfo($file, PATHINFO_FILENAME), // Use the filename as alt text
+                        'itemImageSrc' => asset("images/ua-events/{$file}"),
+                        'thumbnailImageSrc' => asset("images/ua-events/{$file}"),
+                        'alt' => pathinfo($file, PATHINFO_FILENAME),
                     ];
                 }
             }
         }
 
-        return Inertia::render('ActivityForm', [
+        return Inertia::render('ActivityForm/index', [
             'venues' => $venues,
+            'events' => $events,
             'images' => $imageFiles,
+            'approvedForms' => $approvedForms
         ]);
     }
 
@@ -95,9 +111,40 @@ class ActivityFormController extends Controller
     {
         $activityForms = ActivityForm::where('id', $activityId)
             ->firstOrFail();
+        $venues = Venue::orderBy('name')->get();
 
-        return Inertia::render('ActivityFormPreview', [
+
+        return Inertia::render('ActivityForm/show', [
             'activityForms' => $activityForms,
+            'logoPath' => asset('images/sys-logos/ua-logo.png'),
+            'venues' => $venues
+        ]);
+    }
+
+    public function edit($activityId)
+    {
+        $activityForms = ActivityForm::where('id', $activityId)
+            ->firstOrFail();
+
+        $venues = Venue::orderBy('name')->get();
+
+        $events = [
+            'Seminar',
+            'Meeting',
+            'Workshop',
+            'Symposium',
+            'Conference',
+            'Orientation',
+            'Training',
+            'Forum',
+            'Webinar',
+            'Others'
+        ];
+
+        return Inertia::render('ActivityForm/edit', [
+            'activityForms' => $activityForms,
+            'venues' => $venues,
+            'events' => $events,
             'logoPath' => asset('images/sys-logos/ua-logo.png')
         ]);
     }
@@ -108,8 +155,8 @@ class ActivityFormController extends Controller
 
         $activityForms = ActivityForm::where('status', 'PENDING')->whereHas('creator', function ($query) use ($organizationId) {
             $query->where('organization_id', $organizationId);
-        })->orderBy('id', 'desc')
-            ->get();
+        })->latest()
+            ->paginate(5);
 
         return Inertia::render('SubmittedAPF', [
             'activityForms' => $activityForms
@@ -122,8 +169,8 @@ class ActivityFormController extends Controller
 
         $approvedForms = ActivityForm::where('status', 'APPROVED')->whereHas('creator', function ($query) use ($organizationId) {
             $query->where('organization_id', $organizationId);
-        })->orderBy('id', 'desc')
-            ->get();
+        })->latest()
+            ->paginate(5);
 
         return Inertia::render('ApprovedAPF', [
             'approvedForms' => $approvedForms
@@ -136,8 +183,8 @@ class ActivityFormController extends Controller
 
         $rejectedForms = ActivityForm::where('status', 'REJECTED')->whereHas('creator', function ($query) use ($organizationId) {
             $query->where('organization_id', $organizationId);
-        })->orderBy('id', 'desc')
-            ->get();
+        })->latest()
+            ->paginate(5);
 
         return Inertia::render('RejectedAPF', [
             'rejectedForms' => $rejectedForms

@@ -1,36 +1,41 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 
-defineProps({
-    rejectedForms: Array,
+const props = defineProps({
+    rejectedForms: Object,
 });
 </script>
 
 <template>
-    <div class="app flex pt-16">
-        <UAHeader />
-        <AdminSideMenu />
+    <!-- Background Image -->
+    <div class="bg-img">
+        <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+    </div>
 
-        <div class="bg-img">
-            <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+    <!-- Header -->
+    <UAHeader />
+
+    <!-- Sidebar -->
+    <AdminSideMenu />
+
+    <!-- Content -->
+    <div class="main-content">
+        <div class="flex justify-between items-center mt-5 mx-12 mb-4">
+            <Account class="account" />
+
+            <div class="flex justify-center items-center gap-5">
+                <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
+                <font-awesome-icon :icon="['fas', 'bell']" size="2xl" />
+            </div>
         </div>
 
-        <div class="main-content w-screen ml-64 p-5">
-            <div class="flex justify-between items-center mt-5 mx-12 mb-4">
-                <Account class="account" />
+        <div class="h-0.5 bg-ua-blue mb-8"></div>
 
-                <div class="flex justify-center items-center gap-5">
-                    <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
-                    <font-awesome-icon :icon="['fas', 'bell']" size="2xl" />
-                </div>
-            </div>
+        <h1 class="text-center text-4xl mb-4 text-ua-blue">
+            Rejected Activity Proposal Forms
+        </h1>
 
-            <div class="h-0.5 bg-ua-blue mb-8"></div>
-
-            <h1 class="text-center text-4xl mb-4 text-ua-blue">
-                Rejected Activity Proposal Forms
-            </h1>
-
+        <div v-if="rejectedForms.data && rejectedForms.data.length > 0">
             <table class="w-full border-separate border-spacing-4">
                 <tr class="bg-ua-blue text-white h-20">
                     <th class="w-1/5 border">Transaction Number</th>
@@ -39,27 +44,39 @@ defineProps({
                 </tr>
 
                 <!-- fetch data -->
-                <tr
-                    class="text-center h-20"
-                    v-for="form in rejectedForms"
-                    :key="form.id"
-                >
-                    <td class="bg-ua-gray w-1/5 border">{{ form.id }}</td>
-                    <td class="bg-ua-gray w-3/5 border underline">
-                        <Link :href="route('activity-form-preview', form.id)">{{
-                            form.title
-                        }}</Link>
-                    </td>
-                    <td class="bg-ua-gray w-1/5 border">
-                        {{
-                            new Date(form.created_at).toLocaleDateString(
-                                "en-US"
-                            )
-                        }}
-                    </td>
-                </tr>
+                <tbody>
+                    <tr
+                        v-for="form in rejectedForms.data"
+                        :key="form.id"
+                        class="text-center h-20"
+                    >
+                        <td class="bg-ua-gray w-1/5 border">
+                            {{ form.id }}
+                        </td>
+                        <td class="bg-ua-gray w-3/5 border underline">
+                            <Link
+                                :href="route('activity-form.show', form.id)"
+                                >{{ form.title }}</Link
+                            >
+                        </td>
+                        <td class="bg-ua-gray w-1/5 border">
+                            {{
+                                new Date(form.created_at).toLocaleDateString(
+                                    "en-US"
+                                )
+                            }}
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
+        <div v-else class="text-center mt-8 text-ua-blue">
+            No approved activity proposal forms available.
+        </div>
+        <PaginationLinks
+            v-if="rejectedForms.links"
+            :paginator="rejectedForms"
+        />
     </div>
 </template>
 
@@ -78,5 +95,10 @@ defineProps({
     width: 40rem;
     filter: grayscale(100%);
     opacity: 0.1;
+}
+
+.main-content {
+    margin-left: 16rem;
+    padding: 1rem;
 }
 </style>

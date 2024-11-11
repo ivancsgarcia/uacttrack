@@ -1,4 +1,6 @@
 <script setup>
+import ImageUpload from "../global/ImageUpload.vue";
+
 const props = defineProps({
     form: Object,
     venues: Array,
@@ -25,69 +27,58 @@ const handleFileUpload = (event, fieldName) => {
         </p>
 
         <div class="flex flex-col mb-4">
-            <label class="text-2xl"
-                ><span class="text-red-400">*</span> Activity Title</label
-            >
+            <label class="text-2xl">* Activity Title</label>
             <input
                 type="text"
                 v-model="form.title"
                 class="rounded-xl shadow bg-ua-blue/30 p-2"
             />
-            <div v-if="form.errors.title" class="text-red-500">
+            <span v-if="form.errors.title" class="text-red-500">
                 * {{ form.errors.title }}
-            </div>
+            </span>
         </div>
 
         <div class="flex flex-row gap-4 mb-4">
             <div class="flex flex-col w-2/4">
-                <label class="text-2xl"
-                    ><span class="text-red-400">*</span> Type of Event</label
-                >
+                <label class="text-2xl">* Type of Event</label>
                 <input
                     type="text"
                     v-model="form.event_type"
                     class="rounded-xl shadow bg-ua-blue/30 p-2"
                 />
-                <div v-if="form.errors.event_type" class="text-red-500">
+                <span v-if="form.errors.event_type" class="text-red-500">
                     * {{ form.errors.event_type }}
-                </div>
+                </span>
             </div>
             <div class="flex flex-col w-2/4">
-                <label class="text-2xl"
-                    ><span class="text-red-400">*</span> Activity
-                    Description</label
-                >
+                <label class="text-2xl">* Activity Description</label>
                 <textarea
                     v-model="form.description"
                     class="rounded-xl shadow bg-ua-blue/30 p-2"
                 ></textarea>
-                <div v-if="form.errors.description" class="text-red-500">
+                <span v-if="form.errors.description" class="text-red-500">
                     * {{ form.errors.description }}
-                </div>
+                </span>
             </div>
         </div>
 
         <div class="flex mx-auto gap-4 mb-4">
             <div class="flex flex-col w-2/4">
-                <label class="text-2xl"
-                    ><span class="text-red-400">*</span> Date</label
-                >
+                <label class="text-2xl">* Date</label>
                 <VDatePicker v-model="form.date" mode="date" expanded />
                 <!-- <input
                     type="date"
                     v-model="form.date"
                     class="rounded-xl shadow bg-ua-blue/30 p-2"
                 /> -->
-                <div v-if="form.errors.date" class="text-red-500">
+                <span v-if="form.errors.date" class="text-red-500">
                     * {{ form.errors.date }}
-                </div>
+                </span>
             </div>
 
             <div class="flex flex-col w-2/4 justify-center gap-8">
                 <div class="flex flex-col">
-                    <label class="text-2xl"
-                        ><span class="text-red-400">*</span> From Time</label
-                    >
+                    <label class="text-2xl">* From Time</label>
                     <VDatePicker
                         v-model="form.from_time"
                         mode="time"
@@ -99,15 +90,13 @@ const handleFileUpload = (event, fieldName) => {
                     v-model="form.from_time"
                     class="rounded-xl shadow bg-ua-blue/30 p-2"
                 /> -->
-                    <div v-if="form.errors.from_time" class="text-red-500">
+                    <span v-if="form.errors.from_time" class="text-red-500">
                         * {{ form.errors.from_time }}
-                    </div>
+                    </span>
                 </div>
 
                 <div class="flex flex-col">
-                    <label class="text-2xl"
-                        ><span class="text-red-400">*</span> To Time</label
-                    >
+                    <label class="text-2xl">* To Time</label>
                     <VDatePicker
                         v-model="form.to_time"
                         mode="time"
@@ -118,17 +107,15 @@ const handleFileUpload = (event, fieldName) => {
                     v-model="form.to_time"
                     class="rounded-xl shadow bg-ua-blue/30 p-2"
                 /> -->
-                    <div v-if="form.errors.to_time" class="text-red-500">
+                    <span v-if="form.errors.to_time" class="text-red-500">
                         * {{ form.errors.to_time }}
-                    </div>
+                    </span>
                 </div>
             </div>
         </div>
 
         <div class="flex flex-col mx-auto mb-4">
-            <label class="text-2xl"
-                ><span class="text-red-400">*</span> Venue</label
-            >
+            <label class="text-2xl">* Venue</label>
             <select
                 v-model="form.venue"
                 class="rounded-xl shadow bg-ua-blue/30 p-2"
@@ -141,47 +128,45 @@ const handleFileUpload = (event, fieldName) => {
                     {{ venue.name }}
                 </option>
             </select>
-            <div v-if="form.errors.venue" class="text-red-500">
+            <span v-if="form.errors.venue" class="text-red-500">
                 * {{ form.errors.venue }}
-            </div>
+            </span>
         </div>
 
         <div class="flex gap-4">
             <div class="flex flex-col w-2/4">
                 <label class="text-2xl"
-                    ><span class="text-red-400">*</span> Requirements /
-                    Resources Needed</label
+                    >* Requirements / Resources Needed</label
                 >
                 <textarea
                     v-model="form.requirements_or_resources_needed"
                     class="rounded-xl shadow bg-ua-blue/30 p-2"
                 ></textarea>
-                <div
+                <span
                     v-if="form.errors.requirements_or_resources_needed"
                     class="text-red-500"
                 >
                     * {{ form.errors.requirements_or_resources_needed }}
-                </div>
+                </span>
             </div>
             <div class="w-2/4">
                 <div class="flex flex-col mb-4">
                     <label class="text-2xl"
-                        ><span class="text-red-400">*</span> Participants -
-                        Department / Program / Grade or Year Level</label
+                        >* Participants - Department / Program / Grade or Year
+                        Level</label
                     >
                     <input
                         type="text"
                         v-model="form.participant"
                         class="rounded-xl shadow bg-ua-blue/30 p-2"
                     />
-                    <div v-if="form.errors.participant" class="text-red-500">
+                    <span v-if="form.errors.participant" class="text-red-500">
                         * {{ form.errors.participant }}
-                    </div>
+                    </span>
                 </div>
                 <div class="flex flex-col">
                     <label class="text-2xl"
-                        ><span class="text-red-400">*</span> Expected Number of
-                        Attendees</label
+                        >* Expected Number of Attendees</label
                     >
                     <input
                         type="number"
@@ -190,12 +175,12 @@ const handleFileUpload = (event, fieldName) => {
                         max="5000"
                         class="rounded-xl shadow bg-ua-blue/30 p-2"
                     />
-                    <div
+                    <span
                         v-if="form.errors.attendance_count"
                         class="text-red-500"
                     >
                         * {{ form.errors.attendance_count }}
-                    </div>
+                    </span>
                 </div>
             </div>
         </div>
@@ -221,13 +206,14 @@ const handleFileUpload = (event, fieldName) => {
                     Cash Form (PCF ) for amount below P1,000.
                 </p>
                 <div class="flex justify-center">
-                    <input
+                    <ImageUpload />
+                    <!-- <input
                         :disabled="form.check_payment_or_cash != true"
                         type="file"
                         @change="
                             handleFileUpload($event, 'payment_or_cash_file')
                         "
-                    />
+                    /> -->
                 </div>
             </div>
         </div>
@@ -243,12 +229,12 @@ const handleFileUpload = (event, fieldName) => {
             >
                 <p class="text-center">Request for Meals (RFM)</p>
                 <div class="flex justify-center">
-                    <input
+                    <!-- <input
                         :disabled="form.food != true"
                         type="file"
                         @change="handleFileUpload($event, 'food_file')"
-                    />
-                    <!-- <p>{{ form.errors.paymentOrCashFile }}</p> -->
+                    /> -->
+                    <ImageUpload />
                 </div>
             </div>
         </div>
@@ -265,12 +251,12 @@ const handleFileUpload = (event, fieldName) => {
                     Purchase Requisition (PR) for supplies to be purchased
                 </p>
                 <div class="flex justify-center">
-                    <input
+                    <!-- <input
                         :disabled="form.supplies != true"
                         type="file"
                         @change="handleFileUpload($event, 'supplies_file')"
-                    />
-                    <!-- <p>{{ form.errors.suppliesFile }}</p> -->
+                    /> -->
+                    <ImageUpload />
                 </div>
             </div>
         </div>
@@ -284,12 +270,12 @@ const handleFileUpload = (event, fieldName) => {
             <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
                 <p class="text-center">Reproduction Form</p>
                 <div class="flex justify-center">
-                    <input
+                    <!-- <input
                         :disabled="form.reproduction != true"
                         type="file"
                         @change="handleFileUpload($event, 'reproduction_file')"
-                    />
-                    <!-- <p>{{ form.errors.reproductionFile }}</p> -->
+                    /> -->
+                    <ImageUpload />
                 </div>
             </div>
         </div>
@@ -303,12 +289,12 @@ const handleFileUpload = (event, fieldName) => {
             <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
                 <p class="text-center">If applicable:</p>
                 <div class="flex justify-center">
-                    <input
+                    <!-- <input
                         :disabled="form.others != true"
                         type="file"
                         @change="handleFileUpload($event, 'others_file')"
-                    />
-                    <!-- <p>{{ form.errors.othersFile }}</p> -->
+                    /> -->
+                    <ImageUpload />
                 </div>
             </div>
         </div>

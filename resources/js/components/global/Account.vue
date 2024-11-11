@@ -1,49 +1,46 @@
 <script setup>
-import { computed } from 'vue'
-import { usePage } from '@inertiajs/vue3'
+import { computed } from "vue";
+import { usePage } from "@inertiajs/vue3";
 
-const page = usePage()
-const user = computed(() => page.props.auth.user)
-const orgLogo = computed(() => page.props.organization.logo)
+const page = usePage();
+const user = computed(() => page.props.auth.user);
+const orgLogo = computed(() => page.props.organization.logo);
 </script>
 
 <template>
-    <div class="flex items-center w-full">
-        <!-- <div class="round-avatar">
-            <img :src="orgLogo" alt="organization-logo" class="rounded-full">
-        </div> -->
-        <Avatar :image="orgLogo" size="xlarge" shape="circle"/>
+    <div class="flex items-center gap-4">
+        <Avatar :image="orgLogo" size="xlarge" shape="circle" />
         <div class="flex text">
             <p>Welcome,</p>
-            <p class="name">{{ user.first_name + ' ' + user.last_name}}</p>
+            <p class="name">{{ user.first_name + " " + user.last_name }}</p>
         </div>
     </div>
 </template>
 
 <style scoped>
-    .flex {
-        display: flex;
-    }
+.flex {
+    display: flex;
+}
 
-    .round-avatar {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        background-color: gray;
-        margin-right: 1rem;
-    }
+.round-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: gray;
+    margin-right: 1rem;
+}
 
-    .text {
-        flex-direction: column;
-        /* align-items: start; */
-        /* justify-content: center; */
-    }
+.text {
+    flex-direction: column;
+    /* align-items: start; */
+    /* justify-content: center; */
+}
 
-    .text p {
-        font-size: 1.6rem;
-    }
+.text p {
+    font-size: 1.5rem;
+}
 
-    .name {
-        font-weight: bold;
-    }
+.name {
+    font-weight: bold;
+}
 </style>

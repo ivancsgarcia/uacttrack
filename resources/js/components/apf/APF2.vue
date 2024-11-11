@@ -4,6 +4,7 @@ import { ref, computed } from "vue";
 const props = defineProps({
     form: Object,
     venues: Array,
+    approvedForms: Object,
 });
 
 const attrs = ref([
@@ -361,9 +362,17 @@ const pickedVenues = ref([
     { id: 9, name: "Gymnasium", capacity: 4000 },
 ]);
 
-const venueRecommendation = () => {
+const venueRecommendation = (e) => {
+    e.preventDefault();
+
+    props.form.errors.attendance_count = "";
+    props.form.errors.venue = "";
+
     if (props.form.attendance_count <= 0) {
-        alert("Please enter a valid attendance count.");
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
         return;
     }
 
@@ -374,7 +383,8 @@ const venueRecommendation = () => {
     if (recommendedVenue) {
         props.form.venue = recommendedVenue.name;
     } else {
-        alert("No venue available for the specified attendance count.");
+        // props.form.errors.venue =
+        //     "No venue available for the specified attendance count";
     }
 };
 </script>
@@ -385,7 +395,7 @@ const venueRecommendation = () => {
             <div class="w-2/4 space-y-2">
                 <div class="flex flex-col">
                     <label for="date" class="text-ua-blue text-2xl"
-                        ><span class="text-red-400">*</span> Date</label
+                        >* Date</label
                     >
                     <VDatePicker
                         v-model="form.date"
@@ -402,9 +412,7 @@ const venueRecommendation = () => {
                 </div>
 
                 <div class="flex flex-col">
-                    <label class="text-ua-blue text-2xl"
-                        ><span class="text-red-400">*</span> From Time</label
-                    >
+                    <label class="text-ua-blue text-2xl">* From Time</label>
                     <VDatePicker
                         v-model="form.from_time"
                         mode="time"
@@ -419,7 +427,7 @@ const venueRecommendation = () => {
 
                 <div class="flex flex-col">
                     <label for="to-time" class="text-ua-blue text-2xl"
-                        ><span class="text-red-400">*</span> To Time</label
+                        >* To Time</label
                     >
                     <VDatePicker
                         v-model="form.to_time"
@@ -437,7 +445,7 @@ const venueRecommendation = () => {
             <div class="w-2/4 space-y-2">
                 <div class="flex flex-col">
                     <label for="attendees" class="text-ua-blue text-2xl"
-                        ><span class="text-red-400">*</span> Number of Attendees
+                        >* Number of Attendees
                     </label>
                     <input
                         type="number"
@@ -447,11 +455,17 @@ const venueRecommendation = () => {
                         max="5000"
                         class="rounded-xl shadow bg-ua-blue/30 p-2"
                     />
+                    <span
+                        v-if="form.errors.attendance_count"
+                        class="text-red-500"
+                    >
+                        {{ form.errors.attendance_count }}
+                    </span>
                 </div>
 
                 <div class="flex flex-col">
                     <label for="event" class="text-ua-blue text-2xl"
-                        ><span class="text-red-400">*</span> Type of Event
+                        >* Type of Event
                     </label>
                     <input
                         type="text"
@@ -476,13 +490,11 @@ const venueRecommendation = () => {
 
         <div class="flex gap-4">
             <div class="flex flex-col w-2/4">
-                <label for="" class="text-ua-blue text-2xl"
-                    ><span class="text-red-400">*</span> Venue</label
-                >
+                <label for="" class="text-ua-blue text-2xl">* Venue</label>
                 <select
                     v-model="form.venue"
                     placeholder="Pick A Venue"
-                    class="rounded-xl shadow bg-ua-blue/30 p-2 mb-4"
+                    class="rounded-xl shadow bg-ua-blue/30 p-2"
                 >
                     <option value="" selected disabled>Pick A Venue</option>
                     <option
@@ -493,12 +505,14 @@ const venueRecommendation = () => {
                         {{ venue.name }}
                     </option>
                 </select>
+                <span v-if="form.errors.venue" class="text-red-500">
+                    {{ form.errors.venue }}
+                </span>
             </div>
 
             <div class="flex flex-col w-2/4">
                 <label for="reqs" class="text-ua-blue text-2xl"
-                    ><span class="text-red-400">*</span> Requirements /
-                    Resources Needed
+                    >* Requirements / Resources Needed
                 </label>
                 <textarea
                     name="reqs"
