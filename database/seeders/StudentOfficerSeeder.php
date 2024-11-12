@@ -22,8 +22,8 @@ class StudentOfficerSeeder extends Seeder
                 'position' => 'Representative',
                 'first_name' => 'Ivan Christopher',
                 'last_name' => 'Garcia',
-                'email' => 'ivan@email.com',
-                'password' => bcrypt('123'), 
+                'email' => 'icsgarcia.student@ua.edu.ph',
+                'password' => bcrypt('123'),
             ]
         ]);
     }

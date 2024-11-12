@@ -1,6 +1,8 @@
+<script setup></script>
+
 <template>
-<!-- Background Image -->
-<div class="bg-img">
+    <!-- Background Image -->
+    <div class="bg-img">
         <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
     </div>
 
@@ -17,11 +19,13 @@
 
             <div class="icons-box">
                 <div>
-                    <font-awesome-icon
-                        :icon="['fas', 'envelope']"
-                        size="2xl"
-                        class="icon"
-                    />
+                    <a href="https://mail.google.com/" target="_blank">
+                        <font-awesome-icon
+                            :icon="['fas', 'envelope']"
+                            size="2xl"
+                            class="icon"
+                        />
+                    </a>
                 </div>
                 <div>
                     <font-awesome-icon

@@ -168,7 +168,11 @@ const downloadFile = (id) => {
                 Form (PCF ) for amount below P1,000.
             </p>
             <div class="flex justify-center">
-                <a href="" download>{{ activityForms.payment_or_cash_file }}</a>
+                <a
+                    :href="`/storage/${activityForms.payment_or_cash_file}`"
+                    download
+                    >Download Attached FRF or PCF</a
+                >
             </div>
         </div>
     </div>
@@ -184,7 +188,9 @@ const downloadFile = (id) => {
         >
             <p class="text-center">Request for Meals (RFM)</p>
             <div class="flex justify-center">
-                {{ activityForms.food_file }}
+                <a :href="`/storage/${activityForms.food_file}`" download
+                    >Download Attached RFM</a
+                >
             </div>
         </div>
     </div>
@@ -201,7 +207,9 @@ const downloadFile = (id) => {
                 Requisition (PR) for supplies to be purchased
             </p>
             <div class="flex justify-center">
-                {{ activityForms.supplies_file }}
+                <a :href="`/storage/${activityForms.supplies_file}`" download
+                    >Download Attached RF or PR</a
+                >
             </div>
         </div>
     </div>
@@ -215,7 +223,11 @@ const downloadFile = (id) => {
         <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
             <p class="text-center">Reproduction Form</p>
             <div class="flex justify-center">
-                {{ activityForms.reproduction_file }}
+                <a
+                    :href="`/storage/${activityForms.reproduction_file}`"
+                    download
+                    >Download Attached Reproduction Form</a
+                >
             </div>
         </div>
     </div>
@@ -229,21 +241,31 @@ const downloadFile = (id) => {
         <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
             <p class="text-center">If applicable:</p>
             <div class="flex justify-center">
-                {{ activityForms.others_file }}
+                <a :href="`/storage/${activityForms.others_file}`" download
+                    >Download Attached Reproduction Form</a
+                >
             </div>
         </div>
     </div>
 
-    <div class="flex justify-center">
-        <div>
+    <div class="flex justify-center my-4">
+        <!-- <div
+            v-if="
+                activityForms.college_dean_status === 'PENDING' ||
+                activityForms.college_dean_status === 'PENDING'
+            "
+        >
             <button
                 :href="route('activity-form.edit', activityForms.id)"
                 class="bg-yellow-300 rounded-md px-8 py-2"
             >
                 Edit
             </button>
-        </div>
-        <div v-if="activityForms.status === 'APPROVED'">
+        </div> -->
+        <div
+            v-if="activityForms.status === 'APPROVED'"
+            class="flex items-center py-2 px-4 rounded-lg bg-ua-blue text-white"
+        >
             <button @click="downloadPDF(activityForms.id)">Download PDF</button>
         </div>
     </div>

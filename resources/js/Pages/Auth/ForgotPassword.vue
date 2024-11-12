@@ -1,36 +1,63 @@
 <script setup>
-import { Link } from "@inertiajs/vue3";
+import { ref } from "vue";
+import { Link, useForm } from "@inertiajs/vue3";
+
+// Create a reactive email variable
+const email = ref("");
+
+// Use Inertia's form helper for handling the POST request
+const form = useForm({
+    email: email.value,
+});
+
+// Handle the form submission
+const submit = () => {
+    form.post(route("password.request"));
+};
 </script>
 
 <template>
+    <Head title=" | Login" />
     <div class="body">
         <div class="bg-img">
             <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
         </div>
-        <!-- <img src="../../../public/images/UActTrack-logo.png" alt="uacttrack-logo" class="w-2/4 mb-10"> -->
 
         <div class="content">
+            <img
+                :src="'images/sys-logos/UActTrack-logo.png'"
+                alt="UActTrack-logo"
+            />
+
             <div class="box">
-                <h1 class="">Forgot Password</h1>
+                <form @submit.prevent="submit">
+                    <h1 class="">Forgot Password</h1>
 
-                <p class="instructions">
-                    Enter your email address to get instructions to reset your
-                    password.
-                </p>
+                    <p class="instructions">
+                        Enter your email address to get instructions to reset
+                        your password.
+                    </p>
 
-                <div class="text-box">
-                    <div class="icon-box">
-                        <font-awesome-icon
-                            :icon="['fas', 'envelope']"
-                            size="2xl"
-                            color="gray"
+                    <div class="text-box">
+                        <div class="icon-box">
+                            <font-awesome-icon
+                                :icon="['fas', 'envelope']"
+                                size="2xl"
+                                color="gray"
+                            />
+                        </div>
+                        <div class="line"></div>
+                        <input
+                            type="email"
+                            v-model="email"
+                            placeholder="Email"
+                            required
                         />
                     </div>
-                    <div class="line"></div>
-                    <input type="email" placeholder="Email" />
-                </div>
 
-                <button class="submit-btn">Submit</button>
+                    <button class="submit-btn">Send Reset Link</button>
+                </form>
+
                 <Link :href="route('login')" class="">
                     <div class="">
                         <font-awesome-icon
@@ -64,9 +91,10 @@ import { Link } from "@inertiajs/vue3";
 
 .bg-img img {
     transform: rotate(15deg);
-    width: 60rem;
+    width: 40rem;
+    height: auto;
     filter: grayscale(100%);
-    opacity: 0.2;
+    opacity: 0.1;
 }
 
 .content {
@@ -77,9 +105,15 @@ import { Link } from "@inertiajs/vue3";
     width: 50%;
 }
 
+.content img {
+    width: 20rem;
+    height: auto;
+    margin-bottom: 0.5rem;
+}
+
 h1 {
     color: white;
-    font-size: 3rem;
+    font-size: 2rem;
     text-transform: uppercase;
     text-shadow: 3px 2px black;
     margin-bottom: 1rem;
@@ -93,22 +127,22 @@ h1 {
 }
 
 .box {
+    width: 75%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: #272f5c;
     border-radius: 3rem;
-    padding: 4rem 4rem;
-    box-shadow: 8px 8px 15px black;
-    margin-top: 2rem;
+    padding: 3rem;
+    box-shadow: 8px 8px 15px gray;
 }
 
 .text-box {
     display: flex;
     background-color: #fff;
-    border-radius: 1.5rem;
-    margin-top: 2rem;
+    border-radius: 1rem;
+    margin-top: 1.2rem;
     box-shadow: 2px 4px 10px black;
 }
 
@@ -141,7 +175,7 @@ input:focus {
     background-color: white;
     color: #272f5c;
     border-radius: 1.2rem;
-    padding: 0.8rem 3rem;
+    padding: 0.5rem 2rem;
     text-transform: uppercase;
     margin-top: 2.5rem;
     font-size: 1.5rem;
@@ -150,7 +184,7 @@ input:focus {
 }
 
 .submit-btn:hover {
-    background-color: #93c5fd;
+    background-color: #6375bf;
     color: white;
 }
 
@@ -160,5 +194,9 @@ input:focus {
     color: white;
     margin-top: 0.1rem;
     text-decoration: underline;
+}
+
+.login-link:hover {
+    color: #93c5fd;
 }
 </style>

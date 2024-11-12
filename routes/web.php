@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExternalLinks;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\RequestFormController;
+use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware("guest")->group(function () {
@@ -16,8 +17,13 @@ Route::middleware("guest")->group(function () {
     Route::get('/login', [AuthenticateController::class, 'create'])->name('login');
     Route::post('/login', [AuthenticateController::class, 'store']);
 
-    Route::inertia('/forgot-password', 'Auth/ForgotPassword')->name('forgot-password');
+    // Route::inertia('/forgot-password', 'Auth/ForgotPassword')->name('forgot-password');
+    Route::inertia('/forgot-password', 'Auth/ForgotPassword')->name('password.request');
+    Route::post('/forgot-password', [ResetPasswordController::class, 'passwordEmail']);
+    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'passwordReset'])->name('password.reset');
+    Route::post('/reset-password', [ResetPasswordController::class, 'passwordUpdate'])->name('password.update');
 });
+
 
 Route::middleware("auth")->group(function () {
     // Register

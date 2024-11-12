@@ -1,10 +1,9 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
     <div class="sidebar">
         <div class="sidebar-content">
-            <div class="image">
+            <div class="image mb-4 p-4">
                 <img
                     :src="'images/sys-logos/UActTrack-logo.png'"
                     alt="uacttrack-logo"
@@ -14,7 +13,10 @@
             <div class="menu-items">
                 <Link :href="route('home')">
                     <div
-                        :class="{ '!bg-ua-blue !text-white': $page.component === 'Dashboard' }"
+                        :class="{
+                            '!bg-ua-blue !text-white':
+                                $page.component === 'Dashboard',
+                        }"
                     >
                         <p>Dashboard</p>
                     </div>
@@ -22,8 +24,10 @@
 
                 <Link :href="route('activity-form.create')">
                     <div
-                    :class="{ '!bg-ua-blue !text-white': $page.component === 'ActivityForm/index' }"
-
+                        :class="{
+                            '!bg-ua-blue !text-white':
+                                $page.component === 'ActivityForm/index',
+                        }"
                     >
                         <p>Activity Proposal Form</p>
                     </div>
@@ -31,7 +35,10 @@
 
                 <Link :href="route('request-form')">
                     <div
-                        :class="{ '!bg-ua-blue !text-white': $page.component === 'RequestForm' }"
+                        :class="{
+                            '!bg-ua-blue !text-white':
+                                $page.component === 'RequestForm',
+                        }"
                     >
                         <p>Request Forms</p>
                     </div>
@@ -39,7 +46,10 @@
 
                 <Link :href="route('recommendation')">
                     <div
-                        :class="{ '!bg-ua-blue !text-white': $page.component === 'ExternalLinks' }"
+                        :class="{
+                            '!bg-ua-blue !text-white':
+                                $page.component === 'ExternalLinks',
+                        }"
                     >
                         <p>Relevant Links</p>
                     </div>
@@ -47,7 +57,13 @@
             </div>
 
             <div class="logout-section">
-                <Link :href="route('logout')" method="post" as="button" type="button" class="w-full">
+                <Link
+                    :href="route('logout')"
+                    method="post"
+                    as="button"
+                    type="button"
+                    class="w-full"
+                >
                     <div class="logout">
                         <p>Log Out</p>
                     </div>

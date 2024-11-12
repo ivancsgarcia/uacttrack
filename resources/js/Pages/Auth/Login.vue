@@ -72,7 +72,7 @@ const submit = () => {
                 <!-- Forgot Password -->
                 <div class="forgot-password">
                     <p>
-                        <Link :href="route('forgot-password')" class="link">
+                        <Link :href="route('password.request')" class="link">
                             Forgot Password?
                         </Link>
                     </p>

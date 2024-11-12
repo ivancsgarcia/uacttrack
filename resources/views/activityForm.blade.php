@@ -118,9 +118,9 @@
         <table class="table-one">
             <tr>
                 <td>DEPARTMENT / OFFICE / RSO:</td>
-                <td colspan="2" class="bold">NULL</td>
+                <td colspan="2" class="bold">{{$activityForms->creator->organization->name}}</td>
                 <td>CONTACT NUMBER OF PROPONENT:</td>
-                <td colspan="2" class="bold">NULL</td>
+                <td colspan="2" class="bold"></td>
             </tr>
             <tr>
                 <td>WHAT (Title)</td>
@@ -154,7 +154,7 @@
             </tr>
             <tr>
                 <td>PROJECTED FUNDING NEEDS</td>
-                <td colspan="5" class="bold">NULL</td>
+                <td colspan="5" class="bold"></td>
             </tr>
         </table>
 
@@ -210,16 +210,16 @@
         <table class="table-four">
             <tr>
                 <td rowspan="2">Copy Received by:</td>
-                <td><input type="checkbox"></td>
-                <td><input type="checkbox"></td>
-                <td><input type="checkbox"></td>
-                <td><input type="checkbox"></td>
-                <td><input type="checkbox"></td>
-                <td><input type="checkbox"></td>
-                <td><input type="checkbox"></td>
-                <td><input type="checkbox"></td>
-                <td><input type="checkbox"></td>
-                <td><input type="checkbox"></td>
+                <td><input type="checkbox" {{ $activityForms->proponent ? 'checked' : '' }}></td>
+                <td><input type="checkbox" {{ $activityForms->eamo ? 'checked' : '' }}></td>
+                <td><input type="checkbox" {{ $activityForms->photoLab ? 'checked' : '' }}></td>
+                <td><input type="checkbox" {{ $activityForms->ppgs ? 'checked' : '' }}></td>
+                <td><input type="checkbox" {{ $activityForms->security ? 'checked' : '' }}></td>
+                <td><input type="checkbox" {{ $activityForms->janitorial ? 'checked' : '' }}></td>
+                <td><input type="checkbox" {{ $activityForms->sports ? 'checked' : '' }}></td>
+                <td><input type="checkbox" {{ $activityForms->hotel ? 'checked' : '' }}></td>
+                <td><input type="checkbox" {{ $activityForms->soundSystem ? 'checked' : '' }}></td>
+                <td><input type="checkbox" {{ $activityForms->others_specify ? 'checked' : '' }}></td>
             </tr>
             <tr>
                 <td>Proponent</td>

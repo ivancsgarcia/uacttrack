@@ -8,7 +8,7 @@ const isVPA = page.props.auth.isVPA;
 <template>
     <div class="sidebar">
         <div class="sidebar-content">
-            <div class="image">
+            <div class="image mb-4 p-4">
                 <img
                     :src="'images/sys-logos/UActTrack-logo.png'"
                     alt="uacttrack-logo"
@@ -18,11 +18,10 @@ const isVPA = page.props.auth.isVPA;
             <div class="menu-items">
                 <Link :href="route('admin-dashboard')">
                     <div
-                        :class="
-                            route().current('admin-dashboard')
-                                ? '!bg-ua-blue !text-white'
-                                : ''
-                        "
+                        :class="{
+                            '!bg-ua-blue !text-white':
+                                $page.component === 'Admin/AdminDashboard',
+                        }"
                         class="link"
                     >
                         <p>Dashboard</p>
@@ -31,11 +30,10 @@ const isVPA = page.props.auth.isVPA;
 
                 <Link :href="route('admin-pending-apf')">
                     <div
-                        :class="
-                            route().current('admin-pending-apf')
-                                ? '!bg-ua-blue !text-white'
-                                : ''
-                        "
+                        :class="{
+                            '!bg-ua-blue !text-white':
+                                $page.component === 'Admin/AdminPendingAPF',
+                        }"
                         class="link"
                     >
                         <p>To Be Approved</p>
@@ -44,11 +42,10 @@ const isVPA = page.props.auth.isVPA;
 
                 <Link :href="route('admin-approved-apf')">
                     <div
-                        :class="
-                            route().current('admin-approved-apf')
-                                ? '!bg-ua-blue !text-white'
-                                : ''
-                        "
+                        :class="{
+                            '!bg-ua-blue !text-white':
+                                $page.component === 'Admin/AdminApprovedAPF',
+                        }"
                         class="link"
                     >
                         <p>Approved APF</p>
@@ -57,11 +54,10 @@ const isVPA = page.props.auth.isVPA;
 
                 <Link :href="route('admin-rejected-apf')">
                     <div
-                        :class="
-                            route().current('admin-rejected-apf')
-                                ? '!bg-ua-blue !text-white'
-                                : ''
-                        "
+                        :class="{
+                            '!bg-ua-blue !text-white':
+                                $page.component === 'Admin/AdminRejectedAPF',
+                        }"
                         class="link"
                     >
                         <p>Rejected APF</p>
@@ -70,11 +66,10 @@ const isVPA = page.props.auth.isVPA;
 
                 <Link v-if="isVPA" :href="route('admin-send-copy')">
                     <div
-                        :class="
-                            route().current('admin-send-copy')
-                                ? '!bg-ua-blue !text-white'
-                                : ''
-                        "
+                        :class="{
+                            '!bg-ua-blue !text-white':
+                                $page.component === 'Admin/AdminSendCopy',
+                        }"
                         class="link"
                     >
                         <p>Send Copies</p>

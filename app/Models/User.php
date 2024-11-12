@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
     use HasFactory, Notifiable;
 
@@ -25,7 +27,7 @@ class User extends Authenticatable
         'password',
     ];
 
-    public function organization() 
+    public function organization()
     {
         return $this->belongsTo(Organization::class);
     }
@@ -40,7 +42,7 @@ class User extends Authenticatable
     //     return $this->belongsTo(OrganizationPosition::class);
     // }
 
-    public function activity_forms() 
+    public function activity_forms()
     {
         return $this->hasMany(ActivityForm::class);
     }
