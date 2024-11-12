@@ -12,6 +12,7 @@ const props = defineProps({
     osaName: String,
     vpaaName: String,
     vpaName: String,
+    copyReceived: Object,
 });
 
 const showCollegeDean = ref(false);
@@ -215,10 +216,10 @@ const toggle = (event) => {
                 <th colspan="2">Transaction Number</th>
                 <th colspan="2">Activity Title</th>
             </tr>
-            <tbody v-for="form in activityForms.data" :key="form.id">
+            <tbody v-for="copyr in copyReceived.data" :key="copyr.id">
                 <tr>
-                    <td colspan="2">{{ form.id }}</td>
-                    <td colspan="2">{{ form.title }}</td>
+                    <td colspan="2">{{ copyr.id }}</td>
+                    <td colspan="2">{{ copyr.title }}</td>
                 </tr>
                 <tr>
                     <th colspan="4">Send Copies To:</th>
@@ -228,7 +229,7 @@ const toggle = (event) => {
                     <td>
                         <input
                             type="checkbox"
-                            :checked="form.proponent"
+                            :checked="copyr.proponent"
                             disabled
                         />
                     </td>
@@ -236,7 +237,7 @@ const toggle = (event) => {
                     <td>
                         <input
                             type="checkbox"
-                            :checked="form.security"
+                            :checked="copyr.security"
                             disabled
                         />
                     </td>
@@ -246,7 +247,7 @@ const toggle = (event) => {
                     <td>
                         <input
                             type="checkbox"
-                            :checked="form.eamo"
+                            :checked="copyr.eamo"
                             disabled
                         />
                     </td>
@@ -254,7 +255,7 @@ const toggle = (event) => {
                     <td>
                         <input
                             type="checkbox"
-                            :checked="form.janitorial"
+                            :checked="copyr.janitorial"
                             disabled
                         />
                     </td>
@@ -264,7 +265,7 @@ const toggle = (event) => {
                     <td>
                         <input
                             type="checkbox"
-                            :checked="form.photoLab"
+                            :checked="copyr.photoLab"
                             disabled
                         />
                     </td>
@@ -272,7 +273,7 @@ const toggle = (event) => {
                     <td>
                         <input
                             type="checkbox"
-                            :checked="form.sports"
+                            :checked="copyr.sports"
                             disabled
                         />
                     </td>
@@ -282,7 +283,7 @@ const toggle = (event) => {
                     <td>
                         <input
                             type="checkbox"
-                            :checked="form.ppgs"
+                            :checked="copyr.ppgs"
                             disabled
                         />
                     </td>
@@ -290,7 +291,7 @@ const toggle = (event) => {
                     <td>
                         <input
                             type="checkbox"
-                            :checked="form.hotel"
+                            :checked="copyr.hotel"
                             disabled
                         />
                     </td>
@@ -300,7 +301,7 @@ const toggle = (event) => {
                     <td>
                         <input
                             type="checkbox"
-                            :checked="form.soundSystem"
+                            :checked="copyr.soundSystem"
                             disabled
                         />
                     </td>
@@ -308,14 +309,14 @@ const toggle = (event) => {
                     <td>
                         <input
                             type="checkbox"
-                            :checked="form.others_specify"
+                            :checked="copyr.others_specify"
                             disabled
                         />
                     </td>
                 </tr>
             </tbody>
         </table>
-        <PaginationLinks :paginator="activityForms" />
+        <PaginationLinks :paginator="copyReceived" />
     </Dialog>
 </template>
 

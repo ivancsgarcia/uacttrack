@@ -19,6 +19,11 @@ class DashboardController extends Controller
         })
             ->latest()
             ->paginate(5);
+        $copyReceived = ActivityForm::whereHas('creator', function ($query) use ($organizationId) {
+            $query->where('organization_id', $organizationId);
+        })
+            ->latest()
+            ->paginate(1);
 
         // College Dean
         $collegeDean = Organization::where('id', $organizationId)
@@ -56,7 +61,8 @@ class DashboardController extends Controller
             'collegeDeanName' => $collegeDeanName,
             'osaName' => $osaName,
             'vpaaName' => $vpaaName,
-            'vpaName' => $vpaName
+            'vpaName' => $vpaName,
+            'copyReceived' => $copyReceived,
         ]);
     }
 }
