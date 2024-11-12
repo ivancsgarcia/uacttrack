@@ -44,14 +44,6 @@ const goHome = () => {
 </template>
 
 <style scoped>
-/* header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 50;
-} */
-
 .header {
     width: 100%;
     padding: 0.5rem 0;

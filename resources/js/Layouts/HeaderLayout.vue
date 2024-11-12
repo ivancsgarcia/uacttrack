@@ -1,7 +1,7 @@
 <template>
     <!-- Background Image -->
     <div class="bg-img">
-        <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+        <img src="/public/images/sys-logos/ua-logo.png" alt="UA-logo" />
     </div>
 
     <!-- Header -->

@@ -8,6 +8,7 @@ use App\Models\ActivityForm;
 use App\Models\Venue;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Container\Attributes\Storage;
 
 class ActivityFormController extends Controller
 {
@@ -111,13 +112,9 @@ class ActivityFormController extends Controller
     {
         $activityForms = ActivityForm::where('id', $activityId)
             ->firstOrFail();
-        $venues = Venue::orderBy('name')->get();
-
 
         return Inertia::render('ActivityForm/show', [
             'activityForms' => $activityForms,
-            'logoPath' => asset('images/sys-logos/ua-logo.png'),
-            'venues' => $venues
         ]);
     }
 

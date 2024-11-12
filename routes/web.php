@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\AuthenticateController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExternalLinks;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\RequestFormController;
 use Illuminate\Support\Facades\Route;
 
@@ -54,6 +55,8 @@ Route::middleware("auth")->group(function () {
     Route::middleware(['vpa'])->group(function () {
         Route::get('/admin-send-copy', [AdminController::class, 'copyReceiveBy'])->name('admin-send-copy');
     });
+
+    Route::get('/download/{file}', [FileController::class, 'download'])->name('file.download');
 
     Route::inertia('/{pathMatch}', 'notFound')->where('pathMatch', ".*");
 });
