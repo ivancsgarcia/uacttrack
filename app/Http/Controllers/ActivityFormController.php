@@ -78,7 +78,18 @@ class ActivityFormController extends Controller
             'food_file' => 'nullable|file|mimes:jpg,png,pdf,doc,docx,xls,xlsx,txt,jpeg|max:3072',
             'supplies_file' => 'nullable|file|mimes:jpg,png,pdf,doc,docx,xls,xlsx,txt,jpeg|max:3072',
             'reproduction_file' => 'nullable|file|mimes:jpg,png,pdf,doc,docx,xls,xlsx,txt,jpeg|max:3072',
-            'others_file' => 'nullable|file|mimes:jpg,png,pdf,doc,docx,xls,xlsx,txt,jpeg|max:3072'
+            'others_file' => 'nullable|file|mimes:jpg,png,pdf,doc,docx,xls,xlsx,txt,jpeg|max:3072',
+
+            'proponent' => 'required|boolean',
+            'security' => 'required|boolean',
+            'eamo' => 'required|boolean',
+            'janitorial' => 'required|boolean',
+            'photoLab' => 'required|boolean',
+            'sports' => 'required|boolean',
+            'ppgs' => 'required|boolean',
+            'hotel' => 'required|boolean',
+            'soundSystem' => 'required|boolean',
+            'others_specify' => 'required|boolean',
         ]);
 
         $data['date'] = Carbon::parse($request->date)->format('Y-m-d');

@@ -147,49 +147,56 @@ class AdminController extends Controller
     }
 
     public function updateStatus(Request $request, $id)
-    {
-        $user = Auth::user();
-        $activityForm = ActivityForm::findOrFail($id);
+{
+    $user = Auth::user();
+    $activityForm = ActivityForm::findOrFail($id);
 
-        // Update the status based on the user's role
-        switch ($request->position) {
-            case 'College Dean':
-                $activityForm->college_dean_status = $request->status;
-                break;
-            case 'Office of Student Affairs':
-                $activityForm->osa_status = $request->status;
-                break;
-            case 'Vice President for Academic Affairs':
-                $activityForm->vpaa_status = $request->status;
-                break;
-            case 'Vice President for Administration':
-                $activityForm->vpa_status = $request->status;
-                break;
-            default:
-                return response()->json(['message' => 'Unauthorized'], 403);
-        }
+    // Validate the incoming request (optional, but good practice)
+    $request->validate([
+        'status' => 'required|in:PENDING,APPROVED,REJECTED',
+        'position' => 'required|string',
+    ]);
 
-        if (
-            $activityForm->college_dean_status === 'APPROVED' &&
-            $activityForm->osa_status === 'APPROVED' &&
-            $activityForm->vpaa_status === 'APPROVED' &&
-            $activityForm->vpa_status === 'APPROVED'
-        ) {
-            // Set the main status to "APPROVED"
-            $activityForm->status = 'APPROVED';
-        } else if (
-            $activityForm->college_dean_status === 'REJECTED' ||
-            $activityForm->osa_status === 'REJECTED' ||
-            $activityForm->vpaa_status === 'REJECTED' ||
-            $activityForm->vpa_status === 'REJECTED'
-        ) {
-            // Set the main status to "REJECTED"
-            $activityForm->status = 'REJECTED';
-        }
-
-        $activityForm->save();
-        return Inertia::location(url()->previous());
+    // Check if the user has permission to update the status
+    switch ($request->position) {
+        case 'College Dean':
+            $activityForm->college_dean_status = $request->status;
+            break;
+        case 'Office of Student Affairs':
+            $activityForm->osa_status = $request->status;
+            break;
+        case 'Vice President for Academic Affairs':
+            $activityForm->vpaa_status = $request->status;
+            break;
+        case 'Vice President for Administration':
+            $activityForm->vpa_status = $request->status;
+            break;
+        default:
+            return Inertia::render('Unauthorized'); // Return Inertia page
     }
+
+    // Check if all statuses are approved or rejected
+    if (
+        $activityForm->college_dean_status === 'APPROVED' &&
+        $activityForm->osa_status === 'APPROVED' &&
+        $activityForm->vpaa_status === 'APPROVED' &&
+        $activityForm->vpa_status === 'APPROVED'
+    ) {
+        $activityForm->status = 'APPROVED';
+    } elseif (
+        $activityForm->college_dean_status === 'REJECTED' ||
+        $activityForm->osa_status === 'REJECTED' ||
+        $activityForm->vpaa_status === 'REJECTED' ||
+        $activityForm->vpa_status === 'REJECTED'
+    ) {
+        $activityForm->status = 'REJECTED';
+    }
+
+    $activityForm->save();
+
+    // Redirect back to the previous page
+    return Inertia::location(url()->previous());
+}
 
     public function copyReceiveBy()
     {
@@ -199,5 +206,26 @@ class AdminController extends Controller
         return Inertia::render('Admin/AdminSendCopy', [
             'activityForms' => $activityForms
         ]);
+    }
+
+    public function sendCopy(Request $request, $id) {
+        $request->validate([
+            'proponent' => 'required|boolean',
+            'security' => 'required|boolean',
+            'eamo' => 'required|boolean',
+            'janitorial' => 'required|boolean',
+            'photoLab' => 'required|boolean',
+            'sports' => 'required|boolean',
+            'ppgs' => 'required|boolean',
+            'hotel' => 'required|boolean',
+            'soundSystem' => 'required|boolean',
+            'others_specify' => 'required|boolean',
+        ]);
+
+        $activityForm = ActivityForm::find($id);
+        $activityForm->update($request->all());
+
+        return redirect()->route('admin-send-copy')
+            ->with('success', 'Activity Form updated successfully.');
     }
 }

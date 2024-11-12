@@ -39,7 +39,7 @@ function getInitialStatus(form, position) {
 
 // Method to update the status in the database
 const updateStatus = (formId) => {
-    router.post(`/activity-forms/${formId}/status`, {
+    router.post(route('activity-forms.updateStatus', formId), {
         status: formStatuses.value[formId],
         position: position,
     });

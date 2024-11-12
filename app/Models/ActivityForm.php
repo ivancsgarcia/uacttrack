@@ -12,11 +12,13 @@ class ActivityForm extends Model
     protected $fillable = [
         'created_by',
         'status',
+
         'check_payment_or_cash',
         'food',
         'supplies',
         'reproduction',
         'others',
+
         'date',
         'from_time',
         'to_time',
@@ -27,14 +29,28 @@ class ActivityForm extends Model
         'title',
         'description',
         'participant',
+        
         'payment_or_cash_file',
         'food_file',
         'supplies_file',
         'reproduction_file',
         'others_file',
+
         'college_dean_status',
         'osa_status',
         'vpaa_status',
+        'vpa_status',
+
+        'proponent',
+        'security',
+        'eamo',
+        'janitorial',
+        'photoLab',
+        'sports',
+        'ppgs',
+        'hotel',
+        'soundSystem',
+        'others_specify',
     ];
 
     public function creator()

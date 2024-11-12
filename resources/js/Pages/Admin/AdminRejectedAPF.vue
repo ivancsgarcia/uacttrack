@@ -49,7 +49,7 @@ const props = defineProps({
         </table>
     </div>
     <div v-else class="text-center mt-8 text-ua-blue">
-        No approved activity proposal forms available.
+        No rejected activity proposal forms available.
     </div>
     <PaginationLinks v-if="rejectedForms.links" :paginator="rejectedForms" />
 </template>

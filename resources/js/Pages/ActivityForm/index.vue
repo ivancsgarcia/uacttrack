@@ -43,6 +43,16 @@ const form = useForm({
     supplies_file: null,
     reproduction_file: null,
     others_file: null,
+    proponent: false,
+    security: false,
+    eamo: false,
+    janitorial: false,
+    photoLab: false,
+    sports: false,
+    ppgs: false,
+    hotel: false,
+    soundSystem: false,
+    others_specify: false,
 });
 
 const confirm = useConfirm();

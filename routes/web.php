@@ -45,15 +45,16 @@ Route::middleware("auth")->group(function () {
 
     Route::middleware(['admin'])->group(function () {
         Route::get('/admin-dashboard', [AdminController::class, 'dashboard'])->name('admin-dashboard');
-        Route::post('/activity-forms/{id}/status', [AdminController::class, 'updateStatus']);
-
+        
         Route::get('/admin-pending-apf', [AdminController::class, 'getPending'])->name('admin-pending-apf');
+        Route::post('/activity-forms/{id}/status', [AdminController::class, 'updateStatus'])->name('activity-forms.updateStatus');
         Route::get('/admin-approved-apf', [AdminController::class, 'getApproved'])->name('admin-approved-apf');
         Route::get('/admin-rejected-apf', [AdminController::class, 'getRejected'])->name('admin-rejected-apf');
     });
 
     Route::middleware(['vpa'])->group(function () {
         Route::get('/admin-send-copy', [AdminController::class, 'copyReceiveBy'])->name('admin-send-copy');
+        Route::post('/activity-forms/{activityId}/update', [AdminController::class, 'sendCopy']);
     });
 
     Route::get('/download/{file}', [FileController::class, 'download'])->name('file.download');

@@ -170,7 +170,112 @@ const copyReceive = ref(false);
     </Dialog>
 
     <Dialog v-model:visible="copyReceive" header="Copy Received By" modal>
-        <div>Copy Receive</div>
+        <table>
+            <tr>
+                <th colspan="2">Transaction Number</th>
+                <th colspan="2">Activity Title</th>
+            </tr>
+            <tbody v-for="form in activityForms.data" :key="form.id">
+                <tr>
+                    <td colspan="2">{{ form.id }}</td>
+                    <td colspan="2">{{ form.title }}</td>
+                </tr>
+                <tr>
+                    <th colspan="4">Send Copies To:</th>
+                </tr>
+                <tr>
+                    <td>Proponent</td>
+                    <td>
+                        <input
+                            type="checkbox"
+                            :checked="form.proponent"
+                            disabled
+                        />
+                    </td>
+                    <td>Security</td>
+                    <td>
+                        <input
+                            type="checkbox"
+                            :checked="form.security"
+                            disabled
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td>EAMO</td>
+                    <td>
+                        <input
+                            type="checkbox"
+                            :checked="form.eamo"
+                            disabled
+                        />
+                    </td>
+                    <td>Janitorial</td>
+                    <td>
+                        <input
+                            type="checkbox"
+                            :checked="form.janitorial"
+                            disabled
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td>PhotoLab</td>
+                    <td>
+                        <input
+                            type="checkbox"
+                            :checked="form.photoLab"
+                            disabled
+                        />
+                    </td>
+                    <td>Sports</td>
+                    <td>
+                        <input
+                            type="checkbox"
+                            :checked="form.sports"
+                            disabled
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td>PPGS</td>
+                    <td>
+                        <input
+                            type="checkbox"
+                            :checked="form.ppgs"
+                            disabled
+                        />
+                    </td>
+                    <td>Hotel</td>
+                    <td>
+                        <input
+                            type="checkbox"
+                            :checked="form.hotel"
+                            disabled
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Sound System</td>
+                    <td>
+                        <input
+                            type="checkbox"
+                            :checked="form.soundSystem"
+                            disabled
+                        />
+                    </td>
+                    <td>Others</td>
+                    <td>
+                        <input
+                            type="checkbox"
+                            :checked="form.others_specify"
+                            disabled
+                        />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <PaginationLinks :paginator="activityForms" />
     </Dialog>
 </template>
 

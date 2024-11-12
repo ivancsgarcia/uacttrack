@@ -44,6 +44,17 @@ return new class extends Migration
             $table->string('vpaa_status')->default('PENDING');
             $table->string('vpa_status')->default('PENDING');
 
+            $table->boolean('proponent');
+            $table->boolean('security');
+            $table->boolean('eamo');
+            $table->boolean('janitorial');
+            $table->boolean('photoLab');
+            $table->boolean('sports');
+            $table->boolean('ppgs');
+            $table->boolean('hotel');
+            $table->boolean('soundSystem');
+            $table->boolean('others_specify');
+
             $table->timestamps();
         });
     }
