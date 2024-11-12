@@ -1,13 +1,6 @@
-<script setup>
-import { Link } from "@inertiajs/vue3";
-
-const props = defineProps({
-    activityForms: Object,
-});
-</script>
+<script setup></script>
 
 <template>
-    <Head title=" | Submitted APF" />
     <!-- Background Image -->
     <div class="bg-img">
         <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
@@ -48,38 +41,7 @@ const props = defineProps({
 
         <div class="vertical-line"></div>
 
-        <h1 class="text-center text-4xl mb-4 text-ua-blue">
-            Submitted Activity Proposal Form
-        </h1>
-
-        <table class="w-full border-separate border-spacing-4">
-            <thead>
-                <tr class="bg-ua-blue text-white h-20">
-                    <th class="w-1/5 border">Transaction Number</th>
-                    <th class="w-3/5 border">Activity Title</th>
-                    <th class="w-1/5 border">Date</th>
-                </tr>
-            </thead>
-
-            <tbody v-for="form in activityForms.data" :key="form.id">
-                <tr class="text-center h-20">
-                    <td class="bg-ua-gray w-1/5 border">{{ form.id }}</td>
-                    <td class="bg-ua-gray w-3/5 border underline">
-                        <Link :href="route('activity-form.show', form.id)">{{
-                            form.title
-                        }}</Link>
-                    </td>
-                    <td class="bg-ua-gray w-1/5 border">
-                        {{
-                            new Date(form.created_at).toLocaleDateString(
-                                "en-US"
-                            )
-                        }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <PaginationLinks :paginator="activityForms" />
+        <slot></slot>
     </div>
 </template>
 
@@ -103,6 +65,7 @@ const props = defineProps({
 .main-content {
     margin-left: 16rem;
     padding: 1rem;
+    margin-bottom: 2rem;
 }
 
 .account-section {

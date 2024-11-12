@@ -1,4 +1,5 @@
 import "./bootstrap";
+
 import Account from "../js/components/global/Account.vue";
 import SearchBar from "../js/components/global/SearchBar.vue";
 import SideMenu from "./components/global/SideMenu.vue";
@@ -7,6 +8,7 @@ import UAHeader from "../js/components/global/UAheader.vue";
 import Modal from "../js/components/global/Modal.vue";
 import PaginationLinks from "./components/global/PaginationLinks.vue";
 import SystemSideMenu from "./components/global/SystemSideMenu.vue";
+import MyDatePicker from "./components/global/MyDatePicker.vue";
 
 import Button from "primevue/button";
 import ToggleSwitch from "primevue/toggleswitch";
@@ -29,16 +31,22 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 library.add(fas);
 
 import { createApp, h } from "vue";
-import { createInertiaApp } from "@inertiajs/vue3";
+import { createInertiaApp, Head, Link } from "@inertiajs/vue3";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 import PrimeVue from "primevue/config";
-import { setThemeOnLoad } from "./theme";
+// import { setThemeOnLoad } from "./theme";
 import Aura from "@primevue/themes/aura";
 
 createInertiaApp({
+    title: (title) => `UActTrack ${title}`,
     resolve: (name) => {
         const pages = import.meta.glob("./Pages/**/*.vue", { eager: true });
         return pages[`./Pages/${name}.vue`];
+    },
+    progress: {
+        color: "#272f5c",
+        includeCSS: true,
+        showSpinner: true,
     },
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
@@ -56,6 +64,8 @@ createInertiaApp({
             .use(ToastService)
             .use(VCalendar, {})
             .component("font-awesome-icon", FontAwesomeIcon)
+            .component("Head", Head)
+            .component("Link", Link)
             .component("Account", Account)
             .component("SearchBar", SearchBar)
             .component("SideMenu", SideMenu)
@@ -73,6 +83,7 @@ createInertiaApp({
             .component("Toast", Toast)
             .component("Image", Image)
             .component("AdminSideMenu", AdminSideMenu)
+            .component("MyDatePicker", MyDatePicker)
             .mount(el);
     },
 });

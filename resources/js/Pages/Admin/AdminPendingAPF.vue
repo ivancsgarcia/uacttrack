@@ -1,8 +1,11 @@
 <script setup>
+import AdminLayout from "../../Layouts/AdminLayout.vue";
 import { ref } from "vue";
 import { Link, router, usePage } from "@inertiajs/vue3";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+
+defineOptions({ layout: AdminLayout });
 
 const props = defineProps({
     activityForms: Object,
@@ -78,117 +81,67 @@ const changeStatus = (form) => {
 </script>
 
 <template>
-    <!-- Background Image -->
-    <div class="bg-img">
-        <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+    <h1 class="text-center text-4xl mb-4 text-ua-blue">
+        Pending Activity Proposal Forms
+    </h1>
+
+    <div v-if="activityForms.data && activityForms.data.length > 0">
+        <table class="w-full border-separate border-spacing-4">
+            <thead>
+                <tr class="bg-ua-blue text-white h-20">
+                    <th class="w-1/5 border">Transaction Number</th>
+                    <th class="w-1/5 border">Date</th>
+                    <th>Activity Proposal Form</th>
+                    <th class="w-1/5 border">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    v-for="form in activityForms.data"
+                    :key="form.id"
+                    class="text-center h-20"
+                >
+                    <td class="bg-ua-gray text-ua-blue">
+                        {{ form.id }}
+                    </td>
+                    <td class="bg-ua-gray text-ua-blue">
+                        {{
+                            new Date(form.created_at).toLocaleDateString(
+                                "en-US"
+                            )
+                        }}
+                    </td>
+                    <td class="bg-ua-gray text-ua-blue underline">
+                        <Link :href="route('activity-form.show', form.id)">{{
+                            form.title
+                        }}</Link>
+                    </td>
+                    <td class="bg-ua-gray text-ua-blue p-0">
+                        <select
+                            v-model="formStatuses[form.id]"
+                            @change="changeStatus(form)"
+                            class="w-full h-20 bg-ua-gray p-2"
+                        >
+                            <option value="PENDING" selected disabled>
+                                Pending
+                            </option>
+                            <option value="APPROVED">Approved</option>
+                            <option value="REJECTED">Rejected</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-
-    <!-- Header -->
-    <UAHeader />
-
-    <!-- Sidebar -->
-    <AdminSideMenu />
-
-    <!-- Content -->
-    <div class="main-content">
-        <div class="flex justify-between items-center mt-5 mx-12 mb-4">
-            <Account class="account" />
-
-            <div class="flex justify-center items-center gap-5">
-                <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
-                <font-awesome-icon :icon="['fas', 'bell']" size="2xl" />
-            </div>
-        </div>
-
-        <div class="h-0.5 bg-ua-blue mb-8"></div>
-
-        <h1 class="text-center text-4xl mb-4 text-ua-blue">
-            Pending Activity Proposal Forms
-        </h1>
-
-        <div v-if="activityForms.data && activityForms.data.length > 0">
-            <table class="w-full border-separate border-spacing-4">
-                <thead>
-                    <tr class="bg-ua-blue text-white h-20">
-                        <th class="w-1/5 border">Transaction Number</th>
-                        <th class="w-1/5 border">Date</th>
-                        <th>Activity Proposal Form</th>
-                        <th class="w-1/5 border">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr
-                        v-for="form in activityForms.data"
-                        :key="form.id"
-                        class="text-center h-20"
-                    >
-                        <td class="bg-ua-gray text-ua-blue">
-                            {{ form.id }}
-                        </td>
-                        <td class="bg-ua-gray text-ua-blue">
-                            {{
-                                new Date(form.created_at).toLocaleDateString(
-                                    "en-US"
-                                )
-                            }}
-                        </td>
-                        <td class="bg-ua-gray text-ua-blue underline">
-                            <Link
-                                :href="route('activity-form.show', form.id)"
-                                >{{ form.title }}</Link
-                            >
-                        </td>
-                        <td class="bg-ua-gray text-ua-blue p-0">
-                            <select
-                                v-model="formStatuses[form.id]"
-                                @change="changeStatus(form)"
-                                class="w-full h-20 bg-ua-gray p-2"
-                            >
-                                <option value="PENDING" selected disabled>
-                                    Pending
-                                </option>
-                                <option value="APPROVED">Approved</option>
-                                <option value="REJECTED">Rejected</option>
-                            </select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div v-else class="text-center mt-8 text-ua-blue">
-            No approved activity proposal forms available.
-        </div>
-        <PaginationLinks
-            v-if="activityForms.links"
-            :paginator="activityForms"
-        />
-        <ConfirmDialog></ConfirmDialog>
-        <Toast />
+    <div v-else class="text-center mt-8 text-ua-blue">
+        No approved activity proposal forms available.
     </div>
+    <PaginationLinks v-if="activityForms.links" :paginator="activityForms" />
+    <ConfirmDialog></ConfirmDialog>
+    <Toast />
 </template>
 
 <style scoped>
-.bg-img {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    margin-bottom: -3rem;
-    margin-right: -3rem;
-}
-
-.bg-img img {
-    transform: rotate(15deg);
-    width: 40rem;
-    filter: grayscale(100%);
-    opacity: 0.1;
-}
-
-.main-content {
-    margin-left: 16rem;
-    padding: 1rem;
-}
-
 .approval-boxes {
     flex: 1 1 calc(33.333% - 20px);
 }

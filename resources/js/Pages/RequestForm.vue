@@ -1,94 +1,39 @@
 <script setup>
+import Layout from "../Layouts/Layout.vue";
+
+defineOptions({ layout: Layout });
+
 defineProps({
     requestForms: Array,
 });
 </script>
 
 <template>
-    <!-- Background Image -->
-    <div class="bg-img">
-        <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
-    </div>
+    <Head title=" | Forms" />
+    <h2>University of the Assumption Forms</h2>
 
-    <!-- Header -->
-    <UAHeader />
-
-    <!-- Sidebar -->
-    <SideMenu />
-
-    <!-- Content -->
-    <div class="main-content">
-        <div class="account-section">
-            <Account />
-
-            <div class="icons-box">
-                <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
-                <font-awesome-icon :icon="['fas', 'bell']" size="2xl" />
-            </div>
-        </div>
-
-        <div class="vertical-line"></div>
-
-        <h2>University of the Assumption Forms</h2>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Form Titles</th>
-                    <th colspan="2">Download File</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="reqForm in requestForms" :key="reqForm.id">
-                    <td>{{ reqForm.name }}</td>
-                    <td class="underline">
-                        <a :href="reqForm.docx_url" download>docx</a>
-                    </td>
-                    <td class="underline">
-                        <a :href="reqForm.xlsx_url" download>xlsx</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Form Titles</th>
+                <th colspan="2">Download File</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="reqForm in requestForms" :key="reqForm.id">
+                <td>{{ reqForm.name }}</td>
+                <td class="underline">
+                    <a :href="reqForm.docx_url" download>docx</a>
+                </td>
+                <td class="underline">
+                    <a :href="reqForm.xlsx_url" download>xlsx</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </template>
 
 <style scoped>
-.bg-img {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    margin-bottom: -3rem;
-    margin-right: -3rem;
-}
-
-.bg-img img {
-    transform: rotate(15deg);
-    width: 40rem;
-    filter: grayscale(100%);
-    opacity: 0.1;
-}
-
-.main-content {
-    margin-left: 16rem;
-    padding: 1rem;
-}
-
-.account-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 1rem;
-}
-
-.icons-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5rem;
-}
-
 .vertical-line {
     height: 0.125rem;
     background-color: #272f5c;

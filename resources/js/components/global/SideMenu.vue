@@ -1,5 +1,4 @@
 <script setup>
-import { Link } from "@inertiajs/vue3";
 </script>
 
 <template>
@@ -15,11 +14,7 @@ import { Link } from "@inertiajs/vue3";
             <div class="menu-items">
                 <Link :href="route('home')">
                     <div
-                        :class="
-                            route().current('home')
-                                ? '!bg-ua-blue !text-white'
-                                : ''
-                        "
+                        :class="{ '!bg-ua-blue !text-white': $page.component === 'Dashboard' }"
                     >
                         <p>Dashboard</p>
                     </div>
@@ -27,11 +22,8 @@ import { Link } from "@inertiajs/vue3";
 
                 <Link :href="route('activity-form.create')">
                     <div
-                        :class="
-                            route().current('activity-form.create')
-                                ? '!bg-ua-blue !text-white'
-                                : ''
-                        "
+                    :class="{ '!bg-ua-blue !text-white': $page.component === 'ActivityForm/index' }"
+
                     >
                         <p>Activity Proposal Form</p>
                     </div>
@@ -39,11 +31,7 @@ import { Link } from "@inertiajs/vue3";
 
                 <Link :href="route('request-form')">
                     <div
-                        :class="
-                            route().current('request-form')
-                                ? '!bg-ua-blue !text-white'
-                                : ''
-                        "
+                        :class="{ '!bg-ua-blue !text-white': $page.component === 'RequestForm' }"
                     >
                         <p>Request Forms</p>
                     </div>
@@ -51,11 +39,7 @@ import { Link } from "@inertiajs/vue3";
 
                 <Link :href="route('recommendation')">
                     <div
-                        :class="
-                            route().current('recommendation')
-                                ? '!bg-ua-blue !text-white'
-                                : ''
-                        "
+                        :class="{ '!bg-ua-blue !text-white': $page.component === 'ExternalLinks' }"
                     >
                         <p>Relevant Links</p>
                     </div>
@@ -63,7 +47,7 @@ import { Link } from "@inertiajs/vue3";
             </div>
 
             <div class="logout-section">
-                <Link :href="route('logout')" method="post">
+                <Link :href="route('logout')" method="post" as="button" type="button" class="w-full">
                     <div class="logout">
                         <p>Log Out</p>
                     </div>

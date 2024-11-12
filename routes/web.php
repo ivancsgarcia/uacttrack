@@ -11,9 +11,6 @@ use App\Http\Controllers\RequestFormController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware("guest")->group(function () {
-    // Register
-
-
     // Login
     Route::get('/login', [AuthenticateController::class, 'create'])->name('login');
     Route::post('/login', [AuthenticateController::class, 'store']);
@@ -22,7 +19,7 @@ Route::middleware("guest")->group(function () {
 });
 
 Route::middleware("auth")->group(function () {
-
+    // Register
     Route::get('/register', [RegisterController::class, 'create'])->name('register');
     Route::post('/register', [RegisterController::class, 'store']);
     // Logout

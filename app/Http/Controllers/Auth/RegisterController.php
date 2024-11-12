@@ -41,12 +41,10 @@ class RegisterController extends Controller
 
         // Auth::login($user);
 
-        // Redirect based on the role of the newly created user
         if ($user->role === 'Admin') {
-            // Redirect to Admin Dashboard
             return redirect()->route('admin-dashboard');
         }
 
-        return redirect()->route('register')->with('success', 'Activity created successfully!');
+        return redirect()->route('register');
     }
 }

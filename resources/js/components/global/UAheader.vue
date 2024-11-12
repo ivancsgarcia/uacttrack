@@ -34,7 +34,7 @@ const goHome = () => {
         </div> -->
         <div class="container">
             <img
-                :src="`images/sys-logos/ua-logo.png`"
+                src="/public/images/sys-logos/ua-logo.png"
                 alt="ua-logo"
                 class="logo"
             />

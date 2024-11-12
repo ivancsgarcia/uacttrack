@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('activity_forms', function (Blueprint $table) {
             $table->id();
             $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
-            $table->enum('status', ['PENDING', 'APPROVED', 'REJECTED', 'FOR_REVISION'])->default('PENDING');
+            $table->string('status')->default('PENDING');
 
             $table->boolean('check_payment_or_cash');
             $table->boolean('food');
@@ -39,10 +39,10 @@ return new class extends Migration
             $table->string('reproduction_file')->nullable();
             $table->string('others_file')->nullable();
 
-            $table->enum('college_dean_status', ['PENDING', 'APPROVED', 'REJECTED', 'FOR_REVISION'])->default('PENDING');
-            $table->enum('osa_status', ['PENDING', 'APPROVED', 'REJECTED', 'FOR_REVISION'])->default('PENDING');
-            $table->enum('vpaa_status', ['PENDING', 'APPROVED', 'REJECTED', 'FOR_REVISION'])->default('PENDING');
-            $table->enum('vpa_status', ['PENDING', 'APPROVED', 'REJECTED', 'FOR_REVISION'])->default('PENDING');
+            $table->string('college_dean_status')->default('PENDING');
+            $table->string('osa_status')->default('PENDING');
+            $table->string('vpaa_status')->default('PENDING');
+            $table->string('vpa_status')->default('PENDING');
 
             $table->timestamps();
         });

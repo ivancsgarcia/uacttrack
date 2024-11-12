@@ -7,6 +7,7 @@ defineProps({
 </script>
 
 <template>
+    <Head title=" | Approved APF" />
     <!-- Background Image -->
     <div class="bg-img">
         <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />

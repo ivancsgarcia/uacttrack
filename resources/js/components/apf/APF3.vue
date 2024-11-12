@@ -1,6 +1,4 @@
 <script setup>
-import ImageUpload from "../global/ImageUpload.vue";
-
 const props = defineProps({
     form: Object,
     venues: Array,
@@ -8,7 +6,9 @@ const props = defineProps({
 
 const handleFileUpload = (event, fieldName) => {
     const file = event.target.files[0];
-    props.form[fieldName] = file;
+    if (file) {
+        props.form[fieldName] = file;
+    }
 };
 </script>
 
@@ -65,7 +65,7 @@ const handleFileUpload = (event, fieldName) => {
         <div class="flex mx-auto gap-4 mb-4">
             <div class="flex flex-col w-2/4">
                 <label class="text-2xl">* Date</label>
-                <VDatePicker v-model="form.date" mode="date" expanded />
+                <MyDatePicker :form="form" />
                 <!-- <input
                     type="date"
                     v-model="form.date"
@@ -83,7 +83,6 @@ const handleFileUpload = (event, fieldName) => {
                         v-model="form.from_time"
                         mode="time"
                         hide-time-header
-                        class="shadow"
                     />
                     <!-- <input
                     type="time"
@@ -206,17 +205,19 @@ const handleFileUpload = (event, fieldName) => {
                     Cash Form (PCF ) for amount below P1,000.
                 </p>
                 <div class="flex justify-center">
-                    <ImageUpload />
-                    <!-- <input
-                        :disabled="form.check_payment_or_cash != true"
+                    <input
+                        :disabled="form.check_payment_or_cash !== true"
                         type="file"
                         @change="
                             handleFileUpload($event, 'payment_or_cash_file')
                         "
-                    /> -->
+                    />
                 </div>
             </div>
         </div>
+        <span v-if="form.errors.payment_or_cash_file" class="text-red-500">
+            * {{ form.errors.payment_or_cash_file }}
+        </span>
 
         <div class="flex mx-auto gap-4 mb-4 text-xl">
             <div
@@ -229,15 +230,17 @@ const handleFileUpload = (event, fieldName) => {
             >
                 <p class="text-center">Request for Meals (RFM)</p>
                 <div class="flex justify-center">
-                    <!-- <input
-                        :disabled="form.food != true"
+                    <input
+                        :disabled="form.food !== true"
                         type="file"
                         @change="handleFileUpload($event, 'food_file')"
-                    /> -->
-                    <ImageUpload />
+                    />
                 </div>
             </div>
         </div>
+        <span v-if="form.errors.food_file" class="text-red-500">
+            * {{ form.errors.food_file }}
+        </span>
 
         <div class="flex mx-auto gap-4 mb-4 text-xl">
             <div
@@ -251,15 +254,17 @@ const handleFileUpload = (event, fieldName) => {
                     Purchase Requisition (PR) for supplies to be purchased
                 </p>
                 <div class="flex justify-center">
-                    <!-- <input
-                        :disabled="form.supplies != true"
+                    <input
+                        :disabled="form.supplies !== true"
                         type="file"
                         @change="handleFileUpload($event, 'supplies_file')"
-                    /> -->
-                    <ImageUpload />
+                    />
                 </div>
             </div>
         </div>
+        <span v-if="form.errors.supplies_file" class="text-red-500">
+            * {{ form.errors.supplies_file }}
+        </span>
 
         <div class="flex mx-auto gap-4 mb-4 text-xl">
             <div
@@ -270,15 +275,17 @@ const handleFileUpload = (event, fieldName) => {
             <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
                 <p class="text-center">Reproduction Form</p>
                 <div class="flex justify-center">
-                    <!-- <input
-                        :disabled="form.reproduction != true"
+                    <input
+                        :disabled="form.reproduction !== true"
                         type="file"
                         @change="handleFileUpload($event, 'reproduction_file')"
-                    /> -->
-                    <ImageUpload />
+                    />
                 </div>
             </div>
         </div>
+        <span v-if="form.errors.reproduction_file" class="text-red-500">
+            * {{ form.errors.reproduction_file }}
+        </span>
 
         <div class="flex gap-4 text-xl">
             <div
@@ -289,15 +296,17 @@ const handleFileUpload = (event, fieldName) => {
             <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
                 <p class="text-center">If applicable:</p>
                 <div class="flex justify-center">
-                    <!-- <input
-                        :disabled="form.others != true"
+                    <input
+                        :disabled="form.others !== true"
                         type="file"
                         @change="handleFileUpload($event, 'others_file')"
-                    /> -->
-                    <ImageUpload />
+                    />
                 </div>
             </div>
         </div>
+        <span v-if="form.errors.others_file" class="text-red-500">
+            * {{ form.errors.others_file }}
+        </span>
     </div>
 </template>
 

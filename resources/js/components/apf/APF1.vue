@@ -22,21 +22,42 @@ const emit = defineEmits(["nextStep"]);
                 Check Payment / Cash
             </div>
             <div class="w-1/4 bg-ua-blue shadow-lg p-2">
-                <ToggleSwitch v-model="form.check_payment_or_cash" />
+                <ToggleSwitch
+                    v-model="form.check_payment_or_cash"
+                    :pt="{
+                        slider: {
+                            class: {
+                                '!bg-ua-yellow': form.check_payment_or_cash,
+                            },
+                        },
+                    }"
+                />
             </div>
         </div>
 
         <div class="flex justify-center text-center mb-4 gap-4">
             <div class="w-2/4 bg-slate-200 shadow-lg p-2">Food</div>
             <div class="w-1/4 bg-ua-blue shadow-lg p-2">
-                <ToggleSwitch v-model="form.food" />
+                <ToggleSwitch v-model="form.food" :pt="{
+                        slider: {
+                            class: {
+                                '!bg-ua-yellow': form.food,
+                            },
+                        },
+                    }" />
             </div>
         </div>
 
         <div class="flex justify-center text-center mb-4 gap-4">
             <div class="w-2/4 bg-slate-200 shadow-lg p-2">Supplies</div>
             <div class="w-1/4 bg-ua-blue shadow-lg p-2">
-                <ToggleSwitch v-model="form.supplies" />
+                <ToggleSwitch v-model="form.supplies" :pt="{
+                        slider: {
+                            class: {
+                                '!bg-ua-yellow': form.supplies,
+                            },
+                        },
+                    }" />
             </div>
         </div>
 
@@ -44,7 +65,13 @@ const emit = defineEmits(["nextStep"]);
             <div class="w-2/4 bg-slate-200 shadow-lg p-2">Reproduction</div>
 
             <div class="w-1/4 bg-ua-blue shadow-lg p-2">
-                <ToggleSwitch v-model="form.reproduction" />
+                <ToggleSwitch v-model="form.reproduction" :pt="{
+                        slider: {
+                            class: {
+                                '!bg-ua-yellow': form.reproduction,
+                            },
+                        },
+                    }" />
             </div>
         </div>
 
@@ -52,7 +79,13 @@ const emit = defineEmits(["nextStep"]);
             <div class="w-2/4 bg-slate-200 shadow-lg p-2">Others</div>
 
             <div class="w-1/4 bg-ua-blue shadow-lg p-2">
-                <ToggleSwitch v-model="form.others" />
+                <ToggleSwitch v-model="form.others" :pt="{
+                        slider: {
+                            class: {
+                                '!bg-ua-yellow': form.others,
+                            },
+                        },
+                    }" />
             </div>
         </div>
 
@@ -66,75 +99,4 @@ const emit = defineEmits(["nextStep"]);
     </div>
 </template>
 
-<style scoped>
-/* .head {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.25rem;
-}
-
-.title {
-    color: #272f5c;
-    text-align: center;
-    font-weight: bold;
-}
-
-.bool {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #272f5c;
-    color: #fff;
-}
-
-.name {
-    background-color: rgba(39, 47, 92, 0.15);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.radio {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.note {
-    font-size: 1rem;
-}
-
-.div-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 150px;
-    height: 50px;
-    border-radius: 20px;
-    border: 1px solid black;
-    font-size: 1.5rem;
-}
-
-.btns {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.25rem;
-}
-
-.form-btn {
-    color: #272f5c;
-    border: 1px solid black;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-}
-
-.next-btn {
-    color: #fff;
-    background-color: #272f5c;
-    border: 1px solid #272f5c;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-} */
-</style>
+<style scoped></style>

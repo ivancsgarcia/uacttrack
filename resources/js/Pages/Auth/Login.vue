@@ -1,11 +1,9 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3";
-import { Link } from "@inertiajs/vue3";
 
 const form = useForm({
     email: null,
     password: null,
-    // remember: null
 });
 
 const submit = () => {
@@ -16,6 +14,7 @@ const submit = () => {
 </script>
 
 <template>
+    <Head title=" | Login" />
     <div class="body">
         <div class="bg-img">
             <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />

@@ -1,5 +1,5 @@
 <script setup>
-import { useForm, Link } from "@inertiajs/vue3";
+import { useForm } from "@inertiajs/vue3";
 import { watch } from "vue";
 
 defineProps({
@@ -55,6 +55,7 @@ const admin_positions = [
 </script>
 
 <template>
+    <Head title="| Register" />
     <!-- Background Image -->
     <div class="bg-img">
         <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />

@@ -9,7 +9,7 @@ const attrs = ref([
     { key: "today", highlight: true, dates: new Date() },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2024, 7, 21),
         popover: {
@@ -18,7 +18,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2024, 7, 26),
         popover: {
@@ -27,7 +27,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2024, 10, 1),
         popover: {
@@ -36,7 +36,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2024, 10, 2),
         popover: {
@@ -45,7 +45,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2024, 10, 30),
         popover: {
@@ -54,7 +54,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2024, 11, 8),
         popover: {
@@ -63,7 +63,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2024, 11, 11),
         popover: {
@@ -72,7 +72,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2024, 11, 25),
         popover: {
@@ -81,7 +81,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2024, 11, 30),
         popover: {
@@ -90,7 +90,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2025, 0, 1),
         popover: {
@@ -99,7 +99,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2025, 0, 29),
         popover: {
@@ -108,7 +108,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2025, 1, 25),
         popover: {
@@ -117,7 +117,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2025, 2, 30),
         popover: {
@@ -126,7 +126,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2025, 3, 9),
         popover: {
@@ -135,7 +135,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: { start: new Date(2025, 3, 14), end: new Date(2025, 3, 18) },
         popover: {
@@ -144,7 +144,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2025, 4, 1),
         popover: {
@@ -153,7 +153,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2025, 4, 7),
         popover: {
@@ -162,7 +162,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2025, 4, 12),
         popover: {
@@ -171,7 +171,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2025, 5, 6),
         popover: {
@@ -180,7 +180,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2025, 5, 12),
         popover: {
@@ -189,7 +189,7 @@ const attrs = ref([
     },
     {
         highlight: {
-            color: "green",
+            color: "yellow",
         },
         dates: new Date(2025, 5, 15),
         popover: {

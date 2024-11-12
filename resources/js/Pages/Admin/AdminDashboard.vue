@@ -1,6 +1,9 @@
 <script setup>
+import AdminLayout from "../../Layouts/AdminLayout.vue";
 import { ref } from "vue";
 import MyCalendar from "../../components/global/MyCalendar.vue";
+
+defineOptions({ layout: AdminLayout });
 
 const props = defineProps({
     activityForms: Object,
@@ -14,213 +17,164 @@ const copyReceive = ref(false);
 </script>
 
 <template>
-    <!-- Background Image -->
-    <div class="bg-img">
-        <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
+    <h2>UA Academic Calendar and School Events</h2>
+    <MyCalendar :activityForms="props.activityForms" />
+
+    <div class="vertical-line"></div>
+
+    <h2>Approval</h2>
+    <div class="box2-div">
+        <Card @click="showCollegeDean = true">
+            <template #content>
+                <p>College Dean</p>
+            </template>
+        </Card>
+
+        <Card @click="showOSA = true">
+            <template #content>
+                <p>Office of Student Affairs</p>
+            </template>
+        </Card>
+
+        <Card @click="showVPAA = true">
+            <template #content>
+                <p>VPAA Approval</p>
+            </template>
+        </Card>
+
+        <Card @click="showVPA = true">
+            <template #content>
+                <p>VPA Approval</p>
+            </template>
+        </Card>
+
+        <Card @click="copyReceive = true">
+            <template #content>
+                <p>Copy Received by</p>
+            </template>
+        </Card>
     </div>
 
-    <!-- Header -->
-    <UAHeader />
+    <Dialog
+        v-model:visible="showCollegeDean"
+        header="College Dean Approval Status"
+        modal
+    >
+        <table>
+            <thead>
+                <tr>
+                    <th>Transaction Number</th>
+                    <th>Activity Title</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="form in activityForms.data" :key="form.id">
+                    <td>{{ form.id }}</td>
+                    <td>{{ form.title }}</td>
+                    <td
+                        :class="{
+                            'text-green-500':
+                                form.college_dean_status === 'APPROVED',
+                            'text-red-500':
+                                form.college_dean_status === 'REJECTED',
+                        }"
+                    >
+                        {{ form.college_dean_status }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <PaginationLinks :paginator="activityForms" />
+    </Dialog>
 
-    <!-- Sidebar -->
-    <AdminSideMenu />
+    <Dialog v-model:visible="showOSA" header="OSA Approval Status" modal>
+        <table>
+            <thead>
+                <tr>
+                    <th>Transaction Number</th>
+                    <th>Activity Title</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="form in activityForms.data" :key="form.id">
+                    <td>{{ form.id }}</td>
+                    <td>{{ form.title }}</td>
+                    <td
+                        :class="{
+                            'text-green-500': form.osa_status === 'APPROVED',
+                            'text-red-500': form.osa_status === 'REJECTED',
+                        }"
+                    >
+                        {{ form.osa_status }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <PaginationLinks :paginator="activityForms" />
+    </Dialog>
 
-    <!-- Content -->
-    <div class="main-content">
-        <div class="flex justify-between items-center mt-5 mx-12 mb-4">
-            <Account class="account" />
+    <Dialog v-model:visible="showVPAA" header="VPAA Approval Status" modal>
+        <table>
+            <thead>
+                <tr>
+                    <th>Transaction Number</th>
+                    <th>Activity Title</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="form in activityForms.data" :key="form.id">
+                    <td>{{ form.id }}</td>
+                    <td>{{ form.title }}</td>
+                    <td
+                        :class="{
+                            'text-green-500': form.vpaa_status === 'APPROVED',
+                            'text-red-500': form.vpaa_status === 'REJECTED',
+                        }"
+                    >
+                        {{ form.vpaa_status }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <PaginationLinks :paginator="activityForms" />
+    </Dialog>
 
-            <div class="flex justify-center items-center gap-5">
-                <font-awesome-icon :icon="['fas', 'envelope']" size="2xl" />
-                <font-awesome-icon :icon="['fas', 'bell']" size="2xl" />
-            </div>
-        </div>
+    <Dialog v-model:visible="showVPA" header="VPA Approval Status" modal>
+        <table>
+            <thead>
+                <tr>
+                    <th>Transaction Number</th>
+                    <th>Activity Title</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="form in activityForms.data" :key="form.id">
+                    <td>{{ form.id }}</td>
+                    <td>{{ form.title }}</td>
+                    <td
+                        :class="{
+                            'text-green-500': form.vpa_status === 'APPROVED',
+                            'text-red-500': form.vpa_status === 'REJECTED',
+                        }"
+                    >
+                        {{ form.vpa_status }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <PaginationLinks :paginator="activityForms" />
+    </Dialog>
 
-        <div class="h-0.5 bg-ua-blue mb-8"></div>
-
-        <h2>UA Academic Calendar and School Events</h2>
-        <MyCalendar :activityForms="props.activityForms" />
-
-        <div class="vertical-line"></div>
-
-        <h2>Approval</h2>
-        <div class="box2-div">
-            <Card @click="showCollegeDean = true">
-                <template #content>
-                    <p>College Dean</p>
-                </template>
-            </Card>
-
-            <Card @click="showOSA = true">
-                <template #content>
-                    <p>Office of Student Affairs</p>
-                </template>
-            </Card>
-
-            <Card @click="showVPAA = true">
-                <template #content>
-                    <p>VPAA Approval</p>
-                </template>
-            </Card>
-
-            <Card @click="showVPA = true">
-                <template #content>
-                    <p>VPA Approval</p>
-                </template>
-            </Card>
-
-            <Card @click="copyReceive = true">
-                <template #content>
-                    <p>Copy Received by</p>
-                </template>
-            </Card>
-        </div>
-
-        <Dialog
-            v-model:visible="showCollegeDean"
-            header="College Dean Approval Status"
-            modal
-        >
-            <table>
-                <thead>
-                    <tr>
-                        <th>Transaction Number</th>
-                        <th>Activity Title</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="form in activityForms.data" :key="form.id">
-                        <td>{{ form.id }}</td>
-                        <td>{{ form.title }}</td>
-                        <td
-                            :class="{
-                                'text-green-500':
-                                    form.college_dean_status === 'APPROVED',
-                                'text-red-500':
-                                    form.college_dean_status === 'REJECTED',
-                            }"
-                        >
-                            {{ form.college_dean_status }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <PaginationLinks :paginator="activityForms" />
-        </Dialog>
-
-        <Dialog v-model:visible="showOSA" header="OSA Approval Status" modal>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Transaction Number</th>
-                        <th>Activity Title</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="form in activityForms.data" :key="form.id">
-                        <td>{{ form.id }}</td>
-                        <td>{{ form.title }}</td>
-                        <td
-                            :class="{
-                                'text-green-500':
-                                    form.osa_status === 'APPROVED',
-                                'text-red-500': form.osa_status === 'REJECTED',
-                            }"
-                        >
-                            {{ form.osa_status }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <PaginationLinks :paginator="activityForms" />
-        </Dialog>
-
-        <Dialog v-model:visible="showVPAA" header="VPAA Approval Status" modal>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Transaction Number</th>
-                        <th>Activity Title</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="form in activityForms.data" :key="form.id">
-                        <td>{{ form.id }}</td>
-                        <td>{{ form.title }}</td>
-                        <td
-                            :class="{
-                                'text-green-500':
-                                    form.vpaa_status === 'APPROVED',
-                                'text-red-500': form.vpaa_status === 'REJECTED',
-                            }"
-                        >
-                            {{ form.vpaa_status }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <PaginationLinks :paginator="activityForms" />
-        </Dialog>
-
-        <Dialog v-model:visible="showVPA" header="VPA Approval Status" modal>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Transaction Number</th>
-                        <th>Activity Title</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="form in activityForms.data" :key="form.id">
-                        <td>{{ form.id }}</td>
-                        <td>{{ form.title }}</td>
-                        <td
-                            :class="{
-                                'text-green-500':
-                                    form.vpa_status === 'APPROVED',
-                                'text-red-500': form.vpa_status === 'REJECTED',
-                            }"
-                        >
-                            {{ form.vpa_status }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <PaginationLinks :paginator="activityForms" />
-        </Dialog>
-
-        <Dialog v-model:visible="copyReceive" header="Copy Received By" modal>
-            <div>Copy Receive</div>
-        </Dialog>
-    </div>
+    <Dialog v-model:visible="copyReceive" header="Copy Received By" modal>
+        <div>Copy Receive</div>
+    </Dialog>
 </template>
 
 <style scoped>
-.bg-img {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    margin-bottom: -3rem;
-    margin-right: -3rem;
-}
-
-.bg-img img {
-    transform: rotate(15deg);
-    width: 40rem;
-    filter: grayscale(100%);
-    opacity: 0.1;
-}
-
-.main-content {
-    margin-left: 16rem;
-    padding: 1rem;
-}
-
 .vertical-line {
     height: 0.125rem;
     background-color: #272f5c;

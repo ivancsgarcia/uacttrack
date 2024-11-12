@@ -15,7 +15,7 @@ class ActivityFormController extends Controller
     public function create()
     {
         $approvedForms = ActivityForm::where('status', 'APPROVED')->get();
-        $venues = Venue::orderBy('name')->get();
+        $venues = Venue::orderBy('capacity')->get();
 
         $events = [
             'Seminar',
@@ -73,11 +73,11 @@ class ActivityFormController extends Controller
             'description' => 'required|string',
             'participant' => 'required|string',
 
-            'payment_or_cash_file' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
-            'food_file' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
-            'supplies_file' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
-            'reproduction_file' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
-            'others_file' => 'nullable|file|mimes:pdf,jpg,png|max:2048'
+            'payment_or_cash_file' => 'nullable|file|mimes:jpg,png,pdf,doc,docx,xls,xlsx,txt,jpeg|max:3072',
+            'food_file' => 'nullable|file|mimes:jpg,png,pdf,doc,docx,xls,xlsx,txt,jpeg|max:3072',
+            'supplies_file' => 'nullable|file|mimes:jpg,png,pdf,doc,docx,xls,xlsx,txt,jpeg|max:3072',
+            'reproduction_file' => 'nullable|file|mimes:jpg,png,pdf,doc,docx,xls,xlsx,txt,jpeg|max:3072',
+            'others_file' => 'nullable|file|mimes:jpg,png,pdf,doc,docx,xls,xlsx,txt,jpeg|max:3072'
         ]);
 
         $data['date'] = Carbon::parse($request->date)->format('Y-m-d');

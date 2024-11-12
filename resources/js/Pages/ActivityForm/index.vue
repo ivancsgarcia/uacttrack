@@ -1,22 +1,23 @@
 <script setup>
+import HeaderLayout from "../../Layouts/HeaderLayout.vue";
 import { useForm } from "@inertiajs/vue3";
 import APF from "../../components/apf/APF.vue";
 import APF1 from "../../components/apf/APF1.vue";
 import APF2 from "../../components/apf/APF2.vue";
 import APF3 from "../../components/apf/APF3.vue";
-
 import Stepper from "primevue/stepper";
 import StepList from "primevue/steplist";
 import StepPanels from "primevue/steppanels";
 import StepItem from "primevue/stepitem";
 import Step from "primevue/step";
 import StepPanel from "primevue/steppanel";
-
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 
+defineOptions({ layout: HeaderLayout });
+
 const props = defineProps({
-    venues: Object,
+    venues: Array,
     images: Array,
     approvedForms: Object,
 });
@@ -172,16 +173,6 @@ const validateFile = (file) => {
 
 const submit = async () => {
     try {
-        if (!isFormValid()) {
-            toast.add({
-                severity: "warn",
-                summary: "Missing Information",
-                detail: "Please fill out all required fields before submitting.",
-                life: 3000,
-            });
-            return;
-        }
-
         confirm.require({
             header: "Submit Activity Form?",
             message:
@@ -198,19 +189,36 @@ const submit = async () => {
             },
             accept: async () => {
                 try {
-                    await submitForm();
-                    toast.add({
-                        severity: "success",
-                        summary: "Form Submitted",
-                        detail: "Your activity form has been successfully created.",
-                        life: 3000,
-                    });
+                    // Call submitForm function and get the result
+                    const result = await submitForm();
+
+                    // Check if the result indicates success
+                    if (result && result.success) {
+                        toast.add({
+                            severity: "success",
+                            summary: "Form Submitted",
+                            detail: "Your activity form has been successfully created.",
+                            life: 3000,
+                        });
+                    } else {
+                        // If the submission result indicates failure or is falsy
+                        toast.add({
+                            severity: "error",
+                            summary: "Submission Failed",
+                            detail:
+                                result && result.message
+                                    ? result.message
+                                    : "Unable to create form. Please check your inputs and try again.",
+                            life: 3000,
+                        });
+                    }
                 } catch (error) {
+                    // If submitForm throws an error (e.g., network issues)
                     console.error("Error submitting form:", error);
                     toast.add({
                         severity: "error",
-                        summary: "Submission Failed",
-                        detail: "Unable to create form. Please check your inputs and try again.",
+                        summary: "Submission Error",
+                        detail: "An error occurred while submitting the form. Please try again later.",
                         life: 3000,
                     });
                 }
@@ -250,211 +258,177 @@ const submitForm = async () => {
 </script>
 
 <template>
-    <!-- Background Image -->
-    <div class="bg-img">
-        <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
-    </div>
+    <Head title=" | Activity Form" />
+    <form @submit.prevent>
+        <Stepper value="1" linear>
+            <StepList>
+                <Step
+                    value="1"
+                    :pt="{
+                        number: '!text-ua-blue',
+                        title: ' !text-ua-blue',
+                    }"
+                    >Start
+                </Step>
+                <Step
+                    value="2"
+                    :pt="{
+                        number: '!text-ua-blue',
+                        title: ' !text-ua-blue',
+                    }"
+                    >Projected Funding Needs</Step
+                >
+                <Step
+                    value="3"
+                    :pt="{
+                        number: '!text-ua-blue',
+                        title: ' !text-ua-blue',
+                    }"
+                    >Date and Venue Booking</Step
+                >
+                <Step
+                    value="4"
+                    :pt="{
+                        number: '!text-ua-blue',
+                        title: ' !text-ua-blue',
+                    }"
+                    >Activity Form</Step
+                >
+            </StepList>
+            <StepPanels>
+                <StepPanel v-slot="{ activateCallback }" value="1">
+                    <div class="flex flex-col">
+                        <div
+                            class="border-2 border-dashed border-surface-200 rounded bg-surface-50 flex-auto flex justify-center items-center font-medium"
+                        >
+                            <APF :images="images" />
+                        </div>
+                    </div>
+                    <div class="flex pt-6 justify-between">
+                        <Button
+                            label="Cancel"
+                            severity="secondary"
+                            icon="pi pi-arrow-left"
+                            @click="cancel"
+                        />
+                        <Button
+                            label="Start"
+                            :pt="{
+                                root: {
+                                    class: '!bg-ua-blue !outline-none !border-none !hover:bg-ua-blue/80 !hover:border-2',
+                                },
+                            }"
+                            icon="pi pi-arrow-right"
+                            iconPos="right"
+                            @click="activateCallback('2')"
+                        />
+                    </div>
+                </StepPanel>
+                <StepPanel v-slot="{ activateCallback }" value="2">
+                    <div class="flex flex-col">
+                        <div
+                            class="border-2 border-dashed border-surface-200 rounded bg-surface-50 flex-auto flex justify-center items-center font-medium"
+                        >
+                            <APF1 :form="form" />
+                        </div>
+                    </div>
+                    <div class="flex pt-6 justify-between">
+                        <Button
+                            label="Back"
+                            severity="secondary"
+                            icon="pi pi-arrow-left"
+                            @click="activateCallback('1')"
+                        />
+                        <Button
+                            label="Forms"
+                            :pt="{
+                                root: '!bg-ua-yellow !text-ua-blue !outline-none !border-none',
+                            }"
+                            icon="pi pi-bars"
+                            @click="openForms"
+                        />
+                        <Button
+                            label="Next"
+                            :pt="{
+                                root: '!bg-ua-blue !outline-none !border-none',
+                            }"
+                            icon="pi pi-arrow-right"
+                            iconPos="right"
+                            @click="activateCallback('3')"
+                        />
+                    </div>
+                </StepPanel>
+                <StepPanel v-slot="{ activateCallback }" value="3">
+                    <div class="flex flex-col">
+                        <div
+                            class="border-2 border-dashed border-surface-200 rounded bg-surface-50 flex-auto flex justify-center items-center font-medium"
+                        >
+                            <APF2
+                                :form="form"
+                                @nextStep="nextStep"
+                                @previousStep="previousStep"
+                                :venues="props.venues"
+                                :approvedForms="props.approvedForms"
+                            />
+                        </div>
+                    </div>
+                    <div class="flex pt-6 justify-between">
+                        <Button
+                            label="Back"
+                            severity="secondary"
+                            icon="pi pi-arrow-left"
+                            @click="activateCallback('2')"
+                        />
+                        <Button
+                            label="Next"
+                            :pt="{
+                                root: '!bg-ua-blue !outline-none !border-none',
+                            }"
+                            icon="pi pi-arrow-right"
+                            iconPos="right"
+                            @click="activateCallback('4')"
+                        />
+                    </div>
+                </StepPanel>
+                <StepPanel v-slot="{ activateCallback }" value="4">
+                    <div class="flex flex-col">
+                        <div
+                            class="border-2 border-dashed border-surface-200 rounded bg-surface-50 flex-auto flex justify-center items-center font-medium"
+                        >
+                            <APF3
+                                :form="form"
+                                @previousStep="previousStep"
+                                @submitForm="submitForm"
+                                :venues="props.venues"
+                            />
+                        </div>
+                    </div>
+                    <div class="flex pt-6 justify-between">
+                        <Button
+                            label="Back"
+                            severity="secondary"
+                            icon="pi pi-arrow-left"
+                            @click="activateCallback('3')"
+                        />
 
-    <!-- Header -->
-    <UAHeader />
+                        <Button
+                            label="Submit"
+                            :disabled="form.processing"
+                            :pt="{
+                                root: '!bg-ua-blue !outline-none !border-none',
+                            }"
+                            icon="pi pi-arrow-right"
+                            iconPos="right"
+                            @click="submit"
+                        />
+                    </div>
+                </StepPanel>
+            </StepPanels>
+        </Stepper>
+    </form>
 
-    <!-- Content -->
-    <div class="main-content">
-        <form @submit.prevent>
-            <Stepper value="1" linear>
-                <StepList>
-                    <Step
-                        value="1"
-                        :pt="{
-                            number: '!text-ua-blue',
-                            title: ' !text-ua-blue',
-                        }"
-                        >Start</Step
-                    >
-                    <Step
-                        value="2"
-                        :pt="{
-                            number: '!text-ua-blue',
-                            title: ' !text-ua-blue',
-                        }"
-                        >Projected Funding Needs</Step
-                    >
-                    <Step
-                        value="3"
-                        :pt="{
-                            number: '!text-ua-blue',
-                            title: ' !text-ua-blue',
-                        }"
-                        >Date and Venue Booking</Step
-                    >
-                    <Step
-                        value="4"
-                        :pt="{
-                            number: '!text-ua-blue',
-                            title: ' !text-ua-blue',
-                        }"
-                        >Activity Form</Step
-                    >
-                </StepList>
-                <StepPanels>
-                    <StepPanel v-slot="{ activateCallback }" value="1">
-                        <div class="flex flex-col">
-                            <div
-                                class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                            >
-                                <APF :images="images" />
-                            </div>
-                        </div>
-                        <div class="flex pt-6 justify-between">
-                            <Button
-                                label="Cancel"
-                                severity="secondary"
-                                icon="pi pi-arrow-left"
-                                @click="cancel"
-                            />
-                            <Button
-                                label="Start"
-                                :pt="{
-                                    root: {
-                                        class: '!bg-ua-blue !outline-none !border-none !hover:bg-ua-blue/80 !hover:border-2',
-                                    },
-                                }"
-                                icon="pi pi-arrow-right"
-                                iconPos="right"
-                                @click="activateCallback('2')"
-                            />
-                        </div>
-                    </StepPanel>
-                    <StepPanel v-slot="{ activateCallback }" value="2">
-                        <div class="flex flex-col">
-                            <div
-                                class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                            >
-                                <APF1 :form="form" />
-                            </div>
-                        </div>
-                        <div class="flex pt-6 justify-between">
-                            <Button
-                                label="Back"
-                                severity="secondary"
-                                icon="pi pi-arrow-left"
-                                @click="activateCallback('1')"
-                            />
-                            <Button
-                                label="Forms"
-                                :pt="{
-                                    root: '!bg-ua-yellow !text-ua-blue !outline-none !border-none',
-                                }"
-                                icon="pi pi-bars"
-                                @click="openForms"
-                            />
-                            <Button
-                                label="Next"
-                                :pt="{
-                                    root: '!bg-ua-blue !outline-none !border-none',
-                                }"
-                                icon="pi pi-arrow-right"
-                                iconPos="right"
-                                @click="activateCallback('3')"
-                            />
-                        </div>
-                    </StepPanel>
-                    <StepPanel v-slot="{ activateCallback }" value="3">
-                        <div class="flex flex-col">
-                            <div
-                                class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                            >
-                                <APF2
-                                    :form="form"
-                                    @nextStep="nextStep"
-                                    @previousStep="previousStep"
-                                    :venues="props.venues"
-                                    :approvedForms="props.approvedForms"
-                                />
-                            </div>
-                        </div>
-                        <div class="flex pt-6 justify-between">
-                            <Button
-                                label="Back"
-                                severity="secondary"
-                                icon="pi pi-arrow-left"
-                                @click="activateCallback('2')"
-                            />
-                            <Button
-                                label="Next"
-                                :pt="{
-                                    root: '!bg-ua-blue !outline-none !border-none',
-                                }"
-                                icon="pi pi-arrow-right"
-                                iconPos="right"
-                                @click="activateCallback('4')"
-                            />
-                        </div>
-                    </StepPanel>
-                    <StepPanel v-slot="{ activateCallback }" value="4">
-                        <div class="flex flex-col">
-                            <div
-                                class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                            >
-                                <APF3
-                                    :form="form"
-                                    @previousStep="previousStep"
-                                    @submitForm="submitForm"
-                                    :venues="props.venues"
-                                />
-                            </div>
-                        </div>
-                        <div class="flex pt-6 justify-between">
-                            <Button
-                                label="Back"
-                                severity="secondary"
-                                icon="pi pi-arrow-left"
-                                @click="activateCallback('3')"
-                            />
-
-                            <Button
-                                label="Submit"
-                                :disabled="form.processing"
-                                :pt="{
-                                    root: '!bg-ua-blue !outline-none !border-none',
-                                }"
-                                icon="pi pi-arrow-right"
-                                iconPos="right"
-                                @click="submit"
-                            />
-                        </div>
-                    </StepPanel>
-                </StepPanels>
-            </Stepper>
-        </form>
-
-        <ConfirmDialog></ConfirmDialog>
-        <Toast />
-    </div>
+    <ConfirmDialog></ConfirmDialog>
+    <Toast />
 </template>
 
-<style scoped>
-.bg-img {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    margin-bottom: -3rem;
-    margin-right: -3rem;
-}
-
-.bg-img img {
-    transform: rotate(15deg);
-    width: 40rem;
-    filter: grayscale(100%);
-    opacity: 0.1;
-}
-
-.main-content {
-    padding: 1rem;
-}
-
-/* .p-stepper {
-    background-color: transparent !important;
-} */
-</style>
+<style scoped></style>
