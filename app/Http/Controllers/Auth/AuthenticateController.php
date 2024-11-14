@@ -11,7 +11,9 @@ class AuthenticateController extends Controller
 {
     public function create()
     {
-        return Inertia::render('Auth/Login');
+        return Inertia::render('Auth/Login', [
+            'status' => session('status'),
+        ]);
     }
 
     public function store(Request $request)
@@ -24,7 +26,9 @@ class AuthenticateController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
-            if ($user->role === 'Admin') {
+            if ($user->role === 'Admin' && $user->position === 'System Admin') {
+                return redirect()->route('register');
+            } else if ($user->role === 'Admin') {
                 return redirect()->route('admin-dashboard');
             } else {
                 return redirect()->route('home');

@@ -1,11 +1,11 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, reactive } from "vue";
 
 const props = defineProps({
-    activityForms: Array,
+    activityForms: Object,
 });
 
-const attrs = ref([
+const attrs = reactive([
     { key: "today", highlight: true, dates: new Date() },
     {
         highlight: {
@@ -356,17 +356,20 @@ onMounted(() => {
                 key: apf.id,
                 bar: {
                     style: {
-                        backgroundColor: "orange",
+                        backgroundColor: "purple",
                     },
                 },
                 popover: {
-                    label: `${apf.from_time.slice(0, 5)} -
-                        ${apf.to_time.slice(0, 5)}:
-                        ${apf.title} (${apf.venue})`,
+                    label: `${apf.from_time.slice(0, 5)} - ${apf.to_time.slice(
+                        0,
+                        5
+                    )}: ${apf.title} (${apf.venue})`,
                 },
-                dates: new Date(apf.date),
+                dates: new Date(apf.date), // Make sure apf.date is a valid Date object
             }));
-        attrs.value.push(...activityAttrs);
+
+        // Updating the attrs in a reactive way
+        attrs.value = [...attrs.value, ...activityAttrs];
     }
 });
 </script>

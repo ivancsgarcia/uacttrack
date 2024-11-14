@@ -18,10 +18,10 @@ Route::middleware("guest")->group(function () {
     Route::post('/login', [AuthenticateController::class, 'store']);
 
     // Route::inertia('/forgot-password', 'Auth/ForgotPassword')->name('forgot-password');
-    Route::inertia('/forgot-password', 'Auth/ForgotPassword')->name('password.request');
-    Route::post('/forgot-password', [ResetPasswordController::class, 'passwordEmail']);
-    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'passwordReset'])->name('password.reset');
-    Route::post('/reset-password', [ResetPasswordController::class, 'passwordUpdate'])->name('password.update');
+    Route::get('/forgot-password', [ResetPasswordController::class, 'requestPass'])->name('password.request');
+    Route::post('/forgot-password', [ResetPasswordController::class, 'sendEmail'])->name('password.email');
+    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'resetForm'])->name('password.reset');
+    Route::post('/reset-password', [ResetPasswordController::class, 'resetHandler'])->name('password.update');
 });
 
 

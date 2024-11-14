@@ -1,13 +1,23 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, watch, onMounted } from "vue";
+import { attrs, disabledDates } from "../apf/dateAttributes";
 import MyDatePicker from "../global/MyDatePicker.vue";
 
+// Props received from parent
 const props = defineProps({
     form: Object,
     venues: Array,
     approvedForms: Object,
 });
 
+// Ensure the date is formatted correctly upon initialization
+onMounted(() => {
+    if (props.form.date) {
+        props.form.date = new Date(props.form.date).toISOString().split("T")[0];
+    }
+});
+
+// Venue Recommendation Logic
 const venueRecommendation = () => {
     if (!props.form.attendance_count || props.form.attendance_count <= 0) {
         props.form.errors.attendance_count =
@@ -29,19 +39,21 @@ const venueRecommendation = () => {
     <div class="py-4">
         <div class="flex gap-4">
             <div class="w-2/4 space-y-2">
+                <!-- Date Picker Component -->
                 <div class="flex flex-col">
                     <label for="date" class="text-ua-blue text-2xl"
                         >* Date</label
                     >
-                    <MyDatePicker :form="form" />
-                    <!-- <input
-                        type="date"
-                        name="date"
+                    <VDatePicker
                         v-model="form.date"
-                        class="rounded-xl shadow bg-ua-blue/30 p-2"
-                    /> -->
+                        :attributes="attrs"
+                        :disabled-dates="disabledDates"
+                        mode="date"
+                        expanded
+                    />
                 </div>
 
+                <!-- Additional Fields (From Time, To Time) -->
                 <div class="flex flex-col">
                     <label class="text-ua-blue text-2xl">* From Time</label>
                     <VDatePicker
@@ -49,11 +61,6 @@ const venueRecommendation = () => {
                         mode="time"
                         hide-time-header
                     />
-                    <!-- <input
-                        type="time"
-                        v-model="form.from_time"
-                        class="rounded-xl shadow bg-ua-blue/30 p-2"
-                    /> -->
                 </div>
 
                 <div class="flex flex-col">
@@ -65,19 +72,15 @@ const venueRecommendation = () => {
                         mode="time"
                         hide-time-header
                     />
-                    <!-- <input
-                        type="time"
-                        name="to-time"
-                        v-model="form.to_time"
-                        class="rounded-xl shadow bg-ua-blue/30 p-2"
-                    /> -->
                 </div>
             </div>
+
+            <!-- Right side fields (Attendees, Event Type, etc.) -->
             <div class="w-2/4 space-y-2">
                 <div class="flex flex-col">
                     <label class="text-ua-blue text-2xl"
-                        >* Number of Attendees
-                    </label>
+                        >* Number of Attendees</label
+                    >
                     <input
                         type="number"
                         v-model="form.attendance_count"
@@ -95,8 +98,8 @@ const venueRecommendation = () => {
 
                 <div class="flex flex-col">
                     <label for="event" class="text-ua-blue text-2xl"
-                        >* Type of Event
-                    </label>
+                        >* Type of Event</label
+                    >
                     <input
                         type="text"
                         id="event"
@@ -107,8 +110,7 @@ const venueRecommendation = () => {
             </div>
         </div>
 
-        <div class="h-0.5 bg-black my-10"></div>
-
+        <!-- Venue Recommendation Button -->
         <div class="flex justify-center mb-4">
             <button
                 @click="venueRecommendation"
@@ -118,9 +120,10 @@ const venueRecommendation = () => {
             </button>
         </div>
 
+        <!-- Venue and Requirements fields -->
         <div class="flex gap-4">
             <div class="flex flex-col w-2/4">
-                <label for="" class="text-ua-blue text-2xl">* Venue</label>
+                <label for="venue" class="text-ua-blue text-2xl">* Venue</label>
                 <select
                     v-model="form.venue"
                     class="rounded-xl shadow bg-ua-blue/30 p-2"
@@ -141,8 +144,8 @@ const venueRecommendation = () => {
 
             <div class="flex flex-col w-2/4">
                 <label for="reqs" class="text-ua-blue text-2xl"
-                    >* Requirements / Resources Needed
-                </label>
+                    >* Requirements / Resources Needed</label
+                >
                 <textarea
                     name="reqs"
                     id="reqs"

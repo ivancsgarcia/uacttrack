@@ -50,6 +50,15 @@ class AdminSeeder extends Seeder
                 'email' => 'vpa@email.com',
                 'password' => bcrypt('123')
             ],
+            [
+                'role' => 'Admin',
+                'organization_id' => 1,
+                'position' => 'System Admin',
+                'first_name' => 'System',
+                'last_name' => 'Admin',
+                'email' => 'sysadmin@email.com',
+                'password' => bcrypt('123')
+            ],
         ],);
     }
 }

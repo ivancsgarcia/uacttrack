@@ -1,6 +1,10 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3";
 
+defineProps({
+    status: String,
+});
+
 const form = useForm({
     email: null,
     password: null,
@@ -29,6 +33,7 @@ const submit = () => {
             <Form @submit.prevent="submit">
                 <h1>Log In</h1>
 
+                {{ status }}
                 <!-- Email -->
                 <div class="text-box">
                     <div class="icon-box">

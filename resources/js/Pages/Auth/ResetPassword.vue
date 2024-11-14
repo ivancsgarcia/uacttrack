@@ -1,16 +1,29 @@
 <script setup>
-import { ref } from "vue";
+import { useForm } from "@inertiajs/vue3";
 
-// Define 'token' as a prop passed from Laravel
 const props = defineProps({
     token: String,
+    email: String,
 });
 
-// Create a local reactive variable to store the token
-const token = ref(props.token);
+const form = useForm({
+    token: props.token,
+    email: props.email,
+    password: "",
+    password_confirmation: "",
+});
+
+const submit = () => {
+    form.post(route(""), {
+        onFinish: () => {
+            form.reset("password", "password_confirmation");
+        },
+    });
+};
 </script>
 
 <template>
+    <Head title="Reset Password" />
     <div class="flex">
         <div class="w-1/2">
             <img
@@ -19,10 +32,12 @@ const token = ref(props.token);
                 class="w-3/4 m-auto"
             />
 
-            <form action="{{ route('password.update') }}">
+            <form @submit.prevent="submit">
                 <h1>Reset Password</h1>
 
-                <input type="hidden" name="token" :value="token" />
+                <div class="block">
+                    <input type="hidden" name="token" :value="token" />
+                </div>
 
                 <!-- Email -->
                 <div class="text-box">

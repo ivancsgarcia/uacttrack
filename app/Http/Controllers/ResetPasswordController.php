@@ -13,7 +13,14 @@ use Illuminate\Support\Str;
 
 class ResetPasswordController extends Controller
 {
-    public function passwordEmail(Request $request)
+    public function requestPass()
+    {
+        return Inertia::render('Auth/ForgotPassword', [
+            'status' => session('status'),
+        ]);
+    }
+
+    public function sendEmail(Request $request)
     {
         $request->validate(['email' => 'required|email']);
 
@@ -26,12 +33,15 @@ class ResetPasswordController extends Controller
             : back()->withErrors(['email' => __($status)]);
     }
 
-    public function passwordReset(string $token)
+    public function resetForm(Request $request)
     {
-        return Inertia::render('Auth/ResetPassword', ['token' => $token]);
+        return Inertia::render('Auth/ResetPassword', [
+            'email' => $request->email,
+            'token' => $request->route('token'),
+        ]);
     }
 
-    public function passwordUpdate(Request $request)
+    public function resetHandler(Request $request)
     {
         $request->validate([
             'token' => 'required',
