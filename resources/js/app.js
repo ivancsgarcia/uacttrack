@@ -16,6 +16,7 @@ import Dialog from "primevue/dialog";
 import Avatar from "primevue/avatar";
 import Popover from "primevue/popover";
 import Card from "primevue/card";
+import Divider from 'primevue/divider';
 import ConfirmDialog from "primevue/confirmdialog";
 import ConfirmationService from "primevue/confirmationservice";
 import Toast from "primevue/toast";
@@ -53,12 +54,15 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .use(PrimeVue, {
-                theme: {
-                    preset: Aura,
-                    options: {
-                        darkModeSelector: false,
-                    },
-                },
+                // theme: {
+                //     preset: Aura,
+                //     options: {
+                //         prefix: "p",
+                //         darkModeSelector: false,
+                //         cssLayer: false,
+                //     },
+                // },
+                theme: 'none',
             })
             .use(ConfirmationService)
             .use(ToastService)
@@ -82,6 +86,7 @@ createInertiaApp({
             .component("ConfirmDialog", ConfirmDialog)
             .component("Toast", Toast)
             .component("Image", Image)
+            .component("Divider", Divider)
             .component("AdminSideMenu", AdminSideMenu)
             .component("MyDatePicker", MyDatePicker)
             .mount(el);
