@@ -272,38 +272,10 @@ const submitForm = async () => {
     <form @submit.prevent>
         <Stepper value="1" linear>
             <StepList>
-                <Step
-                    value="1"
-                    :pt="{
-                        number: '!text-ua-blue',
-                        title: ' !text-ua-blue',
-                    }"
-                    >Start
-                </Step>
-                <Step
-                    value="2"
-                    :pt="{
-                        number: '!text-ua-blue',
-                        title: ' !text-ua-blue',
-                    }"
-                    >Projected Funding Needs</Step
-                >
-                <Step
-                    value="3"
-                    :pt="{
-                        number: '!text-ua-blue',
-                        title: ' !text-ua-blue',
-                    }"
-                    >Date and Venue Booking</Step
-                >
-                <Step
-                    value="4"
-                    :pt="{
-                        number: '!text-ua-blue',
-                        title: ' !text-ua-blue',
-                    }"
-                    >Activity Form</Step
-                >
+                <Step value="1">Start </Step>
+                <Step value="2">Projected Funding Needs</Step>
+                <Step value="3">Date and Venue Booking</Step>
+                <Step value="4">Activity Form</Step>
             </StepList>
             <StepPanels>
                 <StepPanel v-slot="{ activateCallback }" value="1">
@@ -323,11 +295,6 @@ const submitForm = async () => {
                         />
                         <Button
                             label="Start"
-                            :pt="{
-                                root: {
-                                    class: '!bg-ua-blue !outline-none !border-none !hover:bg-ua-blue/80 !hover:border-2',
-                                },
-                            }"
                             icon="pi pi-arrow-right"
                             iconPos="right"
                             @click="activateCallback('2')"
@@ -350,18 +317,13 @@ const submitForm = async () => {
                             @click="activateCallback('1')"
                         />
                         <Button
+                            class="bg-ua-yellow"
                             label="Forms"
-                            :pt="{
-                                root: '!bg-ua-yellow !text-ua-blue !outline-none !border-none',
-                            }"
                             icon="pi pi-bars"
                             @click="openForms"
                         />
                         <Button
                             label="Next"
-                            :pt="{
-                                root: '!bg-ua-blue !outline-none !border-none',
-                            }"
                             icon="pi pi-arrow-right"
                             iconPos="right"
                             @click="activateCallback('3')"
@@ -391,9 +353,6 @@ const submitForm = async () => {
                         />
                         <Button
                             label="Next"
-                            :pt="{
-                                root: '!bg-ua-blue !outline-none !border-none',
-                            }"
                             icon="pi pi-arrow-right"
                             iconPos="right"
                             @click="activateCallback('4')"
@@ -424,9 +383,6 @@ const submitForm = async () => {
                         <Button
                             label="Submit"
                             :disabled="form.processing"
-                            :pt="{
-                                root: '!bg-ua-blue !outline-none !border-none',
-                            }"
                             icon="pi pi-arrow-right"
                             iconPos="right"
                             @click="submit"

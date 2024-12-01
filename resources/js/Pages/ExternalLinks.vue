@@ -8,16 +8,14 @@ defineOptions({ layout: Layout });
     <Head title=" | Links" />
     <div class="box-div">
         <a href="https://www.ua.edu.ph" target="_blank">
-            <Card>
+            <Card class="w-72 h-72">
                 <template #content>
-                    <div>
-                        <Image
-                            :src="'images/sys-logos/ua-logo.png'"
-                            alt="ua-logo"
-                            width="180"
-                        />
-                        <p>University of the Assumption Website</p>
-                    </div>
+                    <Image
+                        :src="'images/sys-logos/ua-logo.png'"
+                        alt="ua-logo"
+                        width="180"
+                    />
+                    <p>University of the Assumption Website</p>
                 </template>
             </Card>
         </a>
@@ -26,40 +24,36 @@ defineOptions({ layout: Layout });
             href="http://serp.ua.edu.ph/serp/Gate/UASFP.Login.aspx"
             target="_blank"
         >
-            <Card>
+            <Card class="w-72 h-72">
                 <template #content>
-                    <div>
-                        <Image
-                            :src="'images/sys-logos/ua-logo.png'"
-                            alt="ua-logo"
-                            width="180"
-                        />
-                        <p>University of the Assumption SERP</p>
-                    </div>
+                    <Image
+                        :src="'images/sys-logos/ua-logo.png'"
+                        alt="ua-logo"
+                        width="180"
+                    />
+                    <p>University of the Assumption SERP</p>
                 </template>
             </Card>
         </a>
 
-        <Card>
+        <Card class="w-72 h-72">
             <template #content>
-                <div>
-                    <Image
-                        :src="'images/sys-logos/ua-logo.png'"
-                        alt="rsointrack-logo"
-                        width="180"
-                    />
-                    <p>RSO in Track</p>
-                </div>
+                <Image
+                    :src="'images/sys-logos/ua-logo.png'"
+                    alt="rsointrack-logo"
+                    width="180"
+                />
+                <p>RSO in Track</p>
             </template>
         </Card>
 
-        <Card> </Card>
-        <Card> </Card>
-        <Card> </Card>
+        <Card class="w-72 h-72"> </Card>
+        <Card class="w-72 h-72"> </Card>
+        <Card class="w-72 h-72"> </Card>
 
-        <Card> </Card>
-        <Card> </Card>
-        <Card> </Card>
+        <Card class="w-72 h-72"> </Card>
+        <Card class="w-72 h-72"> </Card>
+        <Card class="w-72 h-72"> </Card>
     </div>
 </template>
 
@@ -71,28 +65,9 @@ defineOptions({ layout: Layout });
 }
 
 .box-div {
-    flex: 1 1 calc(33.333% - 20px);
     display: flex;
-    /* flex-direction: column; */
     justify-content: center;
     flex-wrap: wrap;
     gap: 1rem;
-}
-
-.p-card {
-    padding: 1rem;
-    background-color: #272f5c;
-    color: white;
-    width: 350px;
-    height: 300px;
-}
-
-.p-card div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 0.5rem;
 }
 </style>

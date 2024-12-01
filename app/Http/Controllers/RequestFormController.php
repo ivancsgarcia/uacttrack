@@ -15,8 +15,7 @@ class RequestFormController extends Controller
             return [
                 'id' => $form->id,
                 'name' => $form->name,
-                'docx_url' => Storage::url($form->docs_link),
-                'xlsx_url' => Storage::url($form->xlsx_link),
+                'download_link' => Storage::url($form->download_link),
             ];
         })->sortBy('name')
             ->values();

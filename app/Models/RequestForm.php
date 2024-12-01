@@ -11,7 +11,6 @@ class RequestForm extends Model
 
     protected $fillable = [
         'name',
-        'docs_link',
-        'xlsx_link',
+        'download_link',
     ];
 }

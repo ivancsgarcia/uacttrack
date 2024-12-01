@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('request_forms', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('docs_link')->nullable();
-            $table->string('xlsx_link')->nullable();
+            $table->string('download_link')->nullable();
         });
     }
 

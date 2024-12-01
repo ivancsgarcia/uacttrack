@@ -29,12 +29,12 @@ class RegisterController extends Controller
 
         $credentials = $request->validate([
             'role' => ['required'],
-            'organization_id' => ['exists:organizations,id', 'nullable'],
-            'position' => ['required', 'string'],
-            'first_name' => ['required', 'max:255'],
-            'last_name' => ['required', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'confirmed']
+            'organization_id' => ['exists:organizations,id|nullable'],
+            'position' => ['required|string'],
+            'first_name' => ['required|max:255'],
+            'last_name' => ['required|max:255'],
+            'email' => ['required|email|max:255|unique:users,email'],
+            'password' => ['required|confirmed|min:8'],
         ]);
 
         $user = User::create($credentials);

@@ -34,7 +34,7 @@ const toggle = (event) => {
 
     <div class="box-div">
         <Link :href="route('submitted-apf')">
-            <Card class="top">
+            <Card class="min-w-[calc(33.33%-8px)] text-xl p-4">
                 <template #content>
                     <p>Submitted</p>
                     <p>Activity Proposal Form</p>
@@ -43,7 +43,7 @@ const toggle = (event) => {
         </Link>
 
         <Link :href="route('approved-apf')">
-            <Card class="top">
+            <Card class="min-w-[calc(33.33%-8px)] text-xl p-4">
                 <template #content>
                     <p>Approved</p>
                     <p>Activity Proposal Form</p>
@@ -52,7 +52,7 @@ const toggle = (event) => {
         </Link>
 
         <Link :href="route('rejected-apf')">
-            <Card class="top">
+            <Card class="min-w-[calc(33.33%-8px)] text-xl p-4">
                 <template #content>
                     <p>Rejected</p>
                     <p>Activity Proposal Form</p>
@@ -64,32 +64,32 @@ const toggle = (event) => {
     <div class="vertical-line"></div>
 
     <h2>Approval</h2>
-    <div class="box2-div">
-        <Card @click="showCollegeDean = true">
+    <div class="box-div">
+        <Card @click="showCollegeDean = true" class="text-xl p-2">
             <template #content>
                 <p>College Dean</p>
             </template>
         </Card>
 
-        <Card @click="showOSA = true">
+        <Card @click="showOSA = true" class="text-xl p-2">
             <template #content>
                 <p>Office of Student Affairs</p>
             </template>
         </Card>
 
-        <Card @click="showVPAA = true">
+        <Card @click="showVPAA = true" class="text-xl p-2">
             <template #content>
                 <p>VPAA Approval</p>
             </template>
         </Card>
 
-        <Card @click="showVPA = true">
+        <Card @click="showVPA = true" class="text-xl p-2">
             <template #content>
                 <p>VPA Approval</p>
             </template>
         </Card>
 
-        <Card @click="copyReceive = true">
+        <Card @click="copyReceive = true" class="text-xl p-2">
             <template #content>
                 <p>Copy Received by</p>
             </template>
@@ -245,11 +245,7 @@ const toggle = (event) => {
                 <tr>
                     <td>EAMO</td>
                     <td>
-                        <input
-                            type="checkbox"
-                            :checked="copyr.eamo"
-                            disabled
-                        />
+                        <input type="checkbox" :checked="copyr.eamo" disabled />
                     </td>
                     <td>Janitorial</td>
                     <td>
@@ -281,11 +277,7 @@ const toggle = (event) => {
                 <tr>
                     <td>PPGS</td>
                     <td>
-                        <input
-                            type="checkbox"
-                            :checked="copyr.ppgs"
-                            disabled
-                        />
+                        <input type="checkbox" :checked="copyr.ppgs" disabled />
                     </td>
                     <td>Hotel</td>
                     <td>
@@ -332,7 +324,7 @@ const toggle = (event) => {
     justify-content: center;
     flex-wrap: wrap;
     gap: 1rem;
-    margin: 2rem 0 3rem;
+    margin: 2rem 0;
 }
 
 h2 {
@@ -340,13 +332,6 @@ h2 {
     color: #272f5c;
     font-size: 2.2rem;
     margin: -1rem 0 1rem;
-}
-
-.box2-div {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
 }
 
 table {
@@ -366,31 +351,5 @@ td {
     padding: 1rem;
     text-align: center;
     background-color: #fff;
-}
-
-.top {
-    background-color: #272f5c !important;
-    color: #fff !important;
-}
-
-.top:hover {
-    background-color: hsl(230.94, 40.46%, 95%) !important;
-    color: #272f5c !important;
-    border: 1px solid #272f5c !important;
-}
-
-.p-card {
-    padding: 1.5rem 1rem;
-    background-color: hsl(230.94, 40.46%, 98%);
-    color: #272f5c;
-    border: 1px solid #272f5c;
-    text-align: center;
-    font-size: 1.5rem;
-}
-
-.p-card:hover {
-    background-color: #272f5c;
-    color: #fff;
-    cursor: pointer;
 }
 </style>

@@ -23,10 +23,7 @@ defineProps({
             <tr v-for="reqForm in requestForms" :key="reqForm.id">
                 <td>{{ reqForm.name }}</td>
                 <td class="underline">
-                    <a :href="reqForm.docx_url" download>docx</a>
-                </td>
-                <td class="underline">
-                    <a :href="reqForm.xlsx_url" download>xlsx</a>
+                    <a :href="reqForm.download_link" download>Download</a>
                 </td>
             </tr>
         </tbody>
