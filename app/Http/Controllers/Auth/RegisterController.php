@@ -29,7 +29,7 @@ class RegisterController extends Controller
 
         $credentials = $request->validate([
             'role' => ['required'],
-            'organization_id' => ['exists:organizations,id|nullable'],
+            'organization_id' => ['exists:organizations|id|nullable'],
             'position' => ['required|string'],
             'first_name' => ['required|max:255'],
             'last_name' => ['required|max:255'],
