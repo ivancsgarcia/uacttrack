@@ -9,41 +9,43 @@
     <!-- Header -->
     <UAHeader />
 
-    <!-- Sidebar -->
-    <AdminSideMenu />
+    <div class="cont">
+        <!-- Sidebar -->
+        <AdminSideMenu />
 
-    <!-- Content -->
-    <div class="main-content">
-        <div class="account-section">
-            <Account />
+        <!-- Content -->
+        <main class="content">
+            <div class="account-section">
+                <Account />
 
-            <div class="icons-box">
-                <div>
-                    <a href="https://mail.google.com/" target="_blank">
+                <div class="icons-box">
+                    <div>
+                        <a href="https://mail.google.com/" target="_blank">
+                            <font-awesome-icon
+                                :icon="['fas', 'envelope']"
+                                size="2xl"
+                                class="icon"
+                            />
+                        </a>
+                    </div>
+                    <div>
                         <font-awesome-icon
-                            :icon="['fas', 'envelope']"
+                            @click="toggle"
+                            :icon="['fas', 'bell']"
                             size="2xl"
                             class="icon"
                         />
-                    </a>
-                </div>
-                <div>
-                    <font-awesome-icon
-                        @click="toggle"
-                        :icon="['fas', 'bell']"
-                        size="2xl"
-                        class="icon"
-                    />
-                    <Popover ref="op">
-                        <div>hi</div>
-                    </Popover>
+                        <Popover ref="op">
+                            <div>hi</div>
+                        </Popover>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="vertical-line"></div>
+            <div class="vertical-line"></div>
 
-        <slot></slot>
+            <slot></slot>
+        </main>
     </div>
 </template>
 
@@ -64,10 +66,15 @@
     opacity: 0.1;
 }
 
-.main-content {
+.cont {
+    display: flex;
+    margin-top: 60px;
+}
+
+.content {
     margin-left: 16rem;
     padding: 1rem;
-    margin-bottom: 2rem;
+    flex: 1;
 }
 
 .account-section {

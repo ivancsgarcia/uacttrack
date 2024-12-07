@@ -17,74 +17,61 @@ const goHome = () => {
 </script>
 
 <template>
-    <div class="header">
-        <!-- <div class="icons-box">
-            <font-awesome-icon
-                :icon="['fas', 'chevron-left']"
-                @click="goBack"
-                size="2xl"
-                class="icon"
-            />
-            <font-awesome-icon
-                :icon="['fas', 'house']"
-                @click="goHome"
-                size="2xl"
-                class="icon"
-            />
-        </div> -->
-        <div class="container">
-            <img
-                src="/public/images/sys-logos/ua-logo.png"
-                alt="ua-logo"
-                class="logo"
-            />
+    <header>
+        <div class="header-logo">
+            <img src="/public/images/sys-logos/ua-logo.png" alt="ua-logo" />
             <h1>University of the Assumption</h1>
         </div>
-    </div>
+    </header>
 </template>
 
 <style scoped>
-.header {
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    padding: 0.5rem 0;
     background-color: #272f5c;
     color: #fff;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.icons-box {
-    position: absolute;
-    top: 50%;
-    left: 2rem;
-    transform: translateY(-50%);
     display: flex;
-    gap: 1.5rem;
-}
-
-.icon:hover {
-    cursor: pointer;
-    color: lightblue;
-}
-
-.container {
-    display: flex;
-    /* align-items: center; */
     justify-content: center;
-    margin: auto;
-    gap: 1rem;
+    align-items: center;
+    padding: 10px 0;
+    z-index: 1000;
 }
 
-.logo {
+.header-logo {
+    display: flex;
+    align-items: center;
+}
+
+.header-logo img {
     width: 3rem;
+    margin-right: 10px;
 }
 
-h1 {
+.header-logo h1 {
     font-size: 2rem;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.1rem;
     text-align: center;
+}
+
+@media screen and (max-width: 425px) {
+    .header-logo {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .header-logo img {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+
+    .header-logo h1 {
+        font-size: 1.5rem;
+        letter-spacing: 0.05rem;
+    }
 }
 </style>

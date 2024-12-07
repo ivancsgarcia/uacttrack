@@ -1,123 +1,143 @@
-<script setup></script>
+<script setup>
+import { Link } from "@inertiajs/vue3";</script>
 
 <template>
-    <div class="sidebar">
-        <div class="sidebar-content">
-            <div class="image mb-4 p-4">
-                <img
-                    :src="'images/sys-logos/UActTrack-logo.png'"
-                    alt="uacttrack-logo"
-                />
-            </div>
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img
+                :src="'images/sys-logos/UActTrack-logo.png'"
+                alt="uacttrack-logo"
+            />
+        </div>
 
-            <div class="menu-items">
-                <Link :href="route('home')">
-                    <div
+        <nav>
+            <ul>
+                <li>
+                    <Link
+                        :href="route('home')"
                         :class="{
                             '!bg-ua-blue !text-white':
                                 $page.component === 'Dashboard',
                         }"
+                        class="link"
                     >
-                        <p>Dashboard</p>
-                    </div>
-                </Link>
+                        Dashboard
+                    </Link>
+                </li>
 
-                <Link :href="route('activity-form.create')">
-                    <div
+                <li>
+                    <Link
+                        :href="route('activity-form.create')"
                         :class="{
                             '!bg-ua-blue !text-white':
                                 $page.component === 'ActivityForm/index',
                         }"
+                        class="link"
                     >
-                        <p>Activity Proposal Form</p>
-                    </div>
-                </Link>
+                        Activity Proposal Form
+                    </Link>
+                </li>
 
-                <Link :href="route('request-form')">
-                    <div
+                <li>
+                    <Link
+                        :href="route('request-form')"
                         :class="{
                             '!bg-ua-blue !text-white':
                                 $page.component === 'RequestForm',
                         }"
+                        class="link"
                     >
-                        <p>Request Forms</p>
-                    </div>
-                </Link>
+                        Request Forms
+                    </Link>
+                </li>
 
-                <Link :href="route('recommendation')">
-                    <div
+                <li>
+                    <Link
+                        :href="route('recommendation')"
                         :class="{
                             '!bg-ua-blue !text-white':
                                 $page.component === 'ExternalLinks',
                         }"
+                        class="link"
                     >
-                        <p>Relevant Links</p>
-                    </div>
-                </Link>
-            </div>
+                        Relevant Links
+                    </Link>
+                </li>
+            </ul>
+        </nav>
 
-            <div class="logout-section">
-                <Link
-                    :href="route('logout')"
-                    method="post"
-                    as="button"
-                    type="button"
-                    class="w-full"
-                >
-                    <div class="logout">
-                        <p>Log Out</p>
-                    </div>
-                </Link>
-            </div>
+        <div class="logout">
+            <Link
+                :href="route('logout')"
+                method="post"
+                as="button"
+                type="button"
+                class="w-full"
+            >
+                Log Out
+            </Link>
         </div>
-    </div>
+    </aside>
 </template>
 
 <style scoped>
 .sidebar {
-    height: 100%;
-    width: 16rem;
     position: fixed;
-    overflow: auto;
+    top: 60px;
+    left: 0;
+    width: 16rem;
+    height: calc(100% - 60px);
     background-color: rgb(39 47 92 / 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
 }
 
-.sidebar-content {
-    min-height: 100%;
-    position: relative;
+.sidebar-logo img {
+    /* width: 100%; */
+    max-height: 80px;
+    margin: 20px auto; 
 }
 
-.menu-items {
-    color: #272f5c;
-    text-align: center;
+.sidebar nav ul {
+    list-style: none;
+}
+
+.sidebar nav ul li {
+    margin: 10px 0;
+}
+
+.sidebar nav ul li .link {
+    text-decoration: none;
     font-size: 1.25rem;
+    /* background-color: #d9d9d9; */
+    color: #272f5c;
+    display: block;
+    padding: 12px;
+    transition: background 0.3s;
 }
 
-.menu-items div {
-    background-color: #d9d9d9;
-    padding: 12px 0;
-    margin: 5px auto;
-}
-
-.menu-items div:hover {
+.sidebar nav ul li .link:hover {
     background-color: rgba(39, 47, 92, 0.6);
-    color: white;
-}
-
-.logout-section {
-    position: absolute;
-    bottom: 62px;
-    width: 100%;
+    color: #fff;
 }
 
 .logout {
-    background-color: #272f5c;
-    text-align: center;
-    padding: 12px 16px;
-    color: white;
+    margin-top: auto;
 }
 
-.logout:hover {
-    background-color: #c41e3a;
+.logout button {
+    width: 100%;
+    padding: 10px;
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.logout button:hover {
+    background-color: #c0392b;
 }
 </style>

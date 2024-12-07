@@ -6,9 +6,10 @@
 
     <!-- Header -->
     <UAHeader />
-
-    <div class="main-content">
-        <slot></slot>
+    <div class="cont">
+        <main class="content">
+            <slot></slot>
+        </main>
     </div>
 </template>
 
@@ -29,7 +30,16 @@
     opacity: 0.1;
 }
 
-.main-content {
+.cont {
+    display: flex;
+    margin-top: 60px;
+    min-height: calc(100vh - 60px);
+    display: flex;
+    align-items: center;
+}
+
+.content {
     padding: 1rem;
+    flex: 1;
 }
 </style>

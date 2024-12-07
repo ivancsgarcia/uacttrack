@@ -6,90 +6,160 @@ const isVPA = page.props.auth.isVPA;
 </script>
 
 <template>
-    <div class="sidebar">
-        <div class="sidebar-content">
-            <div class="image mb-4 p-4">
-                <img
-                    :src="'images/sys-logos/UActTrack-logo.png'"
-                    alt="uacttrack-logo"
-                />
-            </div>
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img
+                :src="'images/sys-logos/UActTrack-logo.png'"
+                alt="uacttrack-logo"
+            />
+        </div>
 
-            <div class="menu-items">
-                <Link :href="route('admin-dashboard')">
-                    <div
+        <nav>
+            <ul>
+                <li>
+                    <Link
+                        :href="route('admin-dashboard')"
                         :class="{
                             '!bg-ua-blue !text-white':
                                 $page.component === 'Admin/AdminDashboard',
                         }"
                         class="link"
                     >
-                        <p>Dashboard</p>
-                    </div>
-                </Link>
+                        Dashboard
+                    </Link>
+                </li>
 
-                <Link :href="route('admin-pending-apf')">
-                    <div
+                <li>
+                    <Link
+                        :href="route('admin-pending-apf')"
                         :class="{
                             '!bg-ua-blue !text-white':
                                 $page.component === 'Admin/AdminPendingAPF',
                         }"
                         class="link"
                     >
-                        <p>To Be Approved</p>
-                    </div>
-                </Link>
+                        To Be Approved
+                    </Link>
+                </li>
 
-                <Link :href="route('admin-approved-apf')">
-                    <div
+                <li>
+                    <Link
+                        :href="route('admin-approved-apf')"
                         :class="{
                             '!bg-ua-blue !text-white':
                                 $page.component === 'Admin/AdminApprovedAPF',
                         }"
                         class="link"
                     >
-                        <p>Approved APF</p>
-                    </div>
-                </Link>
+                        Approved APF
+                    </Link>
+                </li>
 
-                <Link :href="route('admin-rejected-apf')">
-                    <div
+                <li>
+                    <Link
+                        :href="route('admin-rejected-apf')"
                         :class="{
                             '!bg-ua-blue !text-white':
                                 $page.component === 'Admin/AdminRejectedAPF',
                         }"
                         class="link"
                     >
-                        <p>Rejected APF</p>
-                    </div>
-                </Link>
+                        Rejected APF
+                    </Link>
+                </li>
 
-                <Link v-if="isVPA" :href="route('admin-send-copy')">
-                    <div
+                <li>
+                    <Link
+                        v-if="isVPA"
+                        :href="route('admin-send-copy')"
                         :class="{
                             '!bg-ua-blue !text-white':
                                 $page.component === 'Admin/AdminSendCopy',
                         }"
                         class="link"
                     >
-                        <p>Send Copies</p>
-                    </div>
-                </Link>
-            </div>
+                        Send Copies
+                    </Link>
+                </li>
+            </ul>
+        </nav>
 
-            <div class="logout-section">
-                <Link :href="route('logout')" method="post">
-                    <div class="logout">
-                        <p>Log Out</p>
-                    </div>
-                </Link>
-            </div>
+        <div class="logout">
+            <Link
+                :href="route('logout')"
+                method="post"
+                as="button"
+                type="button"
+                class="w-full"
+            >
+                Log Out
+            </Link>
         </div>
-    </div>
+    </aside>
 </template>
 
 <style scoped>
 .sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 16rem;
+    height: calc(100% - 60px);
+    background-color: rgb(39 47 92 / 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.sidebar-logo img {
+    /* width: 100%; */
+    max-height: 80px;
+    margin: 20px auto;
+}
+
+.sidebar nav ul {
+    list-style: none;
+}
+
+.sidebar nav ul li {
+    margin: 10px 0;
+}
+
+.sidebar nav ul li .link {
+    text-decoration: none;
+    font-size: 1.25rem;
+    /* background-color: #d9d9d9; */
+    color: #272f5c;
+    display: block;
+    padding: 12px;
+    transition: background 0.3s;
+}
+
+.sidebar nav ul li .link:hover {
+    background-color: rgba(39, 47, 92, 0.6);
+    color: #fff;
+}
+
+.logout {
+    margin-top: auto;
+}
+
+.logout button {
+    width: 100%;
+    padding: 10px;
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.logout button:hover {
+    background-color: #c0392b;
+}
+
+/* .sidebar {
     height: 100%;
     width: 16rem;
     position: fixed;
@@ -134,5 +204,5 @@ const isVPA = page.props.auth.isVPA;
 
 .logout:hover {
     background-color: #c41e3a;
-}
+} */
 </style>
