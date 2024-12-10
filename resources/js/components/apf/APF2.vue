@@ -1,7 +1,6 @@
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { ref } from "vue";
 import { attrs, disabledDates } from "../apf/dateAttributes";
-import MyDatePicker from "../global/MyDatePicker.vue";
 
 // Props received from parent
 const props = defineProps({
@@ -10,29 +9,9 @@ const props = defineProps({
     approvedForms: Object,
 });
 
-// Ensure the date is formatted correctly upon initialization
-onMounted(() => {
-    if (props.form.date) {
-        props.form.date = new Date(props.form.date).toISOString().split("T")[0];
-    }
+const masks = ref({
+  modelValue: 'YYYY-MM-DD',
 });
-
-// Venue Recommendation Logic
-const venueRecommendation = () => {
-    if (!props.form.attendance_count || props.form.attendance_count <= 0) {
-        props.form.errors.attendance_count =
-            "Please enter a valid attendance count.";
-        return;
-    }
-
-    const recommendedVenue = props.venues.find(
-        (venue) => venue.capacity >= props.form.attendance_count
-    );
-
-    if (recommendedVenue) {
-        props.form.venue = recommendedVenue.name;
-    }
-};
 </script>
 
 <template>
@@ -48,6 +27,7 @@ const venueRecommendation = () => {
                         v-model="form.date"
                         :attributes="attrs"
                         :disabled-dates="disabledDates"
+                        :masks="masks"
                         mode="date"
                         expanded
                     />

@@ -1,6 +1,5 @@
-import { ref } from "vue";
 
-export const attrs = ref([
+export const attrs = [
     { key: "today", highlight: true, dates: new Date() },
     {
         highlight: {
@@ -303,9 +302,9 @@ export const attrs = ref([
             label: "3rd Semester Final Exams (Graduating Students)",
         },
     },
-]);
+];
 
-export const disabledDates = ref([
+export const disabledDates = [
     {
         start: new Date(),
         end: new Date(new Date().setDate(new Date().getDate() + 7)),
@@ -341,4 +340,4 @@ export const disabledDates = ref([
     { start: new Date(2025, 5, 6), end: new Date(2025, 5, 6) },
     { start: new Date(2025, 5, 12), end: new Date(2025, 5, 12) },
     { start: new Date(2025, 5, 15), end: new Date(2025, 5, 15) },
-]);
+];
