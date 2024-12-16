@@ -48,6 +48,7 @@ Route::middleware("auth")->group(function () {
 
     Route::get('/activity-form-pdf/{activityId}', [ActivityFormPDFController::class, 'generatePDF'])->name('activity-form-pdf');
 
+    Route::get('/api/events', [ActivityFormController::class, 'fetchEvents']);
 
     Route::middleware(['admin'])->group(function () {
         Route::get('/admin-dashboard', [AdminController::class, 'dashboard'])->name('admin-dashboard');
@@ -58,10 +59,10 @@ Route::middleware("auth")->group(function () {
         Route::get('/admin-rejected-apf', [AdminController::class, 'getRejected'])->name('admin-rejected-apf');
     });
 
-    Route::middleware(['vpa'])->group(function () {
-        Route::get('/admin-send-copy', [AdminController::class, 'copyReceiveBy'])->name('admin-send-copy');
-        Route::post('/activity-forms/{activityId}/update', [AdminController::class, 'sendCopy']);
-    });
+        Route::middleware(['vpa'])->group(function () {
+            Route::get('/admin-send-copy', [AdminController::class, 'copyReceiveBy'])->name('admin-send-copy');
+            Route::post('/activity-forms/{activityId}/update', [AdminController::class, 'sendCopy']);
+        }); 
 
     Route::get('/download/{file}', [FileController::class, 'download'])->name('file.download');
 

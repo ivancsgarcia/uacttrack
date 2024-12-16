@@ -22,9 +22,8 @@ return new class extends Migration
             $table->boolean('reproduction');
             $table->boolean('others');
 
-            $table->date('date');
-            $table->time('from_time');
-            $table->time('to_time');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->integer('attendance_count');
             $table->string('event_type');
             $table->string('venue');

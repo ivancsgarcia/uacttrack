@@ -19,16 +19,27 @@ class ActivityFormController extends Controller
         $venues = Venue::orderBy('capacity')->get();
 
         $events = [
-            'Seminar',
-            'Meeting',
-            'Workshop',
-            'Symposium',
-            'Conference',
-            'Orientation',
-            'Training',
-            'Forum',
-            'Webinar',
-            'Others'
+            'Seminar/Workshop',
+            'Academic Competition',
+            'Research Presentations',
+            'Game Tournaments',
+            'Sports Festivals',
+            'Fun Runs/Walkathons',
+            'Esports Competitions',
+            'Outdoor Adventures',
+            'Cultural Festival',
+            'Talent Show',
+            'Art Exhibitions',
+            'Film Screening and Discussion',
+            'Theater Performances',
+            'Outreach Programs',
+            'Fundraising Events',
+            'School Anniversary/Foundation Day',
+            'Recognition Ceremonies',
+            'Welcome and Farewell Parties',
+            'Alumni Homecoming',
+            'Job Fairs',
+            'Internship and Career Placement Workshops',
         ];
 
         $imageFiles = [];
@@ -63,9 +74,8 @@ class ActivityFormController extends Controller
             'reproduction' => 'required|boolean',
             'others' => 'required|boolean',
 
-            'date' => 'required|date',
-            'from_time' => 'required|date',
-            'to_time' => 'required|date',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
             'attendance_count' => 'required|integer|numeric|min:1|max:5000',
             'event_type' => 'required|string',
             'venue' => 'required|max:255',
@@ -92,30 +102,24 @@ class ActivityFormController extends Controller
             'others_specify' => 'required|boolean',
         ]);
 
-        $data['date'] = Carbon::parse($request->date)->format('Y-m-d');
-        $data['from_time'] = Carbon::parse($request->from_time)->format('h:i');
-        $data['to_time'] = Carbon::parse($request->to_time)->format('h:i');
+        $data['start_date'] = Carbon::parse($request->start_date);
+        $data['end_date'] = Carbon::parse($request->end_date);
 
         $data['created_by'] = Auth::id();
 
         if ($request->hasFile('payment_or_cash_file')) {
-            // $data['payment_or_cash_file'] = $request->file('payment_or_cash_file')->store('public/paymentOrCashFiles');
             $data['food_file'] = $request->file('food_file')->store('paymentOrCashFiles', 'public');
         }
         if ($request->hasFile('food_file')) {
-            // $data['food_file'] = $request->file('food_file')->store('public/foodFiles');
             $data['food_file'] = $request->file('food_file')->store('foodFiles', 'public');
         }
         if ($request->hasFile('supplies_file')) {
-            // $data['supplies_file'] = $request->file('supplies_file')->store('public/suppliesFiles');
             $data['food_file'] = $request->file('food_file')->store('suppliesFiles', 'public');
         }
         if ($request->hasFile('reproduction_file')) {
-            // $data['reproduction_file'] = $request->file('reproduction_file')->store('public/reproductionFiles');
             $data['food_file'] = $request->file('food_file')->store('reproductionFiles', 'public');
         }
         if ($request->hasFile('others_file')) {
-            // $data['others_file'] = $request->file('others_file')->store('public/othersFiles');
             $data['food_file'] = $request->file('food_file')->store('othersFiles', 'public');
         }
 
@@ -202,5 +206,11 @@ class ActivityFormController extends Controller
         return Inertia::render('RejectedAPF', [
             'rejectedForms' => $rejectedForms
         ]);
+    }
+
+    public function fetchEvents() {
+        $events = ActivityForm::where('status', 'APPROVED')->get(['title', 'start_date', 'end_date']);
+
+        return response()->json($events);
     }
 }

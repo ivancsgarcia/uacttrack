@@ -3,11 +3,11 @@ const props = defineProps({
     form: Object,
 });
 
-const emit = defineEmits(["nextStep"]);
+// const emit = defineEmits(["nextStep"]);
 </script>
 
 <template>
-    <div class="p-4 text-xl">
+    <div class="w-3/4 p-4 text-xl">
         <div class="flex justify-center items-center gap-4 mb-4">
             <p class="w-2/4 p-2 text-center text-ua-blue">
                 Identify the funding requirements for your activity.

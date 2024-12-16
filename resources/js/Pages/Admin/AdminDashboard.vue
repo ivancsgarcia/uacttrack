@@ -1,7 +1,6 @@
 <script setup>
 import AdminLayout from "../../Layouts/AdminLayout.vue";
 import { ref } from "vue";
-import MyCalendar from "../../components/global/MyCalendar.vue";
 
 defineOptions({ layout: AdminLayout });
 
@@ -19,7 +18,6 @@ const copyReceive = ref(false);
 
 <template>
     <h2>UA Academic Calendar and School Events</h2>
-    <MyCalendar :activityForms="props.activityForms" />
 
     <div class="vertical-line"></div>
 

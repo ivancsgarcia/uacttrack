@@ -1,57 +1,53 @@
 <script setup>
-import { ref } from "vue";
-import { attrs, disabledDates } from "../apf/dateAttributes";
+import { ref, watch } from "vue";
+import InputText from "primevue/inputtext";
+import InputNumber from "primevue/inputnumber";
+import Select from "primevue/select";
+import Textarea from "primevue/textarea";
+import Button from "primevue/button";
+import DatePicker from "../global/DatePicker.vue";
 
-// Props received from parent
 const props = defineProps({
     form: Object,
+    events: Array,
     venues: Array,
     approvedForms: Object,
 });
+const emit = defineEmits(["updateForm"]);
 
-const masks = ref({
-  modelValue: 'YYYY-MM-DD',
+const date = ref("");
+
+watch(date, (newDate) => {
+    if (Array.isArray(newDate) && newDate.length === 2) {
+        emit("updateForm", {
+            start_date: new Date(newDate[0])
+                .toISOString()
+                .slice(0, 19)
+                .replace("T", " "),
+            end_date: new Date(newDate[1])
+                .toISOString()
+                .slice(0, 19)
+                .replace("T", " "),
+        });
+    } else {
+        emit("updateForm", { start_date: "", end_date: "" });
+    }
 });
 </script>
 
 <template>
-    <div class="py-4">
+    <div class="w-3/4 py-4">
         <div class="flex gap-4">
             <div class="w-2/4 space-y-2">
                 <!-- Date Picker Component -->
+                <DatePicker v-model="date" />
                 <div class="flex flex-col">
-                    <label for="date" class="text-ua-blue text-2xl"
-                        >* Date</label
-                    >
-                    <VDatePicker
-                        v-model="form.date"
-                        :attributes="attrs"
-                        :disabled-dates="disabledDates"
-                        :masks="masks"
-                        mode="date"
-                        expanded
-                    />
+                    <label>Start Date:</label>
+                    <InputText type="text" v-model="form.start_date" />
                 </div>
-
-                <!-- Additional Fields (From Time, To Time) -->
                 <div class="flex flex-col">
-                    <label class="text-ua-blue text-2xl">* From Time</label>
-                    <VDatePicker
-                        v-model="form.from_time"
-                        mode="time"
-                        hide-time-header
-                    />
-                </div>
-
-                <div class="flex flex-col">
-                    <label for="to-time" class="text-ua-blue text-2xl"
-                        >* To Time</label
-                    >
-                    <VDatePicker
-                        v-model="form.to_time"
-                        mode="time"
-                        hide-time-header
-                    />
+                    <label>End Date:</label>
+                    <InputText type="text" v-model="form.end_date" />
                 </div>
             </div>
 
@@ -59,15 +55,9 @@ const masks = ref({
             <div class="w-2/4 space-y-2">
                 <div class="flex flex-col">
                     <label class="text-ua-blue text-2xl"
-                        >* Number of Attendees</label
+                        >Number of Attendees</label
                     >
-                    <input
-                        type="number"
-                        v-model="form.attendance_count"
-                        min="0"
-                        max="5000"
-                        class="rounded-xl shadow bg-ua-blue/30 p-2"
-                    />
+                    <InputNumber v-model="form.attendance_count" />
                     <span
                         v-if="form.errors.attendance_count"
                         class="text-red-500"
@@ -78,13 +68,13 @@ const masks = ref({
 
                 <div class="flex flex-col">
                     <label for="event" class="text-ua-blue text-2xl"
-                        >* Type of Event</label
+                        >Type of Event</label
                     >
-                    <input
-                        type="text"
-                        id="event"
+                    <Select
                         v-model="form.event_type"
-                        class="rounded-xl shadow bg-ua-blue/30 p-2"
+                        editable
+                        :options="events"
+                        placeholder="Select an Event"
                     />
                 </div>
             </div>
@@ -92,31 +82,18 @@ const masks = ref({
 
         <!-- Venue Recommendation Button -->
         <div class="flex justify-center mb-4">
-            <button
-                @click="venueRecommendation"
-                class="text-center bg-ua-blue text-white text-xl rounded-xl shadow py-2 px-4 hover:bg-ua-blue/80"
-            >
-                Recommend a Venue
-            </button>
+            <Button label="Recommend a Venue" />
         </div>
 
         <!-- Venue and Requirements fields -->
         <div class="flex gap-4">
             <div class="flex flex-col w-2/4">
-                <label for="venue" class="text-ua-blue text-2xl">* Venue</label>
-                <select
+                <label for="venue" class="text-ua-blue text-2xl">Venue</label>
+                <Select
                     v-model="form.venue"
-                    class="rounded-xl shadow bg-ua-blue/30 p-2"
-                >
-                    <option value="" selected disabled>Pick A Venue</option>
-                    <option
-                        v-for="venue in venues"
-                        :key="venue.id"
-                        :value="venue.name"
-                    >
-                        {{ venue.name }}
-                    </option>
-                </select>
+                    :options="venues.map((venue) => venue.name)"
+                    placeholder="Select a venue"
+                />
                 <span v-if="form.errors.venue" class="text-red-500">
                     {{ form.errors.venue }}
                 </span>
@@ -124,14 +101,13 @@ const masks = ref({
 
             <div class="flex flex-col w-2/4">
                 <label for="reqs" class="text-ua-blue text-2xl"
-                    >* Requirements / Resources Needed</label
+                    >Requirements / Resources Needed</label
                 >
-                <textarea
-                    name="reqs"
-                    id="reqs"
+                <Textarea
                     v-model="form.requirements_or_resources_needed"
-                    class="rounded-xl shadow bg-ua-blue/30 p-2"
-                ></textarea>
+                    rows="5"
+                    cols="30"
+                />
             </div>
         </div>
     </div>

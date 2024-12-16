@@ -71,8 +71,8 @@ const downloadFile = (id) => {
         <div class="w-2/4 flex flex-col">
             <label class="text-2xl">Date</label>
             <input
-                type="date"
-                v-model="activityForms.date"
+                type="text"
+                v-model="activityForms.start_date"
                 disabled
                 class="rounded-xl shadow text-lg bg-ua-blue/30 py-4 px-2"
             />

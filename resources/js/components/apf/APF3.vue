@@ -1,4 +1,8 @@
 <script setup>
+import InputText from "primevue/inputtext";
+import Select from "primevue/select";
+import Textarea from "primevue/textarea";
+
 const props = defineProps({
     form: Object,
     venues: Array,
@@ -13,7 +17,7 @@ const handleFileUpload = (event, fieldName) => {
 </script>
 
 <template>
-    <div class="p-4">
+    <div class="w-3/4 p-4">
         <h1 class="text-3xl text-center mb-8">Activity Proposal Form</h1>
         <p class="m-auto text-md">
             (Approval Form for In-Campus Activities with corresponding Logistics
@@ -27,12 +31,8 @@ const handleFileUpload = (event, fieldName) => {
         </p>
 
         <div class="flex flex-col mb-4">
-            <label class="text-2xl">* Activity Title</label>
-            <input
-                type="text"
-                v-model="form.title"
-                class="rounded-xl shadow bg-ua-blue/30 p-2"
-            />
+            <label class="text-2xl">Activity Title</label>
+            <InputText type="text" v-model="form.title" />
             <span v-if="form.errors.title" class="text-red-500">
                 * {{ form.errors.title }}
             </span>
@@ -40,22 +40,21 @@ const handleFileUpload = (event, fieldName) => {
 
         <div class="flex flex-row gap-4 mb-4">
             <div class="flex flex-col w-2/4">
-                <label class="text-2xl">* Type of Event</label>
-                <input
-                    type="text"
+                <label class="text-2xl">Type of Event</label>
+                <Select
                     v-model="form.event_type"
-                    class="rounded-xl shadow bg-ua-blue/30 p-2"
+                    editable
+                    :options="events"
+                    placeholder="Select an Event"
+                    disabled
                 />
                 <span v-if="form.errors.event_type" class="text-red-500">
                     * {{ form.errors.event_type }}
                 </span>
             </div>
             <div class="flex flex-col w-2/4">
-                <label class="text-2xl">* Activity Description</label>
-                <textarea
-                    v-model="form.description"
-                    class="rounded-xl shadow bg-ua-blue/30 p-2"
-                ></textarea>
+                <label class="text-2xl">Activity Description</label>
+                <Textarea v-model="form.description" rows="5" cols="30" />
                 <span v-if="form.errors.description" class="text-red-500">
                     * {{ form.errors.description }}
                 </span>
@@ -63,70 +62,33 @@ const handleFileUpload = (event, fieldName) => {
         </div>
 
         <div class="flex mx-auto gap-4 mb-4">
-            <div class="flex flex-col w-2/4">
-                <label class="text-2xl">* Date</label>
-                <MyDatePicker :form="form" />
-                <!-- <input
-                    type="date"
-                    v-model="form.date"
-                    class="rounded-xl shadow bg-ua-blue/30 p-2"
-                /> -->
-                <span v-if="form.errors.date" class="text-red-500">
-                    * {{ form.errors.date }}
-                </span>
-            </div>
-
             <div class="flex flex-col w-2/4 justify-center gap-8">
                 <div class="flex flex-col">
-                    <label class="text-2xl">* From Time</label>
-                    <VDatePicker
-                        v-model="form.from_time"
-                        mode="time"
-                        hide-time-header
-                    />
-                    <!-- <input
-                    type="time"
-                    v-model="form.from_time"
-                    class="rounded-xl shadow bg-ua-blue/30 p-2"
-                /> -->
-                    <span v-if="form.errors.from_time" class="text-red-500">
-                        * {{ form.errors.from_time }}
+                    <label class="text-2xl">Start Date</label>
+                    
+                    <span v-if="form.errors.start_date" class="text-red-500">
+                        * {{ form.errors.start_date }}
                     </span>
                 </div>
 
                 <div class="flex flex-col">
-                    <label class="text-2xl">* To Time</label>
-                    <VDatePicker
-                        v-model="form.to_time"
-                        mode="time"
-                        hide-time-header
-                    />
-                    <!-- <input
-                    type="time"
-                    v-model="form.to_time"
-                    class="rounded-xl shadow bg-ua-blue/30 p-2"
-                /> -->
-                    <span v-if="form.errors.to_time" class="text-red-500">
-                        * {{ form.errors.to_time }}
+                    <label class="text-2xl">End Date</label>
+                    
+                    <span v-if="form.errors.end_date" class="text-red-500">
+                        * {{ form.errors.end_date }}
                     </span>
                 </div>
             </div>
         </div>
 
         <div class="flex flex-col mx-auto mb-4">
-            <label class="text-2xl">* Venue</label>
-            <select
+            <label class="text-2xl">Venue</label>
+            <Select
                 v-model="form.venue"
-                class="rounded-xl shadow bg-ua-blue/30 p-2"
-            >
-                <option
-                    v-for="venue in venues"
-                    :key="venue.id"
-                    :value="venue.name"
-                >
-                    {{ venue.name }}
-                </option>
-            </select>
+                :options="venues.map((venue) => venue.name)"
+                placeholder="Select a venue"
+                disabled
+            />
             <span v-if="form.errors.venue" class="text-red-500">
                 * {{ form.errors.venue }}
             </span>
@@ -134,13 +96,13 @@ const handleFileUpload = (event, fieldName) => {
 
         <div class="flex gap-4">
             <div class="flex flex-col w-2/4">
-                <label class="text-2xl"
-                    >* Requirements / Resources Needed</label
-                >
-                <textarea
+                <label class="text-2xl">Requirements / Resources Needed</label>
+                <Textarea
                     v-model="form.requirements_or_resources_needed"
-                    class="rounded-xl shadow bg-ua-blue/30 p-2"
-                ></textarea>
+                    disabled
+                    rows="5"
+                    cols="30"
+                />
                 <span
                     v-if="form.errors.requirements_or_resources_needed"
                     class="text-red-500"
@@ -151,29 +113,17 @@ const handleFileUpload = (event, fieldName) => {
             <div class="w-2/4">
                 <div class="flex flex-col mb-4">
                     <label class="text-2xl"
-                        >* Participants - Department / Program / Grade or Year
+                        >Participants - Department / Program / Grade or Year
                         Level</label
                     >
-                    <input
-                        type="text"
-                        v-model="form.participant"
-                        class="rounded-xl shadow bg-ua-blue/30 p-2"
-                    />
+                    <InputText type="text" v-model="form.participant" />
                     <span v-if="form.errors.participant" class="text-red-500">
                         * {{ form.errors.participant }}
                     </span>
                 </div>
                 <div class="flex flex-col">
-                    <label class="text-2xl"
-                        >* Expected Number of Attendees</label
-                    >
-                    <input
-                        type="number"
-                        v-model="form.attendance_count"
-                        min="0"
-                        max="5000"
-                        class="rounded-xl shadow bg-ua-blue/30 p-2"
-                    />
+                    <label class="text-2xl">Expected Number of Attendees</label>
+                    <InputNumber v-model="form.attendance_count" disabled />
                     <span
                         v-if="form.errors.attendance_count"
                         class="text-red-500"

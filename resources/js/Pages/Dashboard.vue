@@ -1,8 +1,9 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import { ref } from "vue";
-import MyCalendar from "../components/global/MyCalendar.vue";
 import Layout from "../Layouts/Layout.vue";
+import FullCalendar from "../components/global/FullCalendar.vue";
+import CalendarListView from "../components/global/CalendarListView.vue";
 
 defineOptions({ layout: Layout });
 
@@ -30,7 +31,14 @@ const toggle = (event) => {
 <template>
     <Head title=" | Home" />
     <h2>UA Academic Calendar and School Events</h2>
-    <MyCalendar :activityForms="props.activityForms" />
+    <div class="flex gap-4 border">
+        <div class="w-2/6">
+            <CalendarListView />
+        </div>
+        <div class="w-4/6">
+            <FullCalendar />
+        </div>
+    </div>
 
     <div class="box-div">
         <Link :href="route('submitted-apf')">

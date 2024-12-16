@@ -15,7 +15,7 @@
 }
 
 .p-select:not(.p-disabled).p-focus {
-    @apply border-primary
+    @apply border-ua-blue
 }
 
 .p-select.p-variant-filled {

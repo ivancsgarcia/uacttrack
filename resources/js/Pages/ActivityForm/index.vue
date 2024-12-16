@@ -17,6 +17,7 @@ import { useToast } from "primevue/usetoast";
 defineOptions({ layout: HeaderLayout });
 
 const props = defineProps({
+    events: Array,
     venues: Array,
     images: Array,
     approvedForms: Object,
@@ -28,12 +29,11 @@ const form = useForm({
     supplies: false,
     reproduction: false,
     others: false,
-    date: null,
-    from_time: null,
-    to_time: null,
+    start_date: null,
+    end_date: null,
     attendance_count: 0,
     event_type: null,
-    venue: '',
+    venue: "",
     requirements_or_resources_needed: null,
     title: null,
     description: null,
@@ -54,6 +54,11 @@ const form = useForm({
     soundSystem: false,
     others_specify: false,
 });
+
+
+function updateForm(newValues) {
+  Object.assign(form, newValues);
+}
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -125,60 +130,6 @@ const openForms = () => {
             });
         },
     });
-};
-
-const isFormValid = () => {
-    const isBooleanValid = [
-        form.check_payment_or_cash,
-        form.food,
-        form.supplies,
-        form.reproduction,
-        form.others,
-    ].every((val) => typeof val === "boolean");
-
-    const isDateValid = [form.date, form.from_time, form.to_time].every(
-        (val) => val instanceof Date && !isNaN(val.getTime())
-    );
-
-    const isAttendanceCountValid =
-        form.attendance_count >= 1 &&
-        form.attendance_count <= 5000 &&
-        Number.isInteger(form.attendance_count);
-
-    const isStringValid = [
-        form.event_type,
-        form.venue,
-        form.requirements_or_resources_needed,
-        form.title,
-        form.description,
-        form.participant,
-    ].every((val) => typeof val === "string" && val.trim() !== "");
-
-    const isFileValid =
-        (form.payment_or_cash_file
-            ? validateFile(form.payment_or_cash_file)
-            : true) &&
-        (form.food_file ? validateFile(form.food_file) : true) &&
-        (form.supplies_file ? validateFile(form.supplies_file) : true) &&
-        (form.reproduction_file
-            ? validateFile(form.reproduction_file)
-            : true) &&
-        (form.others_file ? validateFile(form.others_file) : true);
-
-    return (
-        isBooleanValid &&
-        isDateValid &&
-        isAttendanceCountValid &&
-        isStringValid &&
-        isFileValid
-    );
-};
-
-const validateFile = (file) => {
-    const allowedTypes = ["application/pdf", "image/jpeg", "image/png"];
-    const maxSize = 2 * 1024 * 1024; // 2MB
-
-    return allowedTypes.includes(file.type) && file.size <= maxSize;
 };
 
 const submit = async () => {
@@ -337,8 +288,10 @@ const submitForm = async () => {
                         >
                             <APF2
                                 :form="form"
+                                @updateForm="updateForm"
                                 @nextStep="nextStep"
                                 @previousStep="previousStep"
+                                :events="props.events"
                                 :venues="props.venues"
                                 :approvedForms="props.approvedForms"
                             />

@@ -19,9 +19,8 @@ class ActivityForm extends Model
         'reproduction',
         'others',
 
-        'date',
-        'from_time',
-        'to_time',
+        'start_date',
+        'end_date',
         'attendance_count',
         'event_type',
         'venue',

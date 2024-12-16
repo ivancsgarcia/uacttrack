@@ -8,7 +8,6 @@ import UAHeader from "../js/components/global/UAheader.vue";
 import Modal from "../js/components/global/Modal.vue";
 import PaginationLinks from "./components/global/PaginationLinks.vue";
 import SystemSideMenu from "./components/global/SystemSideMenu.vue";
-import MyDatePicker from "./components/global/MyDatePicker.vue";
 
 import Button from "primevue/button";
 import ToggleSwitch from "primevue/toggleswitch";
@@ -25,6 +24,9 @@ import Image from "primevue/image";
 import "primeicons/primeicons.css";
 import VCalendar from "v-calendar";
 import "v-calendar/style.css";
+
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -88,7 +90,8 @@ createInertiaApp({
             .component("Image", Image)
             .component("Divider", Divider)
             .component("AdminSideMenu", AdminSideMenu)
-            .component("MyDatePicker", MyDatePicker)
+            .component("VueDatePicker", VueDatePicker)
+
             .mount(el);
     },
 });
