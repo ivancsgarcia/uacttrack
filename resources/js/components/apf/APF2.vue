@@ -1,114 +1,209 @@
 <script setup>
-import { ref, watch } from "vue";
-import InputText from "primevue/inputtext";
-import InputNumber from "primevue/inputnumber";
-import Select from "primevue/select";
-import Textarea from "primevue/textarea";
-import Button from "primevue/button";
-import DatePicker from "../global/DatePicker.vue";
+import { watch } from 'vue';
 
 const props = defineProps({
     form: Object,
-    events: Array,
-    venues: Array,
-    approvedForms: Object,
 });
-const emit = defineEmits(["updateForm"]);
 
-const date = ref("");
-
-watch(date, (newDate) => {
-    if (Array.isArray(newDate) && newDate.length === 2) {
-        emit("updateForm", {
-            start_date: new Date(newDate[0])
-                .toISOString()
-                .slice(0, 19)
-                .replace("T", " "),
-            end_date: new Date(newDate[1])
-                .toISOString()
-                .slice(0, 19)
-                .replace("T", " "),
-        });
-    } else {
-        emit("updateForm", { start_date: "", end_date: "" });
+const handleFileUpload = (event, fieldName) => {
+    const file = event.target.files[0];
+    if (file) {
+        props.form[fieldName] = file;
     }
-});
+};
 </script>
 
 <template>
-    <div class="w-3/4 py-4">
-        <div class="flex gap-4">
-            <div class="w-2/4 space-y-2">
-                <!-- Date Picker Component -->
-                <DatePicker v-model="date" />
-                <div class="flex flex-col">
-                    <label>Start Date:</label>
-                    <InputText type="text" v-model="form.start_date" />
-                </div>
-                <div class="flex flex-col">
-                    <label>End Date:</label>
-                    <InputText type="text" v-model="form.end_date" />
-                </div>
-            </div>
-
-            <!-- Right side fields (Attendees, Event Type, etc.) -->
-            <div class="w-2/4 space-y-2">
-                <div class="flex flex-col">
-                    <label class="text-ua-blue text-2xl"
-                        >Number of Attendees</label
-                    >
-                    <InputNumber v-model="form.attendance_count" />
-                    <span
-                        v-if="form.errors.attendance_count"
-                        class="text-red-500"
-                    >
-                        {{ form.errors.attendance_count }}
-                    </span>
-                </div>
-
-                <div class="flex flex-col">
-                    <label for="event" class="text-ua-blue text-2xl"
-                        >Type of Event</label
-                    >
-                    <Select
-                        v-model="form.event_type"
-                        editable
-                        :options="events"
-                        placeholder="Select an Event"
-                    />
-                </div>
+    <div class="w-3/4 py-8 text-xl">
+        <div class="flex justify-center items-center gap-4 mb-4">
+            <p class="w-2/4 p-2 text-center text-ua-blue">
+                Identify the funding requirements for your activity.
+            </p>
+            <div class="w-1/4 bg-ua-blue p-4 text-center text-white">
+                Yes or No
             </div>
         </div>
 
-        <!-- Venue Recommendation Button -->
-        <div class="flex justify-center mb-4">
-            <Button label="Recommend a Venue" />
+        <!-- Check Payment / Cash -->
+        <div class="flex justify-center text-center mb-2 gap-4">
+            <div class="w-2/4 bg-slate-200 shadow-md p-2">
+                Check Payment / Cash
+            </div>
+            <div class="w-1/4 bg-ua-blue shadow-md p-2">
+                <ToggleSwitch
+                    v-model="form.check_payment_or_cash"
+                    :pt="{
+                        slider: {
+                            class: {
+                                '!bg-ua-yellow': form.check_payment_or_cash,
+                            },
+                        },
+                    }"
+                />
+            </div>
         </div>
-
-        <!-- Venue and Requirements fields -->
-        <div class="flex gap-4">
-            <div class="flex flex-col w-2/4">
-                <label for="venue" class="text-ua-blue text-2xl">Venue</label>
-                <Select
-                    v-model="form.venue"
-                    :options="venues.map((venue) => venue.name)"
-                    placeholder="Select a venue"
-                />
-                <span v-if="form.errors.venue" class="text-red-500">
-                    {{ form.errors.venue }}
-                </span>
-            </div>
-
-            <div class="flex flex-col w-2/4">
-                <label for="reqs" class="text-ua-blue text-2xl"
-                    >Requirements / Resources Needed</label
-                >
-                <Textarea
-                    v-model="form.requirements_or_resources_needed"
-                    rows="5"
-                    cols="30"
+        <div
+            v-show="form.check_payment_or_cash"
+            class="w-3/4 mx-auto bg-ua-blue/30 rounded-md mb-4"
+        >
+            <p class="text-ua-blue text-center">
+                Funding Request Form (FRF) for P1,000 and above or Petty Cash
+                Form (PCF ) for amount below P1,000.
+            </p>
+            <div class="flex justify-center">
+                <input
+                    :disabled="form.check_payment_or_cash !== true"
+                    type="file"
+                    @change="handleFileUpload($event, 'payment_or_cash_file')"
+                    class="text-ua-blue"
                 />
             </div>
+        </div>
+        <span v-if="form.errors.payment_or_cash_file" class="text-red-500">
+            * {{ form.errors.payment_or_cash_file }}
+        </span>
+
+        <!-- Food -->
+        <div class="flex justify-center text-center mb-2 gap-4">
+            <div class="w-2/4 bg-slate-200 shadow-md p-2">Food</div>
+            <div class="w-1/4 bg-ua-blue shadow-md p-2">
+                <ToggleSwitch
+                    v-model="form.food"
+                    :pt="{
+                        slider: {
+                            class: {
+                                '!bg-ua-yellow': form.food,
+                            },
+                        },
+                    }"
+                />
+            </div>
+        </div>
+        <div
+            v-show="form.food"
+            class="w-3/4 mx-auto bg-ua-blue/30 rounded-md mb-4"
+        >
+            <p class="text-ua-blue text-center">Request for Meals (RFM)</p>
+            <div class="flex justify-center">
+                <input
+                    :disabled="form.food !== true"
+                    type="file"
+                    @change="handleFileUpload($event, 'food_file')"
+                    class="text-ua-blue"
+                />
+            </div>
+        </div>
+        <span v-if="form.errors.food_file" class="text-red-500">
+            * {{ form.errors.food_file }}
+        </span>
+
+        <!-- Supplies -->
+        <div class="flex justify-center text-center mb-2 gap-4">
+            <div class="w-2/4 bg-slate-200 shadow-md p-2">Supplies</div>
+            <div class="w-1/4 bg-ua-blue shadow-md p-2">
+                <ToggleSwitch
+                    v-model="form.supplies"
+                    :pt="{
+                        slider: {
+                            class: {
+                                '!bg-ua-yellow': form.supplies,
+                            },
+                        },
+                    }"
+                />
+            </div>
+        </div>
+        <div v-show="form.supplies" class="w-3/4 mx-auto bg-ua-blue/30 rounded-md mb-4">
+            <p class="text-ua-blue text-center">
+                Requisition Form (RF) for supplies available at RMS or Purchase
+                Requisition (PR) for supplies to be purchased
+            </p>
+            <div class="flex justify-center">
+                <input
+                    :disabled="form.supplies !== true"
+                    type="file"
+                    @change="handleFileUpload($event, 'supplies_file')"
+                    class="text-ua-blue"
+                />
+            </div>
+        </div>
+        <span v-if="form.errors.supplies_file" class="text-red-500">
+            * {{ form.errors.supplies_file }}
+        </span>
+
+        <!-- Reproduction -->
+        <div class="flex justify-center text-center mb-2 gap-4">
+            <div class="w-2/4 bg-slate-200 shadow-md p-2">Reproduction</div>
+
+            <div class="w-1/4 bg-ua-blue shadow-md p-2">
+                <ToggleSwitch
+                    v-model="form.reproduction"
+                    :pt="{
+                        slider: {
+                            class: {
+                                '!bg-ua-yellow': form.reproduction,
+                            },
+                        },
+                    }"
+                />
+            </div>
+        </div>
+        <div
+            v-show="form.reproduction"
+            class="w-3/4 mx-auto bg-ua-blue/30 rounded-md mb-4"
+        >
+            <p class="text-ua-blue text-center">Reproduction Form</p>
+            <div class="flex justify-center">
+                <input
+                    :disabled="form.reproduction !== true"
+                    type="file"
+                    @change="handleFileUpload($event, 'reproduction_file')"
+                    class="text-ua-blue"
+                />
+            </div>
+        </div>
+        <span v-if="form.errors.reproduction_file" class="text-red-500">
+            * {{ form.errors.reproduction_file }}
+        </span>
+
+        <!-- Others -->
+        <div class="flex justify-center text-center mb-2 gap-4">
+            <div class="w-2/4 bg-slate-200 shadow-md p-2">Others</div>
+
+            <div class="w-1/4 bg-ua-blue shadow-md p-2">
+                <ToggleSwitch
+                    v-model="form.others"
+                    :pt="{
+                        slider: {
+                            class: {
+                                '!bg-ua-yellow': form.others,
+                            },
+                        },
+                    }"
+                />
+            </div>
+        </div>
+        <div v-show="form.others" class="w-3/4 mx-auto bg-ua-blue/30 rounded-md mb-4">
+            <p class="text-ua-blue text-center">If applicable:</p>
+            <div class="flex justify-center">
+                <input
+                    :disabled="form.others !== true"
+                    type="file"
+                    @change="handleFileUpload($event, 'others_file')"
+                    class="text-ua-blue"
+                />
+            </div>
+        </div>
+        <span v-if="form.errors.others_file" class="text-red-500">
+            * {{ form.errors.others_file }}
+        </span>
+
+        <div class="mx-14 mt-4">
+            <p class="text-base">
+                Please download and complete any additional forms required based
+                on the funding requirements you selected, and attach them at the
+                end of this form.
+            </p>
         </div>
     </div>
 </template>

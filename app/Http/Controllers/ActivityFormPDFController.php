@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Auth;
 
 class ActivityFormPDFController extends Controller
 {
-    public function generatePDF($activityId)
+    public function generatePDF($id)
     {
-        $activityForms = ActivityForm::with('creator')->where('id', $activityId)
+        $activityForms = ActivityForm::with('creator')->where('id', $id)
             ->firstOrFail();
 
         $organizationId = Auth::user()->organization_id;
@@ -55,6 +55,6 @@ class ActivityFormPDFController extends Controller
         ];
 
         $pdf = Pdf::loadView('activityForm', $data);
-        return $pdf->download('activity-form-' . $activityId . '.pdf');
+        return $pdf->download('activity-form-' . $id . '.pdf');
     }
 }

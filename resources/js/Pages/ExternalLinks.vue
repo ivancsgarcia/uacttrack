@@ -6,7 +6,7 @@ defineOptions({ layout: Layout });
 
 <template>
     <Head title=" | Links" />
-    <div class="box-div">
+    <div class="flex flex-wrap justify-center gap-4">
         <a href="https://www.ua.edu.ph" target="_blank">
             <Card class="w-72 h-72">
                 <template #content>
@@ -62,12 +62,5 @@ defineOptions({ layout: Layout });
     height: 0.125rem;
     background-color: #272f5c;
     margin-bottom: 3rem;
-}
-
-.box-div {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
 }
 </style>

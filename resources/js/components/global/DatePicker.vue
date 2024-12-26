@@ -1,12 +1,11 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 import { addDays } from "date-fns";
-import { exams, holidays, disabledDates } from '../apf/dateAttributes';
+import { exams, holidays, disabledDates } from "../apf/dateAttributes";
 
-const props = defineProps({date: String}); 
+const props = defineProps({ date: String });
 
-const markers =ref([...exams, ...holidays]);
-
+const markers = ref([...exams, ...holidays]);
 </script>
 
 <template>

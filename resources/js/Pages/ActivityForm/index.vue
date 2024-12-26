@@ -1,10 +1,11 @@
 <script setup>
 import HeaderLayout from "../../Layouts/HeaderLayout.vue";
 import { useForm } from "@inertiajs/vue3";
-import APF from "../../components/apf/APF.vue";
 import APF1 from "../../components/apf/APF1.vue";
 import APF2 from "../../components/apf/APF2.vue";
 import APF3 from "../../components/apf/APF3.vue";
+import APF4 from "../../components/apf/APF4.vue";
+import APF5 from "../../components/apf/APF5.vue";
 import Stepper from "primevue/stepper";
 import StepList from "primevue/steplist";
 import StepPanels from "primevue/steppanels";
@@ -16,9 +17,10 @@ import { useToast } from "primevue/usetoast";
 
 defineOptions({ layout: HeaderLayout });
 
-const props = defineProps({
+defineProps({
     events: Array,
     venues: Array,
+    participants: Array,
     images: Array,
     approvedForms: Object,
 });
@@ -33,7 +35,7 @@ const form = useForm({
     end_date: null,
     attendance_count: 0,
     event_type: null,
-    venue: "",
+    venue: null,
     requirements_or_resources_needed: null,
     title: null,
     description: null,
@@ -55,9 +57,8 @@ const form = useForm({
     others_specify: false,
 });
 
-
 function updateForm(newValues) {
-  Object.assign(form, newValues);
+    Object.assign(form, newValues);
 }
 
 const confirm = useConfirm();
@@ -220,13 +221,17 @@ const submitForm = async () => {
 
 <template>
     <Head title=" | Activity Form" />
+    <ConfirmDialog></ConfirmDialog>
+    <Toast />
+
     <form @submit.prevent>
         <Stepper value="1" linear>
             <StepList>
-                <Step value="1">Start </Step>
+                <Step value="1">Activity Proposal</Step>
                 <Step value="2">Projected Funding Needs</Step>
-                <Step value="3">Date and Venue Booking</Step>
-                <Step value="4">Activity Form</Step>
+                <Step value="3">Booking and Reservation Details</Step>
+                <Step value="4">Event Details</Step>
+                <Step value="5">Summary</Step>
             </StepList>
             <StepPanels>
                 <StepPanel v-slot="{ activateCallback }" value="1">
@@ -234,7 +239,7 @@ const submitForm = async () => {
                         <div
                             class="border-2 border-dashed border-surface-200 rounded bg-surface-50 flex-auto flex justify-center items-center font-medium"
                         >
-                            <APF :images="images" />
+                            <APF1 :images="images" />
                         </div>
                     </div>
                     <div class="flex pt-6 justify-between">
@@ -257,7 +262,7 @@ const submitForm = async () => {
                         <div
                             class="border-2 border-dashed border-surface-200 rounded bg-surface-50 flex-auto flex justify-center items-center font-medium"
                         >
-                            <APF1 :form="form" />
+                            <APF2 :form="form" />
                         </div>
                     </div>
                     <div class="flex pt-6 justify-between">
@@ -286,14 +291,15 @@ const submitForm = async () => {
                         <div
                             class="border-2 border-dashed border-surface-200 rounded bg-surface-50 flex-auto flex justify-center items-center font-medium"
                         >
-                            <APF2
+                            <APF3
                                 :form="form"
+                                :venues="venues"
+                                :approvedForms="approvedForms"
+                                :participants="participants"
                                 @updateForm="updateForm"
                                 @nextStep="nextStep"
                                 @previousStep="previousStep"
-                                :events="props.events"
-                                :venues="props.venues"
-                                :approvedForms="props.approvedForms"
+                                
                             />
                         </div>
                     </div>
@@ -317,11 +323,11 @@ const submitForm = async () => {
                         <div
                             class="border-2 border-dashed border-surface-200 rounded bg-surface-50 flex-auto flex justify-center items-center font-medium"
                         >
-                            <APF3
+                            <APF4
                                 :form="form"
+                                @nextStep="nextStep"
                                 @previousStep="previousStep"
-                                @submitForm="submitForm"
-                                :venues="props.venues"
+                                :events="events"
                             />
                         </div>
                     </div>
@@ -331,6 +337,32 @@ const submitForm = async () => {
                             severity="secondary"
                             icon="pi pi-arrow-left"
                             @click="activateCallback('3')"
+                        />
+                        <Button
+                            label="Next"
+                            icon="pi pi-arrow-right"
+                            iconPos="right"
+                            @click="activateCallback('5')"
+                        />
+                    </div>
+                </StepPanel>
+                <StepPanel v-slot="{ activateCallback }" value="5">
+                    <div class="flex flex-col">
+                        <div
+                            class="border-2 border-dashed border-surface-200 rounded bg-surface-50 flex-auto flex justify-center items-center font-medium"
+                        >
+                            <APF5
+                                :form="form"
+                                @previousStep="previousStep"
+                            />
+                        </div>
+                    </div>
+                    <div class="flex pt-6 justify-between">
+                        <Button
+                            label="Back"
+                            severity="secondary"
+                            icon="pi pi-arrow-left"
+                            @click="activateCallback('4')"
                         />
 
                         <Button
@@ -345,9 +377,6 @@ const submitForm = async () => {
             </StepPanels>
         </Stepper>
     </form>
-
-    <ConfirmDialog></ConfirmDialog>
-    <Toast />
 </template>
 
 <style scoped></style>

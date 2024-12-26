@@ -2,7 +2,7 @@
 
 .p-button {
     @apply inline-flex cursor-pointer select-none items-center justify-center overflow-hidden relative
-        bg-ua-blue enabled:hover:bg-ua-blue/80 enabled:active:bg-primary-emphasis-alt text-white
+        bg-ua-blue enabled:hover:bg-ua-blue/80 enabled:active:bg-ua-blue text-white
          enabled:hover:border-primary-emphasis enabled:active:border-primary-emphasis-alt
         focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-primary
         px-3 py-2 transition-colors duration-200 gap-2 rounded-md

@@ -1,393 +1,275 @@
 <script setup>
-import { useForm } from "@inertiajs/vue3";
-import APF from "../../components/apf/APF.vue";
-import APF1 from "../../components/apf/APF1.vue";
-import APF2 from "../../components/apf/APF2.vue";
-import APF3 from "../../components/apf/APF3.vue";
+import HeaderLayout from "../../Layouts/HeaderLayout.vue";
+import InputText from "primevue/inputtext";
+import InputNumber from "primevue/inputnumber";
+import Select from "primevue/select";
+import Textarea from "primevue/textarea";
+import Button from "primevue/button";
+import { useForm, router } from "@inertiajs/vue3";
 
-import Stepper from "primevue/stepper";
-import StepList from "primevue/steplist";
-import StepPanels from "primevue/steppanels";
-import StepItem from "primevue/stepitem";
-import Step from "primevue/step";
-import StepPanel from "primevue/steppanel";
-
-import { useConfirm } from "primevue/useconfirm";
-import { useToast } from "primevue/usetoast";
+defineOptions({ layout: HeaderLayout });
 
 const props = defineProps({
-    activityForms: Object,
-    logoPath: String,
-    venues: Object,
+    activity: Object,
+    events: Array,
+    venues: Array,
 });
 
 const form = useForm({
-    check_payment_or_cash: props.activityForms.check_payment_or_cash,
-    food: props.activityForms.food,
-    supplies: props.activityForms.supplies,
-    reproduction: props.activityForms.reproduction,
-    others: props.activityForms.others,
-    date: props.activityForms.date,
-    from_time: props.activityForms.from_time,
-    to_time: props.activityForms.to_time,
-    attendance_count: props.activityForms.attendance_count,
-    event_type: props.activityForms.event_type,
-    venue: props.activityForms.venue,
+    check_payment_or_cash: props.activity.check_payment_or_cash,
+    food: props.activity.food,
+    supplies: props.activity.supplies,
+    reproduction: props.activity.reproduction,
+    others: props.activity.others,
+    start_date: props.activity.start_date,
+    end_date: props.activity.end_date,
+    attendance_count: props.activity.attendance_count,
+    event_type: props.activity.event_type,
+    venue: props.activity.venue,
     requirements_or_resources_needed:
-        props.activityForms.requirements_or_resources_needed,
-    title: props.activityForms.title,
-    description: props.activityForms.description,
-    participant: props.activityForms.participant,
-    payment_or_cash_file: null,
-    food_file: null,
-    supplies_file: null,
-    reproduction_file: null,
-    others_file: null,
+        props.activity.requirements_or_resources_needed,
+    title: props.activity.title,
+    description: props.activity.description,
+    participant: props.activity.participant,
+    payment_or_cash_file: props.activity.payment_or_cash_file,
+    food_file: props.activity.food_file,
+    supplies_file: props.activity.supplies_file,
+    reproduction_file: props.activity.reproduction_file,
+    others_file: props.activity.others_file,
+    proponent: props.activity.proponent,
+    security: props.activity.security,
+    eamo: props.activity.eamo,
+    janitorial: props.activity.janitorial,
+    photoLab: props.activity.photoLab,
+    sports: props.activity.sports,
+    ppgs: props.activity.ppgs,
+    hotel: props.activity.hotel,
+    soundSystem: props.activity.soundSystem,
+    others_specify: props.activity.others_specify,
+    _method: "PUT",
 });
 
-const confirm = useConfirm();
-const toast = useToast();
-
-const cancel = () => {
-    confirm.require({
-        header: "Danger Zone",
-        icon: "pi pi-info-circle",
-        message: "Are you sure you want to exit from the form?",
-        rejectProps: {
-            label: "Cancel",
-            severity: "secondary",
-            outlined: true,
-        },
-        acceptProps: {
-            label: "Exit",
-            severity: "danger",
-        },
-        accept: () => {
-            window.location.href = route("home");
-            toast.add({
-                severity: "success",
-                summary: "Confirmed",
-                life: 3000,
-            });
-        },
-        reject: () => {
-            toast.add({
-                severity: "info",
-                summary: "Cancelled",
-                life: 3000,
-            });
-        },
-    });
+const cancel = (activityId) => {
+    router.get(route("activity-form.show", activityId));
 };
 
-const openForms = () => {
-    confirm.require({
-        header: "Download Forms",
-        icon: "pi pi-info-circle",
-        message:
-            "Are you sure you want to redirect to the Downloadable Forms Page?",
-        rejectProps: {
-            label: "No",
-            severity: "secondary",
-            outlined: true,
-        },
-        acceptProps: {
-            label: "Yes",
-            severity: "success",
-        },
-        accept: () => {
-            toast.add({
-                severity: "success",
-                summary: "Confirmed",
-                detail: "Going to the Downloadable Forms Page.",
-                life: 3000,
-            });
-            window.location.href = route("request-form");
-        },
-        reject: () => {
-            toast.add({
-                severity: "info",
-                summary: "Declined",
-                detail: "You cancelled.",
-                life: 3000,
-            });
-        },
-    });
-};
-
-const submit = () => {
-    try {
-        confirm.require({
-            message: "Are you sure you want to submit the Form?",
-            header: "Download Forms",
-            icon: "pi pi-info-circle",
-            rejectProps: {
-                label: "Cancel",
-                severity: "secondary",
-                outlined: true,
-            },
-            acceptProps: {
-                label: "Submit",
-                severity: "success",
-            },
-            accept: async () => {
-                try {
-                    await submitForm();
-                    toast.add({
-                        severity: "success",
-                        summary: "Confirmed",
-                        detail: "Form Created.",
-                        life: 3000,
-                    });
-                } catch (error) {
-                    console.error("Error submitting form:", error);
-                    toast.add({
-                        severity: "error",
-                        summary: "Error",
-                        detail: "Failed to create form. Please try again.",
-                        life: 3000,
-                    });
-                }
-            },
-            reject: () => {
-                toast.add({
-                    severity: "info",
-                    summary: "Cancelled",
-                    detail: "You cancelled.",
-                    life: 3000,
-                });
-            },
-        });
-    } catch (error) {
-        console.error("Error showing confirmation dialog:", error);
-        toast.add({
-            severity: "error",
-            summary: "Error",
-            detail: "Something went wrong. Please try again.",
-            life: 3000,
-        });
-    }
-};
-
-const submitForm = async () => {
-    form.processing = true;
-    try {
-        const response = await form.post(route("activity-form"));
-        return response;
-    } catch (error) {
-        console.error("Form submission error:", error);
-        throw error;
-    } finally {
-        form.processing = false;
-    }
+const updateForm = (activityId) => {
+    form.post(route("activity-form.update", activityId));
 };
 </script>
-<!-- @submit.prevent="submitForm" -->
+
 <template>
-    <div class="app">
-        <UAHeader />
+    <Head title=" | Activity Proposal Form" />
+    <div class="w-5/6 m-auto">
+        <form @submit.prevent="updateForm(activity.id)">
+            <h1 class="text-3xl text-center my-8">Activity Proposal Form</h1>
+            <p>
+                (Approval Form for In-Campus Activities with corresponding
+                Logistics and Funding Requirements)
+            </p>
+            <p class="mb-4">
+                Note: Deadline of Submission of activity form is one week before
+                the activity. Please ensure that the date in the activity form
+                that you will generate is correct because it cannot be changed.
+            </p>
 
-        <div class="bg-img">
-            <img :src="'images/sys-logos/ua-logo.png'" alt="UA-logo" />
-        </div>
+            <div class="flex gap-4 mb-4">
+                <div class="w-4/6 flex flex-col">
+                    <label class="text-2xl">Activity Title</label>
+                    <InputText v-model="form.title" />
+                </div>
 
-        <div class="main-content">
-            <form>
-                <Stepper value="1" linear>
-                    <StepList>
-                        <Step
-                            value="1"
-                            :pt="{
-                                number: '!text-ua-blue',
-                                title: ' !text-ua-blue',
-                            }"
-                            >Start</Step
-                        >
-                        <Step
-                            value="2"
-                            :pt="{
-                                number: '!text-ua-blue',
-                                title: ' !text-ua-blue',
-                            }"
-                            >Projected Funding Needs</Step
-                        >
-                        <Step
-                            value="3"
-                            :pt="{
-                                number: '!text-ua-blue',
-                                title: ' !text-ua-blue',
-                            }"
-                            >Date and Venue Booking</Step
-                        >
-                        <Step
-                            value="4"
-                            :pt="{
-                                number: '!text-ua-blue',
-                                title: ' !text-ua-blue',
-                            }"
-                            >Activity Form</Step
-                        >
-                    </StepList>
-                    <StepPanels>
-                        <StepPanel v-slot="{ activateCallback }" value="1">
-                            <div class="flex flex-col">
-                                <div
-                                    class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                                >
-                                    <APF :images="images" />
-                                </div>
-                            </div>
-                            <div class="flex pt-6 justify-between">
-                                <Button
-                                    label="Cancel"
-                                    severity="secondary"
-                                    icon="pi pi-arrow-left"
-                                    @click="cancel"
-                                />
-                                <Button
-                                    label="Start"
-                                    :pt="{
-                                        root: {
-                                            class: '!bg-ua-blue !outline-none !border-none !hover:bg-ua-blue/80 !hover:border-2',
-                                        },
-                                    }"
-                                    icon="pi pi-arrow-right"
-                                    iconPos="right"
-                                    @click="activateCallback('2')"
-                                />
-                            </div>
-                        </StepPanel>
-                        <StepPanel v-slot="{ activateCallback }" value="2">
-                            <div class="flex flex-col">
-                                <div
-                                    class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                                >
-                                    <APF1 :form="form" />
-                                </div>
-                            </div>
-                            <div class="flex pt-6 justify-between">
-                                <Button
-                                    label="Back"
-                                    severity="secondary"
-                                    icon="pi pi-arrow-left"
-                                    @click="activateCallback('1')"
-                                />
-                                <Button
-                                    label="Forms"
-                                    :pt="{
-                                        root: '!bg-ua-yellow !text-ua-blue !outline-none !border-none',
-                                    }"
-                                    icon="pi pi-bars"
-                                    @click="openForms"
-                                />
-                                <Button
-                                    label="Next"
-                                    :pt="{
-                                        root: '!bg-ua-blue !outline-none !border-none',
-                                    }"
-                                    icon="pi pi-arrow-right"
-                                    iconPos="right"
-                                    @click="activateCallback('3')"
-                                />
-                            </div>
-                        </StepPanel>
-                        <StepPanel v-slot="{ activateCallback }" value="3">
-                            <div class="flex flex-col">
-                                <div
-                                    class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                                >
-                                    <APF2
-                                        :form="form"
-                                        @nextStep="nextStep"
-                                        @previousStep="previousStep"
-                                        :venues="props.venues"
-                                    />
-                                </div>
-                            </div>
-                            <div class="flex pt-6 justify-between">
-                                <Button
-                                    label="Back"
-                                    severity="secondary"
-                                    icon="pi pi-arrow-left"
-                                    @click="activateCallback('2')"
-                                />
-                                <Button
-                                    label="Next"
-                                    :pt="{
-                                        root: '!bg-ua-blue !outline-none !border-none',
-                                    }"
-                                    icon="pi pi-arrow-right"
-                                    iconPos="right"
-                                    @click="activateCallback('4')"
-                                />
-                            </div>
-                        </StepPanel>
-                        <StepPanel v-slot="{ activateCallback }" value="4">
-                            <div class="flex flex-col">
-                                <div
-                                    class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                                >
-                                    <APF3
-                                        :form="form"
-                                        @previousStep="previousStep"
-                                        @submitForm="submitForm"
-                                        :venues="props.venues"
-                                    />
-                                </div>
-                            </div>
-                            <div class="flex pt-6 justify-between">
-                                <Button
-                                    label="Back"
-                                    severity="secondary"
-                                    icon="pi pi-arrow-left"
-                                    @click="activateCallback('3')"
-                                />
+                <div class="w-2/6 flex flex-col">
+                    <label class="text-2xl">Type of Event</label>
+                    <Select
+                        v-model="form.event_type"
+                        :options="events"
+                        editable
+                    />
+                </div>
+            </div>
 
-                                <Button
-                                    label="Update"
-                                    :disabled="form.processing"
-                                    :pt="{
-                                        root: '!bg-ua-blue !outline-none !border-none',
-                                    }"
-                                    icon="pi pi-arrow-right"
-                                    iconPos="right"
-                                    @click="submit"
-                                />
-                            </div>
-                        </StepPanel>
-                    </StepPanels>
-                </Stepper>
-            </form>
+            <div class="flex flex-col mb-4">
+                <label class="text-2xl">Activity Description</label>
+                <Textarea
+                    cols="30"
+                    rows="4"
+                    v-model="form.description"
+                ></Textarea>
+            </div>
 
-            <ConfirmDialog></ConfirmDialog>
-            <Toast />
-        </div>
+            <div class="flex gap-4 mb-4">
+                <div class="w-3/4 flex flex-col">
+                    <label class="text-2xl"
+                        >Participants - Department / Program / Grade or Year
+                        Level</label
+                    >
+                    <Select v-model="form.participant" />
+                </div>
+
+                <div class="w-1/4 flex flex-col">
+                    <label class="text-2xl">Expected Number of Attendees</label>
+                    <InputNumber v-model="form.attendance_count" />
+                </div>
+            </div>
+
+            <div class="flex gap-4 mb-4">
+                <div class="w-1/2 flex flex-col">
+                    <label class="text-2xl">Start Date/Time</label>
+                    <InputText v-model="form.start_date" />
+                </div>
+
+                <div class="w-1/2 flex flex-col">
+                    <label class="text-2xl">End Date/Time</label>
+                    <InputText v-model="form.end_date" />
+                </div>
+            </div>
+
+            <div class="flex flex-col mb-4">
+                <label class="text-2xl">Venue</label>
+                <Select
+                    v-model="form.venue"
+                    :options="venues.map((venue) => venue.name)"
+                />
+            </div>
+
+            <div class="flex flex-col mb-4">
+                <label class="text-2xl">Requirements / Resources Needed</label>
+                <Textarea
+                    cols="30"
+                    rows="4"
+                    v-model="form.requirements_or_resources_needed"
+                ></Textarea>
+            </div>
+
+            <div class="p-2 bg-black/20 text-center text-2xl my-8">
+                <h2>Projected Funding Needs</h2>
+            </div>
+
+            <div class="flex mb-4">
+                <div class="w-2/4 text-center text-2xl">Nature</div>
+                <div class="w-2/4 text-center text-2xl">Attached Files</div>
+            </div>
+
+            <div class="flex gap-4 mb-4 text-xl">
+                <div
+                    class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
+                >
+                    Check Payment / Cash
+                </div>
+                <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
+                    <p class="text-center">
+                        Funding Request Form (FRF) for P1,000 and above or Petty
+                        Cash Form (PCF ) for amount below P1,000.
+                    </p>
+                    <div class="flex justify-center">
+                        <a
+                            :href="`/storage/${form.payment_or_cash_file}`"
+                            download
+                            >Download Attached FRF or PCF</a
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex mx-auto gap-4 mb-4 text-xl">
+                <div
+                    class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
+                >
+                    Food
+                </div>
+                <div
+                    class="bg-ua-blue/30 w-2/4 flex flex-col justify-center items-center p-2 rounded-md"
+                >
+                    <p class="text-center">Request for Meals (RFM)</p>
+                    <div class="flex justify-center">
+                        <a :href="`/storage/${form.food_file}`" download
+                            >Download Attached RFM</a
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex mx-auto gap-4 mb-4 text-xl">
+                <div
+                    class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
+                >
+                    Supplies
+                </div>
+                <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
+                    <p class="text-center">
+                        Requisition Form (RF) for supplies available at RMS or
+                        Purchase Requisition (PR) for supplies to be purchased
+                    </p>
+                    <div class="flex justify-center">
+                        <a :href="`/storage/${form.supplies_file}`" download
+                            >Download Attached RF or PR</a
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex mx-auto gap-4 mb-4 text-xl">
+                <div
+                    class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
+                >
+                    Reproduction
+                </div>
+                <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
+                    <p class="text-center">Reproduction Form</p>
+                    <div class="flex justify-center">
+                        <a :href="`/storage/${form.reproduction_file}`" download
+                            >Download Attached Reproduction Form</a
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex gap-4 text-xl">
+                <div
+                    class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
+                >
+                    Others, specify
+                </div>
+                <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
+                    <p class="text-center">If applicable:</p>
+                    <div class="flex justify-center">
+                        <a :href="`/storage/${form.others_file}`" download
+                            >Download Attached Reproduction Form</a
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="vertical-line"></div>
+
+            <div class="flex justify-center gap-8 mt-8 mb-12">
+                <div>
+                    <Button
+                        @click="cancel(activity.id)"
+                        label="Cancel"
+                        severity="secondary"
+                        class="px-12 py-4"
+                    />
+                </div>
+                <div>
+                    <!-- <Button
+                        :disabled="form.processing"
+                        label="Save"
+                        severity="success"
+                        class="px-12 py-4"
+                    /> -->
+                    <button :disabled="form.processing">Update</button>
+                </div>
+            </div>
+        </form>
     </div>
 </template>
 
 <style scoped>
-.app {
-    padding-top: 4rem;
-    width: 100%;
-}
-
-.bg-img {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    margin-bottom: -3rem;
-    margin-right: -3rem;
-}
-
-.bg-img img {
-    transform: rotate(15deg);
-    width: 40rem;
-    filter: grayscale(100%);
-    opacity: 0.1;
-}
-
-.main-content {
-    padding: 1rem;
+.vertical-line {
+    height: 0.125rem;
+    background-color: #272f5c;
+    margin: 2rem 0;
 }
 </style>

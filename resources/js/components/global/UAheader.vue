@@ -1,26 +1,36 @@
 <script setup>
-import { router } from "@inertiajs/vue3";
+import { router } from '@inertiajs/vue3';
 
 const goBack = () => {
-    const loginPage = "/login";
-
-    if (window.location.pathname === loginPage) {
-        window.location.href = "/";
-    } else {
-        window.history.back();
-    }
+    window.history.back();
 };
 
 const goHome = () => {
-    router.get(route("home"));
+    router.get(route('home'));
+}
+
+const goForward = () => {
+    window.history.forward();
 };
+
 </script>
 
 <template>
     <header>
-        <div class="header-logo">
-            <img src="/public/images/sys-logos/ua-logo.png" alt="ua-logo" />
-            <h1>University of the Assumption</h1>
+        <div class="header-container">
+            <div class="nav-buttons">
+                <Button @click="goBack" icon="pi pi-angle-left text-3xl" class="icon-btn" />
+                <Button @click="goHome" icon="pi pi-home text-3xl" class="icon-btn" />
+                <Button @click="goForward" icon="pi pi-angle-right text-3xl" class="icon-btn" />
+            </div>
+
+            <div class="header-logo">
+                <img src="/public/images/sys-logos/ua-logo.png" alt="ua-logo" />
+                <h1>University of the Assumption</h1>
+            </div>
+
+            <Button @click="" icon="pi pi-bars text-3xl" class="icon-btn" />
+
         </div>
     </header>
 </template>
@@ -33,16 +43,40 @@ header {
     width: 100%;
     background-color: #272f5c;
     color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     padding: 10px 0;
     z-index: 1000;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .header-logo {
     display: flex;
     align-items: center;
+    
+    justify-content: center;
+    flex-grow: 1;
+    text-align: center;
 }
 
 .header-logo img {
@@ -55,10 +89,13 @@ header {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.1rem;
-    text-align: center;
 }
 
 @media screen and (max-width: 425px) {
+    .header-container {
+        justify-content: space-between;
+    }
+    
     .header-logo {
         flex-direction: column;
         align-items: center;

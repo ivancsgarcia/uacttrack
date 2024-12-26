@@ -11,6 +11,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\RequestFormController;
 use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::middleware("guest")->group(function () {
     // Login
@@ -43,11 +44,12 @@ Route::middleware("auth")->group(function () {
 
     Route::get('/activity-form', [ActivityFormController::class, 'create'])->name('activity-form.create');
     Route::post('/activity-form', [ActivityFormController::class, 'store'])->name('activity-form.store');
-    Route::get('/activity-form/{activityId}', [ActivityFormController::class, 'show'])->name('activity-form.show');
-    Route::get('/activity-form/{activityId}/edit', [ActivityFormController::class, 'edit'])->name('activity-form.edit');
+    Route::get('/activity-form/{id}', [ActivityFormController::class, 'show'])->name('activity-form.show');
+    Route::get('/activity-form/{id}/edit', [ActivityFormController::class, 'edit'])->name('activity-form.edit');
+    Route::put('/activity-form/{id}', [ActivityFormController::class, 'update'])->name('activity-form.update');
+    Route::delete('/activity-form/{id}', [ActivityFormController::class, 'destroy'])->name('activity-form.destroy');
 
-    Route::get('/activity-form-pdf/{activityId}', [ActivityFormPDFController::class, 'generatePDF'])->name('activity-form-pdf');
-
+    Route::get('/activity-form-pdf/{id}', [ActivityFormPDFController::class, 'generatePDF'])->name('activity-form-pdf');
     Route::get('/api/events', [ActivityFormController::class, 'fetchEvents']);
 
     Route::middleware(['admin'])->group(function () {
@@ -59,12 +61,14 @@ Route::middleware("auth")->group(function () {
         Route::get('/admin-rejected-apf', [AdminController::class, 'getRejected'])->name('admin-rejected-apf');
     });
 
-        Route::middleware(['vpa'])->group(function () {
-            Route::get('/admin-send-copy', [AdminController::class, 'copyReceiveBy'])->name('admin-send-copy');
-            Route::post('/activity-forms/{activityId}/update', [AdminController::class, 'sendCopy']);
-        }); 
+    Route::middleware(['vpa'])->group(function () {
+        Route::get('/admin-send-copy', [AdminController::class, 'copyReceiveBy'])->name('admin-send-copy');
+        Route::post('/activity-forms/{activityId}/update', [AdminController::class, 'sendCopy']);
+    });
 
     Route::get('/download/{file}', [FileController::class, 'download'])->name('file.download');
 
-    Route::inertia('/{pathMatch}', 'notFound')->where('pathMatch', ".*");
+    Route::fallback(function () {
+        return Inertia::render('notFound');
+    });
 });
