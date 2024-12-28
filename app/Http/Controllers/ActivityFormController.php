@@ -135,19 +135,19 @@ class ActivityFormController extends Controller
         $data['created_by'] = Auth::id();
 
         if ($request->hasFile('payment_or_cash_file')) {
-            $data['food_file'] = $request->file('food_file')->store('paymentOrCashFiles', 'public');
+            $data['payment_or_cash_file'] = $request->file('payment_or_cash_file')->store('paymentOrCashFiles', 'public');
         }
         if ($request->hasFile('food_file')) {
             $data['food_file'] = $request->file('food_file')->store('foodFiles', 'public');
         }
         if ($request->hasFile('supplies_file')) {
-            $data['food_file'] = $request->file('food_file')->store('suppliesFiles', 'public');
+            $data['supplies_file'] = $request->file('supplies_file')->store('suppliesFiles', 'public');
         }
         if ($request->hasFile('reproduction_file')) {
-            $data['food_file'] = $request->file('food_file')->store('reproductionFiles', 'public');
+            $data['reproduction_file'] = $request->file('reproduction_file')->store('reproductionFiles', 'public');
         }
         if ($request->hasFile('others_file')) {
-            $data['food_file'] = $request->file('food_file')->store('othersFiles', 'public');
+            $data['others_file'] = $request->file('others_file')->store('othersFiles', 'public');
         }
 
         ActivityForm::create($data);
