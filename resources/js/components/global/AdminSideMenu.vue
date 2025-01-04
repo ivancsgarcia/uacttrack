@@ -2,7 +2,7 @@
 import { Link, usePage } from "@inertiajs/vue3";
 
 const page = usePage();
-const isVPA = page.props.auth.isVPA;
+const user = page.props.auth.user;
 </script>
 
 <template>
@@ -70,7 +70,7 @@ const isVPA = page.props.auth.isVPA;
 
                 <li>
                     <Link
-                        v-if="isVPA"
+                        v-if="user.position === 'Vice President for Administration'"
                         :href="route('admin-send-copy')"
                         :class="{
                             '!bg-ua-blue !text-white':

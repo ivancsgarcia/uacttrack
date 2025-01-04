@@ -41,9 +41,8 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => fn() => $request->user()
-                    ? $request->user()->only('first_name', 'last_name', 'position')
+                    ? $request->user()->only('first_name', 'last_name', 'role', 'position')
                     : null,
-                'isVPA' => fn() => $request->user() && $request->user()->position === 'Vice President for Administration',
             ],
             'organization' => [
                 'logo' => fn() => $this->getOrganizationLogo(),

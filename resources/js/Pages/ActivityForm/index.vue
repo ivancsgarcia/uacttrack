@@ -16,7 +16,6 @@ import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 
 defineOptions({ layout: HeaderLayout });
-
 defineProps({
     events: Array,
     venues: Array,
@@ -26,35 +25,22 @@ defineProps({
 });
 
 const form = useForm({
-    check_payment_or_cash: false,
-    food: false,
-    supplies: false,
-    reproduction: false,
-    others: false,
     start_date: null,
     end_date: null,
-    attendance_count: 0,
-    event_type: null,
-    venue: null,
-    requirements_or_resources_needed: null,
-    title: null,
-    description: null,
     participant: null,
+    attendance_count: 0,
+    venue: null,
+
+    title: null,
+    event_type: null,
+    description: null,
+    requirements_or_resources_needed: null,
+
     payment_or_cash_file: null,
     food_file: null,
     supplies_file: null,
     reproduction_file: null,
     others_file: null,
-    proponent: false,
-    security: false,
-    eamo: false,
-    janitorial: false,
-    photoLab: false,
-    sports: false,
-    ppgs: false,
-    hotel: false,
-    soundSystem: false,
-    others_specify: false,
 });
 
 function updateForm(newValues) {
@@ -134,88 +120,52 @@ const openForms = () => {
 };
 
 const submit = async () => {
-    try {
-        confirm.require({
-            header: "Submit Activity Form?",
-            message:
-                "Please review all the information before submitting. This action cannot be undone.",
-            icon: "pi pi-info-circle",
-            rejectProps: {
-                label: "No, Review Again",
-                severity: "secondary",
-                outlined: true,
-            },
-            acceptProps: {
-                label: "Yes, Submit Form",
-                severity: "success",
-            },
-            accept: async () => {
-                try {
-                    // Call submitForm function and get the result
-                    const result = await submitForm();
+    confirm.require({
+        header: "Submit Activity Form?",
+        message:
+            "Please review all the information before submitting. This action cannot be undone.",
+        icon: "pi pi-info-circle",
+        rejectProps: {
+            label: "No, Review Again",
+            severity: "secondary",
+            outlined: true,
+        },
+        acceptProps: {
+            label: "Yes, Submit Form",
+            severity: "success",
+        },
+        accept: async () => {
+            const result = await submitForm();
 
-                    // Check if the result indicates success
-                    if (result && result.success) {
-                        toast.add({
-                            severity: "success",
-                            summary: "Form Submitted",
-                            detail: "Your activity form has been successfully created.",
-                            life: 3000,
-                        });
-                    } else {
-                        // If the submission result indicates failure or is falsy
-                        toast.add({
-                            severity: "error",
-                            summary: "Submission Failed",
-                            detail:
-                                result && result.message
-                                    ? result.message
-                                    : "Unable to create form. Please check your inputs and try again.",
-                            life: 3000,
-                        });
-                    }
-                } catch (error) {
-                    // If submitForm throws an error (e.g., network issues)
-                    console.error("Error submitting form:", error);
-                    toast.add({
-                        severity: "error",
-                        summary: "Submission Error",
-                        detail: "An error occurred while submitting the form. Please try again later.",
-                        life: 3000,
-                    });
-                }
-            },
-            reject: () => {
+            if (result) {
                 toast.add({
-                    severity: "info",
-                    summary: "Review Canceled",
-                    detail: "You chose to review the form again.",
+                    severity: "success",
+                    summary: "Form Submitted",
+                    detail: "Your activity form has been successfully created.",
                     life: 3000,
                 });
-            },
-        });
-    } catch (error) {
-        console.error("Error showing confirmation dialog:", error);
-        toast.add({
-            severity: "error",
-            summary: "Dialog Error",
-            detail: "Unable to open confirmation dialog. Please try again.",
-            life: 3000,
-        });
-    }
+            } else {
+                toast.add({
+                    severity: "error",
+                    summary: "Submission Failed",
+                    detail: "Unable to create form. Please check your inputs and try again.",
+                    life: 3000,
+                });
+            }
+        },
+        reject: () => {
+            toast.add({
+                severity: "info",
+                summary: "Review Canceled",
+                detail: "You chose to review the form again.",
+                life: 3000,
+            });
+        },
+    });
 };
 
-const submitForm = async () => {
-    form.processing = true;
-    try {
-        const response = await form.post(route("activity-form.store"));
-        return response;
-    } catch (error) {
-        console.error("Form submission error:", error);
-        throw error;
-    } finally {
-        form.processing = false;
-    }
+const submitForm = () => {
+    form.post(route("activity-form.store"));
 };
 </script>
 
@@ -224,7 +174,7 @@ const submitForm = async () => {
     <ConfirmDialog></ConfirmDialog>
     <Toast />
 
-    <form @submit.prevent>
+    <form @submit.prevent="submit">
         <Stepper value="1" linear>
             <StepList>
                 <Step value="1">Activity Proposal</Step>
@@ -299,7 +249,6 @@ const submitForm = async () => {
                                 @updateForm="updateForm"
                                 @nextStep="nextStep"
                                 @previousStep="previousStep"
-                                
                             />
                         </div>
                     </div>
@@ -353,6 +302,9 @@ const submitForm = async () => {
                         >
                             <APF5
                                 :form="form"
+                                :participants="participants"
+                                :venues="venues"
+                                :events="events"
                                 @previousStep="previousStep"
                             />
                         </div>
@@ -366,11 +318,11 @@ const submitForm = async () => {
                         />
 
                         <Button
-                            label="Submit"
+                            type="submit"
                             :disabled="form.processing"
+                            label="Submit"
                             icon="pi pi-arrow-right"
                             iconPos="right"
-                            @click="submit"
                         />
                     </div>
                 </StepPanel>

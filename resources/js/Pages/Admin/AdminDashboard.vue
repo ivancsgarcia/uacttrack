@@ -1,6 +1,8 @@
 <script setup>
 import AdminLayout from "../../Layouts/AdminLayout.vue";
 import { ref } from "vue";
+import FullCalendar from "../../components/global/FullCalendar.vue";
+import CalendarListView from "../../components/global/CalendarListView.vue";
 
 defineOptions({ layout: AdminLayout });
 
@@ -18,6 +20,14 @@ const copyReceive = ref(false);
 
 <template>
     <h2>UA Academic Calendar and School Events</h2>
+    <div class="flex gap-4 border">
+        <div class="w-2/6">
+            <CalendarListView />
+        </div>
+        <div class="w-4/6">
+            <FullCalendar />
+        </div>
+    </div>
 
     <div class="vertical-line"></div>
 

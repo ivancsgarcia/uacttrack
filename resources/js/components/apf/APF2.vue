@@ -1,9 +1,15 @@
 <script setup>
-import { watch } from 'vue';
+import { ref } from 'vue';
 
 const props = defineProps({
     form: Object,
 });
+
+const check_payment_or_cash = ref(false);
+const food = ref(false);
+const supplies = ref(false);
+const reproduction = ref(false);
+const others = ref(false);
 
 const handleFileUpload = (event, fieldName) => {
     const file = event.target.files[0];
@@ -31,11 +37,11 @@ const handleFileUpload = (event, fieldName) => {
             </div>
             <div class="w-1/4 bg-ua-blue shadow-md p-2">
                 <ToggleSwitch
-                    v-model="form.check_payment_or_cash"
+                    v-model="check_payment_or_cash"
                     :pt="{
                         slider: {
                             class: {
-                                '!bg-ua-yellow': form.check_payment_or_cash,
+                                '!bg-ua-yellow': check_payment_or_cash,
                             },
                         },
                     }"
@@ -43,7 +49,7 @@ const handleFileUpload = (event, fieldName) => {
             </div>
         </div>
         <div
-            v-show="form.check_payment_or_cash"
+            v-show="check_payment_or_cash"
             class="w-3/4 mx-auto bg-ua-blue/30 rounded-md mb-4"
         >
             <p class="text-ua-blue text-center">
@@ -52,7 +58,7 @@ const handleFileUpload = (event, fieldName) => {
             </p>
             <div class="flex justify-center">
                 <input
-                    :disabled="form.check_payment_or_cash !== true"
+                    :disabled="check_payment_or_cash !== true"
                     type="file"
                     @change="handleFileUpload($event, 'payment_or_cash_file')"
                     class="text-ua-blue"
@@ -68,11 +74,11 @@ const handleFileUpload = (event, fieldName) => {
             <div class="w-2/4 bg-slate-200 shadow-md p-2">Food</div>
             <div class="w-1/4 bg-ua-blue shadow-md p-2">
                 <ToggleSwitch
-                    v-model="form.food"
+                    v-model="food"
                     :pt="{
                         slider: {
                             class: {
-                                '!bg-ua-yellow': form.food,
+                                '!bg-ua-yellow': food,
                             },
                         },
                     }"
@@ -80,13 +86,13 @@ const handleFileUpload = (event, fieldName) => {
             </div>
         </div>
         <div
-            v-show="form.food"
+            v-show="food"
             class="w-3/4 mx-auto bg-ua-blue/30 rounded-md mb-4"
         >
             <p class="text-ua-blue text-center">Request for Meals (RFM)</p>
             <div class="flex justify-center">
                 <input
-                    :disabled="form.food !== true"
+                    :disabled="food !== true"
                     type="file"
                     @change="handleFileUpload($event, 'food_file')"
                     class="text-ua-blue"
@@ -102,25 +108,25 @@ const handleFileUpload = (event, fieldName) => {
             <div class="w-2/4 bg-slate-200 shadow-md p-2">Supplies</div>
             <div class="w-1/4 bg-ua-blue shadow-md p-2">
                 <ToggleSwitch
-                    v-model="form.supplies"
+                    v-model="supplies"
                     :pt="{
                         slider: {
                             class: {
-                                '!bg-ua-yellow': form.supplies,
+                                '!bg-ua-yellow': supplies,
                             },
                         },
                     }"
                 />
             </div>
         </div>
-        <div v-show="form.supplies" class="w-3/4 mx-auto bg-ua-blue/30 rounded-md mb-4">
+        <div v-show="supplies" class="w-3/4 mx-auto bg-ua-blue/30 rounded-md mb-4">
             <p class="text-ua-blue text-center">
                 Requisition Form (RF) for supplies available at RMS or Purchase
                 Requisition (PR) for supplies to be purchased
             </p>
             <div class="flex justify-center">
                 <input
-                    :disabled="form.supplies !== true"
+                    :disabled="supplies !== true"
                     type="file"
                     @change="handleFileUpload($event, 'supplies_file')"
                     class="text-ua-blue"
@@ -137,11 +143,11 @@ const handleFileUpload = (event, fieldName) => {
 
             <div class="w-1/4 bg-ua-blue shadow-md p-2">
                 <ToggleSwitch
-                    v-model="form.reproduction"
+                    v-model="reproduction"
                     :pt="{
                         slider: {
                             class: {
-                                '!bg-ua-yellow': form.reproduction,
+                                '!bg-ua-yellow': reproduction,
                             },
                         },
                     }"
@@ -149,13 +155,13 @@ const handleFileUpload = (event, fieldName) => {
             </div>
         </div>
         <div
-            v-show="form.reproduction"
+            v-show="reproduction"
             class="w-3/4 mx-auto bg-ua-blue/30 rounded-md mb-4"
         >
             <p class="text-ua-blue text-center">Reproduction Form</p>
             <div class="flex justify-center">
                 <input
-                    :disabled="form.reproduction !== true"
+                    :disabled="reproduction !== true"
                     type="file"
                     @change="handleFileUpload($event, 'reproduction_file')"
                     class="text-ua-blue"
@@ -172,22 +178,22 @@ const handleFileUpload = (event, fieldName) => {
 
             <div class="w-1/4 bg-ua-blue shadow-md p-2">
                 <ToggleSwitch
-                    v-model="form.others"
+                    v-model="others"
                     :pt="{
                         slider: {
                             class: {
-                                '!bg-ua-yellow': form.others,
+                                '!bg-ua-yellow': others,
                             },
                         },
                     }"
                 />
             </div>
         </div>
-        <div v-show="form.others" class="w-3/4 mx-auto bg-ua-blue/30 rounded-md mb-4">
+        <div v-show="others" class="w-3/4 mx-auto bg-ua-blue/30 rounded-md mb-4">
             <p class="text-ua-blue text-center">If applicable:</p>
             <div class="flex justify-center">
                 <input
-                    :disabled="form.others !== true"
+                    :disabled="others !== true"
                     type="file"
                     @change="handleFileUpload($event, 'others_file')"
                     class="text-ua-blue"

@@ -56,7 +56,7 @@ class AdminController extends Controller
                     ]);
                     break;
             }
-            $activityForms = $activityForms->latest()->paginate(5);
+            $activityForms = $activityForms->paginate(5);
 
             return Inertia::render('Admin/AdminPendingAPF', [
                 'activityForms' => $activityForms,
@@ -79,7 +79,9 @@ class AdminController extends Controller
 
             switch ($user->position) {
                 case 'College Dean':
-                    $approvedForms = ActivityForm::where('college_dean_status', 'APPROVED');
+                    $organizationUserIds = $user->organization->users->pluck('id');
+                    $approvedForms = ActivityForm::whereIn('created_by', $organizationUserIds)
+                        ->where('college_dean_status', 'APPROVED');
                     break;
 
                 case 'Office of Student Affairs':
@@ -118,7 +120,9 @@ class AdminController extends Controller
 
             switch ($user->position) {
                 case 'College Dean':
-                    $rejectedForms = ActivityForm::where('college_dean_status', 'REJECTED');
+                    $organizationUserIds = $user->organization->users->pluck('id');
+                    $rejectedForms = ActivityForm::whereIn('created_by', $organizationUserIds)
+                        ->where('college_dean_status', 'REJECTED');
                     break;
 
                 case 'Office of Student Affairs':
@@ -154,7 +158,6 @@ class AdminController extends Controller
         $user = Auth::user();
         $activityForm = ActivityForm::findOrFail($id);
 
-        // Update the status based on the user's role
         switch ($request->position) {
             case 'College Dean':
                 $activityForm->college_dean_status = $request->status;

@@ -1,17 +1,19 @@
 <script setup>
-import { Link } from "@inertiajs/vue3";
+import { Link, router } from "@inertiajs/vue3";
 import Layout from "../Layouts/Layout.vue";
 
 defineOptions({ layout: Layout });
-
-const props = defineProps({
+defineProps({
     activityForms: Object,
 });
+
+const createAPF = () => {
+    router.get(route("activity-form.create"));
+};
 </script>
 
 <template>
     <Head title=" | Submitted APF" />
-    <!-- Content -->
 
     <h1 class="text-center text-4xl mb-4 text-ua-blue">
         Submitted Activity Proposal Form
@@ -20,27 +22,45 @@ const props = defineProps({
     <table class="w-full border-separate border-spacing-4">
         <thead>
             <tr class="bg-ua-blue text-white h-20">
-                <th class="w-1/5 border">Transaction Number</th>
-                <th class="w-3/5 border">Activity Title</th>
-                <th class="w-1/5 border">Date</th>
+                <th class="w-1/5 border text-lg">Transaction Number</th>
+                <th class="w-3/5 border text-lg">Activity Title</th>
+                <th class="w-1/5 border text-lg">Date</th>
             </tr>
         </thead>
 
-        <tbody v-for="form in activityForms.data" :key="form.id">
+        <tbody v-for="(form, index) in activityForms.data" :key="form.id">
             <tr class="text-center h-20">
-                <td class="bg-ua-gray w-1/5 border">{{ form.id }}</td>
-                <td class="bg-ua-gray w-3/5 border underline">
+                <td class="bg-ua-gray w-1/5 border text-lg">
+                    {{ (activityForms.current_page - 1) * activityForms.per_page + index + 1 }}
+                </td>
+                <td class="bg-ua-gray w-3/5 border text-lg underline">
                     <Link :href="route('activity-form.show', form.id)">{{
                         form.title
                     }}</Link>
                 </td>
-                <td class="bg-ua-gray w-1/5 border">
+                <td class="bg-ua-gray w-1/5 border text-lg">
                     {{ new Date(form.created_at).toLocaleDateString("en-US") }}
                 </td>
             </tr>
         </tbody>
     </table>
-    <PaginationLinks :paginator="activityForms" />
+    <div v-if="!activityForms.data.length" class="mt-4">
+        <p class="text-lg text-center text-bold mt-4">
+            No activity proposals have been submitted yet.
+        </p>
+
+        <Button
+            @click="createAPF"
+            raised
+            size="large"
+            label="Create an APF"
+            class="block mx-auto"
+        />
+    </div>
+    <PaginationLinks
+        v-if="activityForms.data.length"
+        :paginator="activityForms"
+    />
 </template>
 
 <style scoped>

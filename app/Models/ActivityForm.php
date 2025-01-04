@@ -13,12 +13,6 @@ class ActivityForm extends Model
         'created_by',
         'status',
 
-        'check_payment_or_cash',
-        'food',
-        'supplies',
-        'reproduction',
-        'others',
-
         'start_date',
         'end_date',
         'attendance_count',
@@ -39,6 +33,11 @@ class ActivityForm extends Model
         'osa_status',
         'vpaa_status',
         'vpa_status',
+
+        'college_dean_remarks',
+        'osa_remarks',
+        'vpaa_remarks',
+        'vpa_remarks',
 
         'proponent',
         'security',

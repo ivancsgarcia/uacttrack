@@ -1,5 +1,5 @@
 <script setup>
-import { useForm } from "@inertiajs/vue3";
+import { useForm, Link } from "@inertiajs/vue3";
 
 defineProps({
     status: String,
@@ -31,51 +31,48 @@ const submit = () => {
             />
 
             <Form @submit.prevent="submit">
-                <h1>Log In</h1>
+                <h1 class="text-white text-3xl uppercase tracking-wider h1-shadow mb-4">Log In</h1>
 
                 {{ status }}
                 <!-- Email -->
-                <div class="text-box">
-                    <div class="icon-box">
-                        <font-awesome-icon
-                            :icon="['fas', 'envelope']"
-                            size="2xl"
-                            color="gray"
+                <div class="w-full mb-4">
+                    <InputGroup>
+                        <InputGroupAddon>
+                            <i class="pi pi-envelope"></i>
+                        </InputGroupAddon>
+                        <InputText
+                            type="email"
+                            v-model="form.email"
+                            placeholder="Email"
+                            size="large"
                         />
+                    </InputGroup>
+                    <div v-if="form.errors.email" class="error">
+                        * {{ form.errors.email }}
                     </div>
-                    <div class="line"></div>
-                    <input
-                        type="email"
-                        v-model="form.email"
-                        placeholder="Email"
-                    />
-                </div>
-                <div v-if="form.errors.email" class="error">
-                    * {{ form.errors.email }}
                 </div>
 
                 <!-- Password -->
-                <div class="text-box">
-                    <div class="icon-box">
-                        <font-awesome-icon
-                            :icon="['fas', 'lock']"
-                            size="2xl"
-                            color="gray"
+                <div class="w-full">
+                    <InputGroup>
+                        <InputGroupAddon>
+                            <i class="pi pi-lock"></i>
+                        </InputGroupAddon>
+                        <Password
+                            v-model="form.password"
+                            toggleMask
+                            placeholder="Password"
+                            :feedback="false"
+                            size="large"
                         />
+                    </InputGroup>
+                    <div v-if="form.errors.password" class="error">
+                        * {{ form.errors.password }}
                     </div>
-                    <div class="line"></div>
-                    <input
-                        type="password"
-                        v-model="form.password"
-                        placeholder="Password"
-                    />
-                </div>
-                <div v-if="form.errors.password" class="error">
-                    * {{ form.errors.password }}
                 </div>
 
                 <!-- Forgot Password -->
-                <div class="forgot-password">
+                <div class="forgot-password mb-4">
                     <p>
                         <Link :href="route('password.request')" class="link">
                             Forgot Password?
@@ -84,14 +81,21 @@ const submit = () => {
                 </div>
 
                 <!-- Log In Button -->
-                <button :disabled="form.processing" class="login-btn">
-                    Log In
-                </button>
+                <Button
+                    type="submit"
+                    :disabled="form.processing"
+                    label="LOG IN"
+                    size="large"
+                    class="block bg-white text-ua-blue hover:bg-ua-blue hover:text-white"
+                />
 
                 <!-- Register Link -->
-                <!-- <Link :href="route('register')">
-                    <p>Create an Account</p>
-                </Link> -->
+                <p class="mt-8 mb-4 text-white">
+                    Don't have an account?
+                    <Link :href="route('register')" class="underline"
+                        >Register</Link
+                    >
+                </p>
             </Form>
         </div>
     </div>
@@ -142,51 +146,13 @@ form {
     justify-content: center;
     align-items: center;
     background-color: #272f5c;
-    border-radius: 3rem;
-    padding: 3rem;
+    border-radius: 2rem;
+    padding: 2rem 3rem;
     box-shadow: 8px 8px 15px gray;
 }
 
-h1 {
-    color: white;
-    font-size: 2rem;
-    text-transform: uppercase;
+.h1-shadow {
     text-shadow: 3px 2px black;
-    /* margin-bottom: 1rem; */
-    letter-spacing: 0.1rem;
-}
-
-.text-box {
-    display: flex;
-    background-color: #fff;
-    border-radius: 1rem;
-    margin-top: 1.2rem;
-    box-shadow: 2px 4px 10px black;
-}
-
-.icon-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.5rem 0.8rem 0.5rem 1rem;
-}
-
-input {
-    border-radius: 1.5rem;
-    width: 100%;
-    padding: 0.5rem 1rem;
-    font-size: 1.5rem;
-    color: #272f5c;
-}
-
-input:focus {
-    outline: none;
-}
-
-.line {
-    width: 0.16rem;
-    height: auto;
-    background-color: lightgray;
 }
 
 .error {
@@ -208,26 +174,5 @@ input:focus {
 
 .forgot-password .link:hover {
     color: #93c5fd;
-}
-
-.login-btn {
-    background-color: white;
-    color: #272f5c;
-    border-radius: 1.2rem;
-    padding: 0.5rem 2rem;
-    text-transform: uppercase;
-    margin-top: 2.5rem;
-    font-size: 1.5rem;
-    letter-spacing: 0.1rem;
-    font-weight: bold;
-}
-
-.login-btn:hover {
-    background-color: #6375bf;
-    color: white;
-}
-
-::placeholder {
-    opacity: 0.4;
 }
 </style>

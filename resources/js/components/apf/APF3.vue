@@ -91,7 +91,7 @@ watch(date, (newDate) => {
         </div>
 
         <div class="flex justify-center">
-            <Button label="Recommend a Venue" class="text-2xl shadow-md" />
+            <Button raised size="large" label="Recommend a Venue" class="text-2xl" />
         </div>
 
         <div class="flex flex-col">

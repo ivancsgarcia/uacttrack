@@ -17,7 +17,6 @@ class ActivityFormController extends Controller
     {
         $approvedForms = ActivityForm::where('status', 'APPROVED')->get();
         $venues = Venue::orderBy('capacity')->get();
-
         $events = [
             'Seminar/Workshop',
             'Academic Competition',
@@ -41,7 +40,6 @@ class ActivityFormController extends Controller
             'Job Fairs',
             'Internship and Career Placement Workshops',
         ];
-
         $participants = [
             'Pre-School',
             'Kinder',
@@ -67,7 +65,6 @@ class ActivityFormController extends Controller
             'Alumni',
             'Guests',
         ];
-
         $imageFiles = [];
         $directoryPath = public_path('images/ua-events');
         if (is_dir($directoryPath)) {
@@ -95,43 +92,26 @@ class ActivityFormController extends Controller
     {
 
         $data = $request->validate([
-            'check_payment_or_cash' => 'required|boolean',
-            'food' => 'required|boolean',
-            'supplies' => 'required|boolean',
-            'reproduction' => 'required|boolean',
-            'others' => 'required|boolean',
-
             'start_date' => 'required|date',
             'end_date' => 'required|date',
-            'attendance_count' => 'required|integer|numeric|min:1|max:5000',
-            'event_type' => 'required|string',
-            'venue' => 'required|max:255',
-            'requirements_or_resources_needed' => 'required|string',
-            'title' => 'required|string',
-            'description' => 'required|string',
             'participant' => 'required|string',
+            'attendance_count' => 'required|integer|numeric|min:1|max:5000',
+            'venue' => 'required|max:255',
+
+            'title' => 'required|string',
+            'event_type' => 'required|string',
+            'description' => 'required|string',
+            'requirements_or_resources_needed' => 'required|string',
 
             'payment_or_cash_file' => 'nullable|file|mimes:jpg,png,pdf,doc,docx,xls,xlsx,txt,jpeg|max:3072',
             'food_file' => 'nullable|file|mimes:jpg,png,pdf,doc,docx,xls,xlsx,txt,jpeg|max:3072',
             'supplies_file' => 'nullable|file|mimes:jpg,png,pdf,doc,docx,xls,xlsx,txt,jpeg|max:3072',
             'reproduction_file' => 'nullable|file|mimes:jpg,png,pdf,doc,docx,xls,xlsx,txt,jpeg|max:3072',
             'others_file' => 'nullable|file|mimes:jpg,png,pdf,doc,docx,xls,xlsx,txt,jpeg|max:3072',
-
-            'proponent' => 'required|boolean',
-            'security' => 'required|boolean',
-            'eamo' => 'required|boolean',
-            'janitorial' => 'required|boolean',
-            'photoLab' => 'required|boolean',
-            'sports' => 'required|boolean',
-            'ppgs' => 'required|boolean',
-            'hotel' => 'required|boolean',
-            'soundSystem' => 'required|boolean',
-            'others_specify' => 'required|boolean',
         ]);
 
         $data['start_date'] = Carbon::parse($request->start_date);
         $data['end_date'] = Carbon::parse($request->end_date);
-
         $data['created_by'] = Auth::id();
 
         if ($request->hasFile('payment_or_cash_file')) {
@@ -158,9 +138,7 @@ class ActivityFormController extends Controller
     public function show($id)
     {
         $activity = ActivityForm::findOrFail($id);
-
         $venues = Venue::orderBy('capacity')->get();
-
         $events = [
             'Seminar/Workshop',
             'Academic Competition',
@@ -184,7 +162,6 @@ class ActivityFormController extends Controller
             'Job Fairs',
             'Internship and Career Placement Workshops',
         ];
-
         $participants = [
             'Pre-School',
             'Kinder',
@@ -222,9 +199,7 @@ class ActivityFormController extends Controller
     public function edit($id)
     {
         $activity = ActivityForm::findOrFail($id);
-
         $venues = Venue::orderBy('capacity')->get();
-
         $events = [
             'Seminar/Workshop',
             'Academic Competition',
@@ -248,7 +223,6 @@ class ActivityFormController extends Controller
             'Job Fairs',
             'Internship and Career Placement Workshops',
         ];
-
         $participants = [
             'Pre-School',
             'Kinder',
@@ -288,12 +262,6 @@ class ActivityFormController extends Controller
         $activity = ActivityForm::findOrFail($id);
 
         $data = $request->validate([
-            'check_payment_or_cash' => 'required|boolean',
-            'food' => 'required|boolean',
-            'supplies' => 'required|boolean',
-            'reproduction' => 'required|boolean',
-            'others' => 'required|boolean',
-
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'attendance_count' => 'required|integer|numeric|min:1|max:5000',
@@ -309,22 +277,10 @@ class ActivityFormController extends Controller
             'supplies_file' => 'nullable|file|mimes:jpg,png,pdf,doc,docx,xls,xlsx,txt,jpeg|max:3072',
             'reproduction_file' => 'nullable|file|mimes:jpg,png,pdf,doc,docx,xls,xlsx,txt,jpeg|max:3072',
             'others_file' => 'nullable|file|mimes:jpg,png,pdf,doc,docx,xls,xlsx,txt,jpeg|max:3072',
-
-            'proponent' => 'required|boolean',
-            'security' => 'required|boolean',
-            'eamo' => 'required|boolean',
-            'janitorial' => 'required|boolean',
-            'photoLab' => 'required|boolean',
-            'sports' => 'required|boolean',
-            'ppgs' => 'required|boolean',
-            'hotel' => 'required|boolean',
-            'soundSystem' => 'required|boolean',
-            'others_specify' => 'required|boolean',
         ]);
 
         $data['start_date'] = Carbon::parse($request->start_date);
         $data['end_date'] = Carbon::parse($request->end_date);
-
         $data['created_by'] = Auth::id();
 
         if ($request->hasFile('payment_or_cash_file')) {
@@ -415,11 +371,9 @@ class ActivityFormController extends Controller
     public function fetchAll()
     {
         $organizationId = Auth::user()->organization_id;
-
         $activityForms = ActivityForm::where('status', 'PENDING')->whereHas('creator', function ($query) use ($organizationId) {
             $query->where('organization_id', $organizationId);
-        })->latest()
-            ->paginate(5);
+        })->paginate(5);
 
         return Inertia::render('SubmittedAPF', [
             'activityForms' => $activityForms
@@ -432,8 +386,7 @@ class ActivityFormController extends Controller
 
         $approvedForms = ActivityForm::where('status', 'APPROVED')->whereHas('creator', function ($query) use ($organizationId) {
             $query->where('organization_id', $organizationId);
-        })->latest()
-            ->paginate(5);
+        })->latest()->paginate(5);
 
         return Inertia::render('ApprovedAPF', [
             'approvedForms' => $approvedForms
@@ -446,8 +399,7 @@ class ActivityFormController extends Controller
 
         $rejectedForms = ActivityForm::where('status', 'REJECTED')->whereHas('creator', function ($query) use ($organizationId) {
             $query->where('organization_id', $organizationId);
-        })->latest()
-            ->paginate(5);
+        })->latest()->paginate(5);
 
         return Inertia::render('RejectedAPF', [
             'rejectedForms' => $rejectedForms

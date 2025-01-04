@@ -3,7 +3,6 @@ import { Link } from "@inertiajs/vue3";
 import Layout from "../Layouts/Layout.vue";
 
 defineOptions({ layout: Layout });
-
 defineProps({
     approvedForms: Object,
 });
@@ -24,9 +23,9 @@ defineProps({
             </tr>
         </thead>
 
-        <tbody v-for="form in approvedForms.data" :key="form.id">
+        <tbody v-for="(form, index) in approvedForms.data" :key="form.id">
             <tr class="text-center h-20">
-                <td class="bg-ua-gray w-1/5 border">{{ form.id }}</td>
+                <td class="bg-ua-gray w-1/5 border">{{ index + 1 }}</td>
                 <td class="bg-ua-gray w-3/5 border underline">
                     <Link :href="route('activity-form.show', form.id)">{{
                         form.title
@@ -38,7 +37,12 @@ defineProps({
             </tr>
         </tbody>
     </table>
-    <PaginationLinks :paginator="approvedForms" />
+    <div v-if="!approvedForms.data.length" class="mt-4">
+        <p class="text-lg text-center text-bold mt-4">
+            There are no approved activity forms at this time.
+        </p>
+    </div>
+    <PaginationLinks v-else :paginator="approvedForms" />
 </template>
 
 <style scoped>

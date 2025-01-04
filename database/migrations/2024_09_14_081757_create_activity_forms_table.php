@@ -16,12 +16,6 @@ return new class extends Migration
             $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
             $table->string('status')->default('PENDING');
 
-            $table->boolean('check_payment_or_cash');
-            $table->boolean('food');
-            $table->boolean('supplies');
-            $table->boolean('reproduction');
-            $table->boolean('others');
-
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->integer('attendance_count');
@@ -43,16 +37,21 @@ return new class extends Migration
             $table->string('vpaa_status')->default('PENDING');
             $table->string('vpa_status')->default('PENDING');
 
-            $table->boolean('proponent');
-            $table->boolean('security');
-            $table->boolean('eamo');
-            $table->boolean('janitorial');
-            $table->boolean('photoLab');
-            $table->boolean('sports');
-            $table->boolean('ppgs');
-            $table->boolean('hotel');
-            $table->boolean('soundSystem');
-            $table->boolean('others_specify');
+            $table->text('college_dean_remarks')->nullable();
+            $table->text('osa_remarks')->nullable();
+            $table->text('vpaa_remarks')->nullable();
+            $table->text('vpa_remarks')->nullable();
+
+            $table->boolean('proponent')->default(false);
+            $table->boolean('security')->default(false);
+            $table->boolean('eamo')->default(false);
+            $table->boolean('janitorial')->default(false);
+            $table->boolean('photoLab')->default(false);
+            $table->boolean('sports')->default(false);
+            $table->boolean('ppgs')->default(false);
+            $table->boolean('hotel')->default(false);
+            $table->boolean('soundSystem')->default(false);
+            $table->boolean('others_specify')->default(false);
 
             $table->timestamps();
         });

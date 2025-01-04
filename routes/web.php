@@ -18,7 +18,10 @@ Route::middleware("guest")->group(function () {
     Route::get('/login', [AuthenticateController::class, 'create'])->name('login');
     Route::post('/login', [AuthenticateController::class, 'store']);
 
-    // Route::inertia('/forgot-password', 'Auth/ForgotPassword')->name('forgot-password');
+    // Register
+    Route::get('/register', [RegisterController::class, 'create'])->name('register');
+    Route::post('/register', [RegisterController::class, 'store']);
+
     Route::get('/forgot-password', [ResetPasswordController::class, 'requestPass'])->name('password.request');
     Route::post('/forgot-password', [ResetPasswordController::class, 'sendEmail'])->name('password.email');
     Route::get('/reset-password/{token}', [ResetPasswordController::class, 'resetForm'])->name('password.reset');
@@ -27,32 +30,33 @@ Route::middleware("guest")->group(function () {
 
 
 Route::middleware("auth")->group(function () {
-    // Register
-    Route::get('/register', [RegisterController::class, 'create'])->name('register');
-    Route::post('/register', [RegisterController::class, 'store']);
     // Logout
     Route::post('/logout', [AuthenticateController::class, 'destroy'])->name('logout');
 
-    Route::get('/', [DashboardController::class, 'create'])->name('home');
+    Route::middleware(['role:Student Officer'])->group(function () {
+        Route::get('/', [DashboardController::class, 'create'])->name('home');
 
-    Route::get('/request-form', [RequestFormController::class, 'create'])->name('request-form');
-    Route::get('/recommendation', [ExternalLinks::class, 'create'])->name('recommendation');
+        Route::get('/request-form', [RequestFormController::class, 'create'])->name('request-form');
+        Route::get('/recommendation', [ExternalLinks::class, 'create'])->name('recommendation');
 
-    Route::get('/submitted-apf', [ActivityFormController::class, 'fetchAll'])->name('submitted-apf');
-    Route::get('/approved-apf', [ActivityFormController::class, 'fetchApproved'])->name('approved-apf');
-    Route::get('/rejected-apf', [ActivityFormController::class, 'fetchRejected'])->name('rejected-apf');
+        Route::get('/submitted-apf', [ActivityFormController::class, 'fetchAll'])->name('submitted-apf');
+        Route::get('/approved-apf', [ActivityFormController::class, 'fetchApproved'])->name('approved-apf');
+        Route::get('/rejected-apf', [ActivityFormController::class, 'fetchRejected'])->name('rejected-apf');
 
-    Route::get('/activity-form', [ActivityFormController::class, 'create'])->name('activity-form.create');
-    Route::post('/activity-form', [ActivityFormController::class, 'store'])->name('activity-form.store');
+        Route::get('/activity-form', [ActivityFormController::class, 'create'])->name('activity-form.create');
+        Route::post('/activity-form', [ActivityFormController::class, 'store'])->name('activity-form.store');
+        // Route::get('/activity-form/{id}', [ActivityFormController::class, 'show'])->name('activity-form.show');
+        Route::get('/activity-form/{id}/edit', [ActivityFormController::class, 'edit'])->name('activity-form.edit');
+        Route::put('/activity-form/{id}', [ActivityFormController::class, 'update'])->name('activity-form.update');
+        Route::delete('/activity-form/{id}', [ActivityFormController::class, 'destroy'])->name('activity-form.destroy');
+
+        Route::get('/activity-form-pdf/{id}', [ActivityFormPDFController::class, 'generatePDF'])->name('activity-form-pdf');
+        Route::get('/api/events', [ActivityFormController::class, 'fetchEvents']);
+    });
+
     Route::get('/activity-form/{id}', [ActivityFormController::class, 'show'])->name('activity-form.show');
-    Route::get('/activity-form/{id}/edit', [ActivityFormController::class, 'edit'])->name('activity-form.edit');
-    Route::put('/activity-form/{id}', [ActivityFormController::class, 'update'])->name('activity-form.update');
-    Route::delete('/activity-form/{id}', [ActivityFormController::class, 'destroy'])->name('activity-form.destroy');
 
-    Route::get('/activity-form-pdf/{id}', [ActivityFormPDFController::class, 'generatePDF'])->name('activity-form-pdf');
-    Route::get('/api/events', [ActivityFormController::class, 'fetchEvents']);
-
-    Route::middleware(['admin'])->group(function () {
+    Route::middleware(['role:Admin'])->group(function () {
         Route::get('/admin-dashboard', [AdminController::class, 'dashboard'])->name('admin-dashboard');
         Route::post('/activity-forms/{id}/status', [AdminController::class, 'updateStatus']);
 

@@ -1,29 +1,35 @@
 <script setup>
 import HeaderLayout from "../../Layouts/HeaderLayout.vue";
-import InputText from "primevue/inputtext";
-import InputNumber from "primevue/inputnumber";
-import Select from "primevue/select";
-import Textarea from "primevue/textarea";
-import Button from "primevue/button";
-import { router, Link } from "@inertiajs/vue3";
+import { router, Link, usePage } from "@inertiajs/vue3";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import { ref, watch } from "vue";
 
 defineOptions({ layout: HeaderLayout });
-
 defineProps({
     activity: Object,
     events: Array,
     venues: Object,
+    participants: Array,
 });
 
 const confirm = useConfirm();
 const toast = useToast();
+const page = usePage();
+const user = page.props.auth.user;
+const showApproveDialog = ref(false);
+const showRejectDialog = ref(false);
+const disableApproveComments = ref(false);
+const disableRejectComments = ref(false);
+const approveComment = ref("");
+
+watch(disableApproveComments, (value) => {
+    if (value) approveComment.value = "";
+});
 
 const editActivityForm = (activityId) => {
     router.get(route("activity-form.edit", activityId));
 };
-
 const deleteActivityForm = (activityId) => {
     confirm.require({
         message: "Do you want to delete this Activity Form?",
@@ -50,22 +56,82 @@ const deleteActivityForm = (activityId) => {
         },
         reject: () => {
             toast.add({
-                severity: "error",
-                summary: "Rejected",
-                detail: "You have Rejected",
+                severity: "info",
+                summary: "Cancelled",
+                detail: "The activity proposal was not deleted.",
                 life: 3000,
             });
         },
     });
 };
-
 const downloadPDF = (activityId) => {
     const url = `/activity-form-pdf/${activityId}`;
     window.open(url, "_blank");
 };
-
 const downloadFile = (id) => {
     window.location.href = `/download-file/${id}`;
+};
+const approve = () => {
+    confirm.require({
+        message: "Are you sure you want to approve this activity proposal?",
+        header: "Approve Activity Proposal",
+        icon: "pi pi-check-circle",
+        rejectProps: {
+            label: "Cancel",
+            severity: "secondary",
+        },
+        acceptProps: {
+            label: "Yes, Approve",
+            severity: "success",
+        },
+        accept: () => {
+            toast.add({
+                severity: "success",
+                summary: "Approved",
+                detail: "The activity proposal has been approved successfully.",
+                life: 3000,
+            });
+        },
+        reject: () => {
+            toast.add({
+                severity: "info",
+                summary: "Cancelled",
+                detail: "You cancelled the approval process.",
+                life: 3000,
+            });
+        },
+    });
+};
+const reject = () => {
+    confirm.require({
+        message: "Are you sure you want to reject this activity proposal?",
+        header: "Reject Activity Proposal",
+        icon: "pi pi-times-circle",
+        rejectProps: {
+            label: "Cancel",
+            severity: "secondary",
+        },
+        acceptProps: {
+            label: "Yes, Reject",
+            severity: "danger",
+        },
+        accept: () => {
+            toast.add({
+                severity: "warn",
+                summary: "Rejected",
+                detail: "The activity proposal has been rejected successfully.",
+                life: 3000,
+            });
+        },
+        reject: () => {
+            toast.add({
+                severity: "info",
+                summary: "Cancelled",
+                detail: "You cancelled the rejection process.",
+                life: 3000,
+            });
+        },
+    });
 };
 </script>
 
@@ -73,8 +139,9 @@ const downloadFile = (id) => {
     <Head title=" | Activity Proposal Form" />
     <Toast />
     <ConfirmDialog></ConfirmDialog>
+
     <div class="w-5/6 m-auto">
-        <h1 class="text-3xl text-center my-8">Activity Proposal Form</h1>
+        <h1 class="text-4xl text-center my-8">Activity Proposal Form</h1>
         <p>
             (Approval Form for In-Campus Activities with corresponding Logistics
             and Funding Requirements)
@@ -107,7 +174,7 @@ const downloadFile = (id) => {
             <Textarea
                 cols="30"
                 rows="4"
-                v-model="activity.title"
+                v-model="activity.description"
                 disabled
             ></Textarea>
         </div>
@@ -118,7 +185,7 @@ const downloadFile = (id) => {
                     >Participants - Department / Program / Grade or Year
                     Level</label
                 >
-                <Select v-model="activity.participant" disabled />
+                <Select v-model="activity.participant" :options="participants" disabled />
             </div>
 
             <div class="w-1/4 flex flex-col">
@@ -162,121 +229,212 @@ const downloadFile = (id) => {
             <h2>Projected Funding Needs</h2>
         </div>
 
-        <div class="flex mb-4">
-            <div class="w-2/4 text-center text-2xl">Nature</div>
-            <div class="w-2/4 text-center text-2xl">Attached Files</div>
-        </div>
+        <div class="flex flex-wrap justify-center gap-4">
+            <Card class="w-[calc(33.333%-1rem)] mb-4 text-xl">
+                <template #title>Check Payment / Cash</template>
+                <template #content>
+                    <div>
+                        <a
+                            :href="`/storage/${activity.payment_or_cash_file}`"
+                            download
+                            class="underline"
+                            >Download Attached FRF or PCF</a
+                        >
+                    </div>
+                </template>
+            </Card>
 
-        <div class="flex gap-4 mb-4 text-xl">
-            <div
-                class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
-            >
-                Check Payment / Cash
-            </div>
-            <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
-                <p class="text-center">
-                    Funding Request Form (FRF) for P1,000 and above or Petty
-                    Cash Form (PCF ) for amount below P1,000.
-                </p>
-                <div class="flex justify-center">
-                    <a
-                        :href="`/storage/${activity.payment_or_cash_file}`"
-                        download
-                        >Download Attached FRF or PCF</a
-                    >
-                </div>
-            </div>
-        </div>
+            <Card class="w-[calc(33.333%-1rem)] mb-4 text-xl">
+                <template #title>Food</template>
+                <template #content>
+                    <div>
+                        <a
+                            :href="`/storage/${activity.food_file}`"
+                            download
+                            class="underline"
+                            >Download Attached RFM</a
+                        >
+                    </div>
+                </template>
+            </Card>
 
-        <div class="flex mx-auto gap-4 mb-4 text-xl">
-            <div
-                class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
-            >
-                Food
-            </div>
-            <div
-                class="bg-ua-blue/30 w-2/4 flex flex-col justify-center items-center p-2 rounded-md"
-            >
-                <p class="text-center">Request for Meals (RFM)</p>
-                <div class="flex justify-center">
-                    <a :href="`/storage/${activity.food_file}`" download
-                        >Download Attached RFM</a
-                    >
-                </div>
-            </div>
-        </div>
+            <Card class="w-[calc(33.333%-1rem)] mb-4 text-xl">
+                <template #title>Supplies</template>
+                <template #content>
+                    <div>
+                        <a
+                            :href="`/storage/${activity.supplies_file}`"
+                            download
+                            class="underline"
+                            >Download Attached RF or PR Form</a
+                        >
+                    </div>
+                </template>
+            </Card>
 
-        <div class="flex mx-auto gap-4 mb-4 text-xl">
-            <div
-                class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
-            >
-                Supplies
-            </div>
-            <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
-                <p class="text-center">
-                    Requisition Form (RF) for supplies available at RMS or
-                    Purchase Requisition (PR) for supplies to be purchased
-                </p>
-                <div class="flex justify-center">
-                    <a :href="`/storage/${activity.supplies_file}`" download
-                        >Download Attached RF or PR</a
-                    >
-                </div>
-            </div>
-        </div>
+            <Card class="w-[calc(33.333%-1rem)] mb-4 text-xl">
+                <template #title>Reproduction</template>
+                <template #content>
+                    <div>
+                        <a
+                            :href="`/storage/${activity.reproduction_file}`"
+                            download
+                            class="underline"
+                            >Download Attached Reproduction Form</a
+                        >
+                    </div>
+                </template>
+            </Card>
 
-        <div class="flex mx-auto gap-4 mb-4 text-xl">
-            <div
-                class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
-            >
-                Reproduction
-            </div>
-            <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
-                <p class="text-center">Reproduction Form</p>
-                <div class="flex justify-center">
-                    <a :href="`/storage/${activity.reproduction_file}`" download
-                        >Download Attached Reproduction Form</a
-                    >
-                </div>
-            </div>
-        </div>
-
-        <div class="flex gap-4 text-xl">
-            <div
-                class="bg-ua-blue/30 w-2/4 flex justify-center items-center p-2 rounded-md"
-            >
-                Others, specify
-            </div>
-            <div class="bg-ua-blue/30 w-2/4 p-2 rounded-md">
-                <p class="text-center">If applicable:</p>
-                <div class="flex justify-center">
-                    <a :href="`/storage/${activity.others_file}`" download
-                        >Download Attached Reproduction Form</a
-                    >
-                </div>
-            </div>
+            <Card class="w-[calc(33.333%-1rem)] mb-4 text-xl">
+                <template #title>Others, specify</template>
+                <template #content>
+                    <div>
+                        <a
+                            :href="`/storage/${activity.others_file}`"
+                            download
+                            class="underline"
+                            >Download Attached Form</a
+                        >
+                    </div>
+                </template>
+            </Card>
         </div>
 
         <div class="vertical-line"></div>
 
         <div class="flex justify-center gap-4 my-8">
-            <div v-if="activity.status === 'PENDING'">
+            <div v-if="user.role === 'Admin'" class="space-x-4">
+                <Button
+                    @click="showRejectDialog = true"
+                    size="large"
+                    severity="danger"
+                    label="Reject"
+                />
+                <Button
+                    @click="showApproveDialog = true"
+                    size="large"
+                    severity="success"
+                    label="Approve"
+                />
+            </div>
+            <div
+                v-if="
+                    user.role === 'Student Officer' &&
+                    activity.status === 'PENDING'
+                "
+                class="space-x-4"
+            >
                 <Button
                     @click="deleteActivityForm(activity.id)"
                     label="Delete"
                     severity="danger"
-                    class="px-12 py-4"
+                    size="large"
                 />
-            </div>
-            <div v-if="activity.status === 'PENDING'">
                 <Link :href="route('activity-form.edit', activity.id)">
-                    <Button label="Edit" class="px-12 py-4" />
+                    <Button label="Edit" size="large" />
                 </Link>
             </div>
             <div v-if="activity.status === 'APPROVED'">
-                <Button @click="downloadPDF(activity.id)" label="Download PDF" class="px-12 py-4" />
+                <Button
+                    @click="downloadPDF(activity.id)"
+                    label="Download PDF"
+                    size="large"
+                />
             </div>
         </div>
+
+        <!-- Approve Dialog -->
+        <Dialog
+            v-model:visible="showApproveDialog"
+            modal
+            header="Approve Activity Proposal"
+        >
+            <span class="text-surface-500 dark:text-surface-400 block mb-4"
+                >Are you sure you want to approve this activity proposal?</span
+            >
+            <div class="text-surface-500 dark:text-surface-400">
+                <label>Provide Feedback:</label>
+                <Textarea
+                    v-model="approveComment"
+                    :disabled="disableApproveComments"
+                    fluid
+                    rows="5"
+                    cols="30"
+                />
+                <div class="flex items-center gap-1">
+                    <Checkbox v-model="disableApproveComments" binary />
+                    <label>No feedback</label>
+                </div>
+            </div>
+            <div class="flex justify-end gap-2">
+                <Button
+                    type="button"
+                    label="Cancel"
+                    severity="secondary"
+                    @click="showApproveDialog = false"
+                ></Button>
+                <Button
+                    type="button"
+                    label="Approve"
+                    @click="
+                        toast.add({
+                            severity: 'success',
+                            summary: 'Approved',
+                            detail: 'The activity proposal has been approved successfully.',
+                            life: 3000,
+                        });
+                        showApproveDialog = false;
+                    "
+                ></Button>
+            </div>
+        </Dialog>
+
+        <!-- Reject Dialog -->
+        <Dialog
+            v-model:visible="showRejectDialog"
+            modal
+            header="Reject Activity Proposal"
+        >
+            <span class="text-surface-500 dark:text-surface-400 block mb-4"
+                >Are you sure you want to reject this activity proposal?</span
+            >
+            <div class="text-surface-500 dark:text-surface-400">
+                <label>Provide Feedback:</label>
+                <Textarea
+                    :disabled="disableRejectComments"
+                    fluid
+                    rows="5"
+                    cols="30"
+                />
+                <div class="flex items-center gap-1">
+                    <Checkbox v-model="disableRejectComments" binary />
+                    <label>No feedback</label>
+                </div>
+            </div>
+            <div class="flex justify-end gap-2">
+                <Button
+                    type="button"
+                    label="Cancel"
+                    severity="secondary"
+                    @click="showRejectDialog = false"
+                ></Button>
+                <Button
+                    type="button"
+                    label="Reject"
+                    severity="danger"
+                    @click="
+                        toast.add({
+                            severity: 'warn',
+                            summary: 'Rejected',
+                            detail: 'The activity proposal has been rejected successfully.',
+                            life: 3000,
+                        });
+                        showRejectDialog = false;
+                    "
+                ></Button>
+            </div>
+        </Dialog>
     </div>
 </template>
 

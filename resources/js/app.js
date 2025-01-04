@@ -10,12 +10,20 @@ import PaginationLinks from "./components/global/PaginationLinks.vue";
 import SystemSideMenu from "./components/global/SystemSideMenu.vue";
 
 import Button from "primevue/button";
+import InputGroup from 'primevue/inputgroup';
+import InputGroupAddon from 'primevue/inputgroupaddon';
+import Password from 'primevue/password';
+import Checkbox from 'primevue/checkbox';
+import InputNumber from 'primevue/inputnumber';
+import Textarea from 'primevue/textarea';
+import Select from 'primevue/select';
+import InputText from 'primevue/inputtext';
 import ToggleSwitch from "primevue/toggleswitch";
 import Dialog from "primevue/dialog";
 import Avatar from "primevue/avatar";
 import Popover from "primevue/popover";
 import Card from "primevue/card";
-import Divider from 'primevue/divider';
+import Divider from "primevue/divider";
 import ConfirmDialog from "primevue/confirmdialog";
 import ConfirmationService from "primevue/confirmationservice";
 import Toast from "primevue/toast";
@@ -25,8 +33,8 @@ import "primeicons/primeicons.css";
 import VCalendar from "v-calendar";
 import "v-calendar/style.css";
 
-import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css'
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -37,8 +45,6 @@ import { createApp, h } from "vue";
 import { createInertiaApp, Head, Link } from "@inertiajs/vue3";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 import PrimeVue from "primevue/config";
-// import { setThemeOnLoad } from "./theme";
-import Aura from "@primevue/themes/aura";
 
 createInertiaApp({
     title: (title) => `UActTrack ${title}`,
@@ -56,15 +62,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .use(PrimeVue, {
-                // theme: {
-                //     preset: Aura,
-                //     options: {
-                //         prefix: "p",
-                //         darkModeSelector: false,
-                //         cssLayer: false,
-                //     },
-                // },
-                theme: 'none',
+                theme: "none",
             })
             .use(ConfirmationService)
             .use(ToastService)
@@ -80,6 +78,14 @@ createInertiaApp({
             .component("PaginationLinks", PaginationLinks)
             .component("SystemSideMenu", SystemSideMenu)
             .component("Button", Button)
+            .component("InputGroup", InputGroup)
+            .component("InputGroupAddon", InputGroupAddon)
+            .component("Password", Password)
+            .component("Checkbox", Checkbox)
+            .component("InputNumber", InputNumber)
+            .component("Textarea", Textarea)
+            .component("Select", Select)
+            .component("InputText", InputText)
             .component("ToggleSwitch", ToggleSwitch)
             .component("Dialog", Dialog)
             .component("Avatar", Avatar)

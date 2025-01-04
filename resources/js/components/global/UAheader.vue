@@ -1,14 +1,16 @@
 <script setup>
-import { router } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+
+const page = usePage();
+const user = computed(() => page.props.auth.user);
 
 const goBack = () => {
     window.history.back();
 };
-
 const goHome = () => {
-    router.get(route('home'));
+    (user.value.role === 'Admin') ? router.get(route('admin-dashboard')) : router.get(route('home'));
 }
-
 const goForward = () => {
     window.history.forward();
 };
