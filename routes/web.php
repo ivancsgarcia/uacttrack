@@ -58,7 +58,7 @@ Route::middleware("auth")->group(function () {
 
     Route::middleware(['role:Admin'])->group(function () {
         Route::get('/admin-dashboard', [AdminController::class, 'dashboard'])->name('admin-dashboard');
-        Route::post('/activity-forms/{id}/status', [AdminController::class, 'updateStatus']);
+        Route::put('/activity-forms/{id}/status', [AdminController::class, 'updateStatus'])->name('activity-form.status');
 
         Route::get('/admin-pending-apf', [AdminController::class, 'getPending'])->name('admin-pending-apf');
         Route::get('/admin-approved-apf', [AdminController::class, 'getApproved'])->name('admin-approved-apf');

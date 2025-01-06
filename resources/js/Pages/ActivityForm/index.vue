@@ -119,7 +119,7 @@ const openForms = () => {
     });
 };
 
-const submit = async () => {
+const submit = () => {
     confirm.require({
         header: "Submit Activity Form?",
         message:
@@ -134,24 +134,25 @@ const submit = async () => {
             label: "Yes, Submit Form",
             severity: "success",
         },
-        accept: async () => {
-            const result = await submitForm();
-
-            if (result) {
-                toast.add({
+        accept: () => {
+            form.post(route("activity-form.store"), {
+                onSuccess: () => {
+                    toast.add({
                     severity: "success",
                     summary: "Form Submitted",
                     detail: "Your activity form has been successfully created.",
                     life: 3000,
                 });
-            } else {
-                toast.add({
+                },
+                onError: () => {
+                    toast.add({
                     severity: "error",
                     summary: "Submission Failed",
                     detail: "Unable to create form. Please check your inputs and try again.",
                     life: 3000,
                 });
-            }
+                },
+            });
         },
         reject: () => {
             toast.add({
@@ -162,10 +163,6 @@ const submit = async () => {
             });
         },
     });
-};
-
-const submitForm = () => {
-    form.post(route("activity-form.store"));
 };
 </script>
 
@@ -321,7 +318,7 @@ const submitForm = () => {
                             type="submit"
                             :disabled="form.processing"
                             label="Submit"
-                            icon="pi pi-arrow-right"
+                            icon="pi pi-send"
                             iconPos="right"
                         />
                     </div>
@@ -330,5 +327,3 @@ const submitForm = () => {
         </Stepper>
     </form>
 </template>
-
-<style scoped></style>

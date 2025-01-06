@@ -32,11 +32,11 @@ class AdminController extends Controller
                 case 'College Dean':
                     $organizationUserIds = $user->organization->users->pluck('id');
                     $activityForms = ActivityForm::whereIn('created_by', $organizationUserIds)
-                        ->where('college_dean_status', 'PENDING');
+                        ->where('college_dean_status', 'PENDING')->with('creator.organization');
                     break;
 
                 case 'Office of Student Affairs':
-                    $activityForms = ActivityForm::where('osa_status', 'PENDING');
+                    $activityForms = ActivityForm::where('osa_status', 'PENDING')->with('creator.organization');
                     break;
 
                 case 'Vice President for Academic Affairs':
@@ -44,7 +44,7 @@ class AdminController extends Controller
                         ['college_dean_status', 'APPROVED'],
                         ['osa_status', 'APPROVED'],
                         ['vpaa_status', 'PENDING'],
-                    ]);
+                    ])->with('creator.organization');
                     break;
 
                 case 'Vice President for Administration':
@@ -53,7 +53,7 @@ class AdminController extends Controller
                         ['osa_status', 'APPROVED'],
                         ['vpaa_status', 'APPROVED'],
                         ['vpa_status', 'PENDING'],
-                    ]);
+                    ])->with('creator.organization');
                     break;
             }
             $activityForms = $activityForms->paginate(5);
@@ -81,19 +81,19 @@ class AdminController extends Controller
                 case 'College Dean':
                     $organizationUserIds = $user->organization->users->pluck('id');
                     $approvedForms = ActivityForm::whereIn('created_by', $organizationUserIds)
-                        ->where('college_dean_status', 'APPROVED');
+                        ->where('college_dean_status', 'APPROVED')->with('creator.organization');
                     break;
 
                 case 'Office of Student Affairs':
-                    $approvedForms = ActivityForm::where('osa_status', 'APPROVED');
+                    $approvedForms = ActivityForm::where('osa_status', 'APPROVED')->with('creator.organization');
                     break;
 
                 case 'Vice President for Academic Affairs':
-                    $approvedForms = ActivityForm::where('vpaa_status', 'APPROVED');
+                    $approvedForms = ActivityForm::where('vpaa_status', 'APPROVED')->with('creator.organization');
                     break;
 
                 case 'Vice President for Administration':
-                    $approvedForms = ActivityForm::where('vpa_status', 'APPROVED');
+                    $approvedForms = ActivityForm::where('vpa_status', 'APPROVED')->with('creator.organization');
                     break;
             }
 
@@ -122,19 +122,19 @@ class AdminController extends Controller
                 case 'College Dean':
                     $organizationUserIds = $user->organization->users->pluck('id');
                     $rejectedForms = ActivityForm::whereIn('created_by', $organizationUserIds)
-                        ->where('college_dean_status', 'REJECTED');
+                        ->where('college_dean_status', 'REJECTED')->with('creator.organization');
                     break;
 
                 case 'Office of Student Affairs':
-                    $rejectedForms = ActivityForm::where('osa_status', 'REJECTED');
+                    $rejectedForms = ActivityForm::where('osa_status', 'REJECTED')->with('creator.organization');
                     break;
 
                 case 'Vice President for Academic Affairs':
-                    $rejectedForms = ActivityForm::where('vpaa_status', 'REJECTED');
+                    $rejectedForms = ActivityForm::where('vpaa_status', 'REJECTED')->with('creator.organization');
                     break;
 
                 case 'Vice President for Administration':
-                    $rejectedForms = ActivityForm::where('vpa_status', 'REJECTED');
+                    $rejectedForms = ActivityForm::where('vpa_status', 'REJECTED')->with('creator.organization');
                     break;
             }
 
@@ -155,24 +155,38 @@ class AdminController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
+        $data = $request->validate([
+            'status' => ['required', 'string', 'in:APPROVED,REJECTED'],
+            'approveRemarks' => ['string', 'nullable'],
+            'rejectRemarks' => ['string', 'nullable'],
+        ]);
+
         $user = Auth::user();
         $activityForm = ActivityForm::findOrFail($id);
+        $remarks = $data['approveRemarks'] ?? $data['rejectRemarks'];
 
-        switch ($request->position) {
+        switch ($user->position) {
             case 'College Dean':
-                $activityForm->college_dean_status = $request->status;
+                $activityForm->college_dean_status = $data['status'];
+                $activityForm->college_dean_remarks = $remarks;
                 break;
             case 'Office of Student Affairs':
-                $activityForm->osa_status = $request->status;
+                $activityForm->osa_status = $data['status'];
+                $activityForm->osa_remarks = $remarks;
+
                 break;
             case 'Vice President for Academic Affairs':
-                $activityForm->vpaa_status = $request->status;
+                $activityForm->vpaa_status = $data['status'];
+                $activityForm->vpaa_remarks = $remarks;
+
                 break;
             case 'Vice President for Administration':
-                $activityForm->vpa_status = $request->status;
+                $activityForm->vpa_status = $data['status'];
+                $activityForm->vpa_remarks = $remarks;
+
                 break;
             default:
-                return response()->json(['message' => 'Unauthorized'], 403);
+                return redirect()->back()->withErrors(['message' => 'Unauthorized']);
         }
 
         if (
@@ -194,7 +208,7 @@ class AdminController extends Controller
         }
 
         $activityForm->save();
-        return Inertia::location(url()->previous());
+        return redirect()->back()->with('success', 'Activity status updated successfully.');
     }
 
     public function copyReceiveBy()

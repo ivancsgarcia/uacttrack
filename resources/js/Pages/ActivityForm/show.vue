@@ -1,16 +1,17 @@
 <script setup>
 import HeaderLayout from "../../Layouts/HeaderLayout.vue";
-import { router, Link, usePage } from "@inertiajs/vue3";
+import { router, Link, usePage, useForm } from "@inertiajs/vue3";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import { ref, watch } from "vue";
 
 defineOptions({ layout: HeaderLayout });
-defineProps({
+const props = defineProps({
     activity: Object,
     events: Array,
     venues: Object,
     participants: Array,
+    status: String,
 });
 
 const confirm = useConfirm();
@@ -19,13 +20,29 @@ const page = usePage();
 const user = page.props.auth.user;
 const showApproveDialog = ref(false);
 const showRejectDialog = ref(false);
-const disableApproveComments = ref(false);
-const disableRejectComments = ref(false);
-const approveComment = ref("");
-
-watch(disableApproveComments, (value) => {
-    if (value) approveComment.value = "";
+const disableApproveRemarks = ref(false);
+const disableRejectRemarks = ref(false);
+// const approveRemarks = ref("");
+// const rejectRemarks = ref("");
+const form = useForm({
+    id: props.activity.id,
+    status: "PENDING",
+    approveRemarks: "",
+    rejectRemarks: "",
+    _method: "PUT",
 });
+
+watch(
+    [disableApproveRemarks, disableRejectRemarks],
+    ([approveDisabled, rejectDisabled]) => {
+        if (approveDisabled) {
+            form.approveRemarks = "";
+        }
+        if (rejectDisabled) {
+            form.rejectRemarks = "";
+        }
+    }
+);
 
 const editActivityForm = (activityId) => {
     router.get(route("activity-form.edit", activityId));
@@ -185,7 +202,11 @@ const reject = () => {
                     >Participants - Department / Program / Grade or Year
                     Level</label
                 >
-                <Select v-model="activity.participant" :options="participants" disabled />
+                <Select
+                    v-model="activity.participant"
+                    :options="participants"
+                    disabled
+                />
             </div>
 
             <div class="w-1/4 flex flex-col">
@@ -304,7 +325,10 @@ const reject = () => {
         <div class="vertical-line"></div>
 
         <div class="flex justify-center gap-4 my-8">
-            <div v-if="user.role === 'Admin'" class="space-x-4">
+            <div
+                v-if="user.role === 'Admin' && status === 'PENDING'"
+                class="space-x-4"
+            >
                 <Button
                     @click="showRejectDialog = true"
                     size="large"
@@ -356,14 +380,14 @@ const reject = () => {
             <div class="text-surface-500 dark:text-surface-400">
                 <label>Provide Feedback:</label>
                 <Textarea
-                    v-model="approveComment"
-                    :disabled="disableApproveComments"
+                    v-model="form.approveRemarks"
+                    :disabled="disableApproveRemarks"
                     fluid
                     rows="5"
                     cols="30"
                 />
                 <div class="flex items-center gap-1">
-                    <Checkbox v-model="disableApproveComments" binary />
+                    <Checkbox v-model="disableApproveRemarks" binary />
                     <label>No feedback</label>
                 </div>
             </div>
@@ -375,14 +399,22 @@ const reject = () => {
                     @click="showApproveDialog = false"
                 ></Button>
                 <Button
-                    type="button"
+                    type="submit"
                     label="Approve"
                     @click="
-                        toast.add({
-                            severity: 'success',
-                            summary: 'Approved',
-                            detail: 'The activity proposal has been approved successfully.',
-                            life: 3000,
+                        form.status = 'APPROVED';
+                        form.post(route('activity-form.status', form.id), {
+                            onSuccess: () => {
+                                toast.add({
+                                    severity: 'success',
+                                    summary: 'Approved',
+                                    detail: 'The activity proposal has been approved successfully.',
+                                    life: 3000,
+                                });
+                            },
+                            onError: () => {
+                                alert('Error updating record!');
+                            },
                         });
                         showApproveDialog = false;
                     "
@@ -402,13 +434,14 @@ const reject = () => {
             <div class="text-surface-500 dark:text-surface-400">
                 <label>Provide Feedback:</label>
                 <Textarea
-                    :disabled="disableRejectComments"
+                    v-model="form.rejectRemarks"
+                    :disabled="disableRejectRemarks"
                     fluid
                     rows="5"
                     cols="30"
                 />
                 <div class="flex items-center gap-1">
-                    <Checkbox v-model="disableRejectComments" binary />
+                    <Checkbox v-model="disableRejectRemarks" binary />
                     <label>No feedback</label>
                 </div>
             </div>
@@ -424,11 +457,19 @@ const reject = () => {
                     label="Reject"
                     severity="danger"
                     @click="
-                        toast.add({
-                            severity: 'warn',
-                            summary: 'Rejected',
-                            detail: 'The activity proposal has been rejected successfully.',
-                            life: 3000,
+                        form.status = 'REJECTED';
+                        form.post(route('activity-form.status', form.id), {
+                            onSuccess: () => {
+                                toast.add({
+                                    severity: 'warn',
+                                    summary: 'Rejected',
+                                    detail: 'The activity proposal has been rejected successfully.',
+                                    life: 3000,
+                                });
+                            },
+                            onError: () => {
+                                alert('Error updating record!');
+                            },
                         });
                         showRejectDialog = false;
                     "

@@ -137,7 +137,15 @@ class ActivityFormController extends Controller
 
     public function show($id)
     {
+        $user = Auth::user();
         $activity = ActivityForm::findOrFail($id);
+        $status = match ($user->position) {
+            'College Dean' => $activity->college_dean_status,
+            'Office of Student Affairs' => $activity->osa_status,
+            'Vice President for Academic Affairs' => $activity->vpaa_status,
+            'Vice President for Administration' => $activity->vpa_status,
+            default => null,
+        };
         $venues = Venue::orderBy('capacity')->get();
         $events = [
             'Seminar/Workshop',
@@ -193,6 +201,7 @@ class ActivityFormController extends Controller
             'venues' => $venues,
             'events' => $events,
             'participants' => $participants,
+            'status' => $status,
         ]);
     }
 

@@ -29,18 +29,8 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 
     public function organization()
     {
-        return $this->belongsTo(Organization::class);
+        return $this->belongsTo(Organization::class, 'organization_id');
     }
-
-    // public function adminPositions() 
-    // {
-    //     return $this->belongsTo(AdminPosition::class);
-    // }
-
-    // public function organizationPositions() 
-    // {
-    //     return $this->belongsTo(OrganizationPosition::class);
-    // }
 
     public function activity_forms()
     {

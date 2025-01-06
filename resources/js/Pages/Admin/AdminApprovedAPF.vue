@@ -10,42 +10,58 @@ const props = defineProps({
 </script>
 
 <template>
-    <h1 class="text-center text-4xl mb-4 text-ua-blue">
+    <h1 class="text-center text-3xl font-bold mb-6 text-ua-blue">
         Approved Activity Proposal Forms
     </h1>
 
-    <table class="w-full border-separate border-spacing-4">
-        <tr class="bg-ua-blue text-white h-20">
-            <th class="w-1/5 border">Transaction Number</th>
-            <th class="w-3/5 border">Activity Title</th>
-            <th class="w-1/5 border">Date</th>
-        </tr>
-
-        <tbody>
-            <tr
-                v-for="(form, index) in approvedForms.data"
-                :key="form.id"
-                class="text-center h-20"
-            >
-                <td class="bg-ua-gray w-1/5 border">
-                    {{ index + 1 }}
-                </td>
-                <td class="bg-ua-gray w-3/5 border underline">
-                    <Link :href="route('activity-form.show', form.id)">{{
-                        form.title
-                    }}</Link>
-                </td>
-                <td class="bg-ua-gray w-1/5 border">
-                    {{ new Date(form.created_at).toLocaleDateString("en-US") }}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div v-if="!approvedForms.data.length" class="text-center mt-8 text-ua-blue">
+    <!-- When no data -->
+    <div
+        v-if="!approvedForms.data.length"
+        class="text-center py-8 text-ua-blue"
+    >
         No approved activity proposal forms available.
     </div>
-    <PaginationLinks v-else :paginator="approvedForms" />
-</template>
 
-<style scoped></style>
+    <!-- Data table -->
+    <div v-else>
+        <table class="w-full">
+            <tr class="bg-ua-blue text-white">
+                <th class="w-1/12 py-4">ID</th>
+                <th class="w-2/12">Organization</th>
+                <th class="">Activity Title</th>
+                <th class="w-2/12">Date Approved</th>
+            </tr>
+            <tbody>
+                <tr
+                    v-for="(form, index) in approvedForms.data"
+                    :key="form.id"
+                    class="text-center"
+                >
+                    <td class="bg-ua-gray py-4">
+                        {{ index + 1 }}
+                    </td>
+                    <td class="bg-ua-gray text-ua-blue">
+                        {{ form.creator.organization.name }}
+                    </td>
+                    <td class="bg-ua-gray underline">
+                        <Link :href="route('activity-form.show', form.id)">{{
+                            form.title
+                        }}</Link>
+                    </td>
+                    <td class="bg-ua-gray">
+                        {{
+                            new Date(form.updated_at).toLocaleDateString(
+                                "en-US"
+                            )
+                        }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <PaginationLinks
+        v-if="approvedForms.data.length >= 6"
+        :paginator="approvedForms"
+    />
+</template>

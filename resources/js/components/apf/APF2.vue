@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
 const props = defineProps({
     form: Object,
@@ -50,7 +50,7 @@ const handleFileUpload = (event, fieldName) => {
         </div>
         <div
             v-show="check_payment_or_cash"
-            class="w-3/4 mx-auto bg-ua-blue/30 rounded-md mb-4"
+            class="w-3/4 mx-auto border-2 border-ua-blue rounded-md p-4 mb-4"
         >
             <p class="text-ua-blue text-center">
                 Funding Request Form (FRF) for P1,000 and above or Petty Cash
@@ -85,10 +85,7 @@ const handleFileUpload = (event, fieldName) => {
                 />
             </div>
         </div>
-        <div
-            v-show="food"
-            class="w-3/4 mx-auto bg-ua-blue/30 rounded-md mb-4"
-        >
+        <div v-show="food" class="w-3/4 mx-auto border-2 border-ua-blue rounded-md p-4 mb-4">
             <p class="text-ua-blue text-center">Request for Meals (RFM)</p>
             <div class="flex justify-center">
                 <input
@@ -119,7 +116,10 @@ const handleFileUpload = (event, fieldName) => {
                 />
             </div>
         </div>
-        <div v-show="supplies" class="w-3/4 mx-auto bg-ua-blue/30 rounded-md mb-4">
+        <div
+            v-show="supplies"
+            class="w-3/4 mx-auto border-2 border-ua-blue rounded-md p-4 mb-4"
+        >
             <p class="text-ua-blue text-center">
                 Requisition Form (RF) for supplies available at RMS or Purchase
                 Requisition (PR) for supplies to be purchased
@@ -156,7 +156,7 @@ const handleFileUpload = (event, fieldName) => {
         </div>
         <div
             v-show="reproduction"
-            class="w-3/4 mx-auto bg-ua-blue/30 rounded-md mb-4"
+            class="w-3/4 mx-auto border-2 border-ua-blue rounded-md p-4 mb-4"
         >
             <p class="text-ua-blue text-center">Reproduction Form</p>
             <div class="flex justify-center">
@@ -189,7 +189,10 @@ const handleFileUpload = (event, fieldName) => {
                 />
             </div>
         </div>
-        <div v-show="others" class="w-3/4 mx-auto bg-ua-blue/30 rounded-md mb-4">
+        <div
+            v-show="others"
+            class="w-3/4 mx-auto border-2 border-ua-blue rounded-md p-4 mb-4"
+        >
             <p class="text-ua-blue text-center">If applicable:</p>
             <div class="flex justify-center">
                 <input

@@ -15,37 +15,12 @@ const createAPF = () => {
 <template>
     <Head title=" | Submitted APF" />
 
-    <h1 class="text-center text-4xl mb-4 text-ua-blue">
+    <h1 class="text-center text-3xl font-bold mb-6 text-ua-blue">
         Submitted Activity Proposal Form
     </h1>
 
-    <table class="w-full border-separate border-spacing-4">
-        <thead>
-            <tr class="bg-ua-blue text-white h-20">
-                <th class="w-1/5 border text-lg">Transaction Number</th>
-                <th class="w-3/5 border text-lg">Activity Title</th>
-                <th class="w-1/5 border text-lg">Date</th>
-            </tr>
-        </thead>
-
-        <tbody v-for="(form, index) in activityForms.data" :key="form.id">
-            <tr class="text-center h-20">
-                <td class="bg-ua-gray w-1/5 border text-lg">
-                    {{ (activityForms.current_page - 1) * activityForms.per_page + index + 1 }}
-                </td>
-                <td class="bg-ua-gray w-3/5 border text-lg underline">
-                    <Link :href="route('activity-form.show', form.id)">{{
-                        form.title
-                    }}</Link>
-                </td>
-                <td class="bg-ua-gray w-1/5 border text-lg">
-                    {{ new Date(form.created_at).toLocaleDateString("en-US") }}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div v-if="!activityForms.data.length" class="mt-4">
-        <p class="text-lg text-center text-bold mt-4">
+    <div v-if="!activityForms.data.length" class="mt-8">
+        <p class="text-center text-bold mb-4">
             No activity proposals have been submitted yet.
         </p>
 
@@ -57,56 +32,40 @@ const createAPF = () => {
             class="block mx-auto"
         />
     </div>
+
+    <div v-else>
+        <table class="w-4/5 mx-auto">
+            <thead>
+                <tr class="bg-ua-blue text-white border-b-4 border-white">
+                    <th class="w-1/5 py-4">ID</th>
+                    <th class="w-3/5">Activity Title</th>
+                    <th class="w-1/5">Date Created</th>
+                </tr>
+            </thead>
+            <tbody v-for="(form, index) in activityForms.data" :key="form.id">
+                <tr class="text-center border-b-4 border-white">
+                    <td class="bg-ua-gray w-1/5 py-4">
+                        {{ index + 1 }}
+                    </td>
+                    <td class="bg-ua-gray w-3/5 underline">
+                        <Link :href="route('activity-form.show', form.id)">{{
+                            form.title
+                        }}</Link>
+                    </td>
+                    <td class="bg-ua-gray w-1/5">
+                        {{
+                            new Date(form.created_at).toLocaleDateString(
+                                "en-US"
+                            )
+                        }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
     <PaginationLinks
-        v-if="activityForms.data.length"
+        v-if="activityForms.data.length >= 6"
         :paginator="activityForms"
     />
 </template>
-
-<style scoped>
-.bg-img {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    margin-bottom: -3rem;
-    margin-right: -3rem;
-}
-
-.bg-img img {
-    transform: rotate(15deg);
-    width: 40rem;
-    filter: grayscale(100%);
-    opacity: 0.1;
-}
-
-.main-content {
-    margin-left: 16rem;
-    padding: 1rem;
-}
-
-.account-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 1rem;
-}
-
-.icons-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.icon:hover {
-    cursor: pointer;
-    color: gold;
-}
-
-.vertical-line {
-    height: 0.125rem;
-    background-color: #272f5c;
-    margin-bottom: 3rem;
-}
-</style>
