@@ -138,19 +138,19 @@ const submit = () => {
             form.post(route("activity-form.store"), {
                 onSuccess: () => {
                     toast.add({
-                    severity: "success",
-                    summary: "Form Submitted",
-                    detail: "Your activity form has been successfully created.",
-                    life: 3000,
-                });
+                        severity: "success",
+                        summary: "Form Submitted",
+                        detail: "Your activity form has been successfully created.",
+                        life: 3000,
+                    });
                 },
                 onError: () => {
                     toast.add({
-                    severity: "error",
-                    summary: "Submission Failed",
-                    detail: "Unable to create form. Please check your inputs and try again.",
-                    life: 3000,
-                });
+                        severity: "error",
+                        summary: "Submission Failed",
+                        detail: "Unable to create form. Please check your inputs and try again.",
+                        life: 3000,
+                    });
                 },
             });
         },
@@ -209,7 +209,7 @@ const submit = () => {
                         <div
                             class="border-2 border-dashed border-surface-200 rounded bg-surface-50 flex-auto flex justify-center items-center font-medium"
                         >
-                            <APF2 :form="form" />
+                            <APF2 :form="form" @updateForm="updateForm" />
                         </div>
                     </div>
                     <div class="flex pt-6 justify-between">
@@ -220,7 +220,6 @@ const submit = () => {
                             @click="activateCallback('1')"
                         />
                         <Button
-                            class="bg-ua-yellow"
                             label="Forms"
                             icon="pi pi-bars"
                             @click="openForms"

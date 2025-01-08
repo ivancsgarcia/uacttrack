@@ -1,8 +1,4 @@
 <script setup>
-import InputText from "primevue/inputtext";
-import Select from "primevue/select";
-import Textarea from "primevue/textarea";
-
 const props = defineProps({
     form: Object,
     events: Array,
@@ -162,8 +158,39 @@ const handleFileUpload = (event, fieldName) => {
             </div>
         </div>
 
-        <div class="bg-black/20 text-ua-blue p-4 text-center text-2xl my-8">
+        <div class="bg-ua-blue text-white p-4 text-center text-2xl my-8">
             Projected Funding Needs
         </div>
+
+        <table class="min-w-full border-collapse border border-gray-300 text-left text-ua-blue">
+            <thead class="text-center">
+                <tr>
+                    <th class="px-4 py-2 border border-gray-300 font-semibold w-2/4">Funding Requirements</th>
+                    <th class="px-4 py-2 border border-gray-300 font-semibold">File</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="px-4 py-2 border border-gray-300">Check Payment / Cash</td>
+                    <td class="px-4 py-2 border border-gray-300">{{ form.payment_or_cash_file?.name || "No file uploaded" }}</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 border border-gray-300">Food</td>
+                    <td class="px-4 py-2 border border-gray-300">{{ form.food_file?.name || "No file uploaded" }}</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 border border-gray-300">Supplies</td>
+                    <td class="px-4 py-2 border border-gray-300">{{ form.supplies_file?.name || "No file uploaded" }}</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 border border-gray-300">Reproduction</td>
+                    <td class="px-4 py-2 border border-gray-300">{{ form.reproduction_file?.name || "No file uploaded" }}</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 border border-gray-300">Others</td>
+                    <td class="px-4 py-2 border border-gray-300">{{ form.others_file?.name || "No file uploaded" }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>

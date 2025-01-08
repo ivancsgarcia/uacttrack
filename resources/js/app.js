@@ -17,6 +17,7 @@ import Checkbox from 'primevue/checkbox';
 import InputNumber from 'primevue/inputnumber';
 import Textarea from 'primevue/textarea';
 import Select from 'primevue/select';
+import FileUpload from 'primevue/fileupload';
 import InputText from 'primevue/inputtext';
 import ToggleSwitch from "primevue/toggleswitch";
 import Dialog from "primevue/dialog";
@@ -78,6 +79,7 @@ createInertiaApp({
             .component("PaginationLinks", PaginationLinks)
             .component("SystemSideMenu", SystemSideMenu)
             .component("Button", Button)
+            .component("FileUpload", FileUpload)
             .component("InputGroup", InputGroup)
             .component("InputGroupAddon", InputGroupAddon)
             .component("Password", Password)

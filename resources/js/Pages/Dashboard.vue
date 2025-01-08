@@ -73,31 +73,31 @@ const toggle = (event) => {
 
     <h2>Approval</h2>
     <div class="box-div">
-        <Card @click="showCollegeDean = true" class="text-xl p-2">
+        <Card @click="showCollegeDean = true" class="cursor-pointer text-xl p-2">
             <template #content>
                 <p>College Dean</p>
             </template>
         </Card>
 
-        <Card @click="showOSA = true" class="text-xl p-2">
+        <Card @click="showOSA = true" class="cursor-pointer text-xl p-2">
             <template #content>
                 <p>Office of Student Affairs</p>
             </template>
         </Card>
 
-        <Card @click="showVPAA = true" class="text-xl p-2">
+        <Card @click="showVPAA = true" class="cursor-pointer text-xl p-2">
             <template #content>
                 <p>VPAA Approval</p>
             </template>
         </Card>
 
-        <Card @click="showVPA = true" class="text-xl p-2">
+        <Card @click="showVPA = true" class="cursor-pointer text-xl p-2">
             <template #content>
                 <p>VPA Approval</p>
             </template>
         </Card>
 
-        <Card @click="copyReceive = true" class="text-xl p-2">
+        <Card @click="copyReceive = true" class="cursor-pointer text-xl p-2">
             <template #content>
                 <p>Copy Received by</p>
             </template>

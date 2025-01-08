@@ -1,18 +1,48 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 const props = defineProps({
     form: Object,
 });
 
+const emit = defineEmits(["updateForm"]);
+
+// const localForm = reactive({ ...props.form });
 const check_payment_or_cash = ref(false);
 const food = ref(false);
 const supplies = ref(false);
 const reproduction = ref(false);
 const others = ref(false);
 
+watch(
+    [check_payment_or_cash, food, supplies, reproduction, others],
+    ([
+        newCheck_payment_or_cash,
+        newFood,
+        newSupplies,
+        newReproduction,
+        newOthers,
+    ]) => {
+        if (newCheck_payment_or_cash === false) {
+            emit("updateForm", { payment_or_cash_file: null });
+        }
+        if (newFood === false) {
+            emit("updateForm", { food_file: null });
+        }
+        if (newSupplies === false) {
+            emit("updateForm", { supplies_file: null });
+        }
+        if (newReproduction === false) {
+            emit("updateForm", { reproduction_file: null });
+        }
+        if (newOthers === false) {
+            emit("updateForm", { others_file: null });
+        }
+    }
+);
+
 const handleFileUpload = (event, fieldName) => {
-    const file = event.target.files[0];
+    const file = event.files[0];
     if (file) {
         props.form[fieldName] = file;
     }
@@ -36,16 +66,7 @@ const handleFileUpload = (event, fieldName) => {
                 Check Payment / Cash
             </div>
             <div class="w-1/4 bg-ua-blue shadow-md p-2">
-                <ToggleSwitch
-                    v-model="check_payment_or_cash"
-                    :pt="{
-                        slider: {
-                            class: {
-                                '!bg-ua-yellow': check_payment_or_cash,
-                            },
-                        },
-                    }"
-                />
+                <ToggleSwitch v-model="check_payment_or_cash" />
             </div>
         </div>
         <div
@@ -56,14 +77,10 @@ const handleFileUpload = (event, fieldName) => {
                 Funding Request Form (FRF) for P1,000 and above or Petty Cash
                 Form (PCF ) for amount below P1,000.
             </p>
-            <div class="flex justify-center">
-                <input
-                    :disabled="check_payment_or_cash !== true"
-                    type="file"
-                    @change="handleFileUpload($event, 'payment_or_cash_file')"
-                    class="text-ua-blue"
-                />
-            </div>
+            <FileUpload
+                @select="handleFileUpload($event, 'payment_or_cash_file')"
+                mode="basic"
+            />
         </div>
         <span v-if="form.errors.payment_or_cash_file" class="text-red-500">
             * {{ form.errors.payment_or_cash_file }}
@@ -73,19 +90,13 @@ const handleFileUpload = (event, fieldName) => {
         <div class="flex justify-center text-center mb-2 gap-4">
             <div class="w-2/4 bg-slate-200 shadow-md p-2">Food</div>
             <div class="w-1/4 bg-ua-blue shadow-md p-2">
-                <ToggleSwitch
-                    v-model="food"
-                    :pt="{
-                        slider: {
-                            class: {
-                                '!bg-ua-yellow': food,
-                            },
-                        },
-                    }"
-                />
+                <ToggleSwitch v-model="food" />
             </div>
         </div>
-        <div v-show="food" class="w-3/4 mx-auto border-2 border-ua-blue rounded-md p-4 mb-4">
+        <div
+            v-show="food"
+            class="w-3/4 mx-auto border-2 border-ua-blue rounded-md p-4 mb-4"
+        >
             <p class="text-ua-blue text-center">Request for Meals (RFM)</p>
             <div class="flex justify-center">
                 <input
@@ -104,16 +115,7 @@ const handleFileUpload = (event, fieldName) => {
         <div class="flex justify-center text-center mb-2 gap-4">
             <div class="w-2/4 bg-slate-200 shadow-md p-2">Supplies</div>
             <div class="w-1/4 bg-ua-blue shadow-md p-2">
-                <ToggleSwitch
-                    v-model="supplies"
-                    :pt="{
-                        slider: {
-                            class: {
-                                '!bg-ua-yellow': supplies,
-                            },
-                        },
-                    }"
-                />
+                <ToggleSwitch v-model="supplies" />
             </div>
         </div>
         <div
@@ -142,16 +144,7 @@ const handleFileUpload = (event, fieldName) => {
             <div class="w-2/4 bg-slate-200 shadow-md p-2">Reproduction</div>
 
             <div class="w-1/4 bg-ua-blue shadow-md p-2">
-                <ToggleSwitch
-                    v-model="reproduction"
-                    :pt="{
-                        slider: {
-                            class: {
-                                '!bg-ua-yellow': reproduction,
-                            },
-                        },
-                    }"
-                />
+                <ToggleSwitch v-model="reproduction" />
             </div>
         </div>
         <div
@@ -177,16 +170,7 @@ const handleFileUpload = (event, fieldName) => {
             <div class="w-2/4 bg-slate-200 shadow-md p-2">Others</div>
 
             <div class="w-1/4 bg-ua-blue shadow-md p-2">
-                <ToggleSwitch
-                    v-model="others"
-                    :pt="{
-                        slider: {
-                            class: {
-                                '!bg-ua-yellow': others,
-                            },
-                        },
-                    }"
-                />
+                <ToggleSwitch v-model="others" />
             </div>
         </div>
         <div

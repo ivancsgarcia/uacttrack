@@ -1,11 +1,6 @@
 <script setup>
 import { ref, watch } from "vue";
-import InputText from "primevue/inputtext";
-import InputNumber from "primevue/inputnumber";
-import Select from "primevue/select";
-import Button from "primevue/button";
 import DatePicker from "../global/DatePicker.vue";
-import { options } from "@fullcalendar/core/preact.js";
 
 const props = defineProps({
     form: Object,

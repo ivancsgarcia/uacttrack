@@ -22,7 +22,7 @@
 }
 
 .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
-    @apply bg-primary
+    @apply bg-ua-yellow
 }
 
 .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-handle {
@@ -38,7 +38,7 @@
 }
 
 .p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:hover).p-toggleswitch-checked .p-toggleswitch-slider {
-    @apply bg-primary-emphasis
+    @apply bg-ua-yellow
 }
 
 .p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:hover).p-toggleswitch-checked .p-toggleswitch-handle {
@@ -46,7 +46,7 @@
 }
 
 .p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:focus-visible) .p-toggleswitch-slider {
-    @apply outline outline-1 outline-offset-2 outline-primary
+    @apply outline outline-1 outline-offset-2 outline-ua-yellow
 }
 
 .p-toggleswitch.p-invalid > .p-toggleswitch-slider {

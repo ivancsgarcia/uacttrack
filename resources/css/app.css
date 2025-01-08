@@ -101,5 +101,6 @@
 }
 body {
     /* background-color: #fafafa; */
-    color: #272f5c;
+    color: #272f5c !important;
+    background-color: #f8fafc !;
 }

@@ -95,7 +95,7 @@ class ActivityFormController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'participant' => 'required|string',
-            'attendance_count' => 'required|integer|numeric|min:1|max:5000',
+            'attendance_count' => 'required|integer|numeric|min:20|max:5000',
             'venue' => 'required|max:255',
 
             'title' => 'required|string',
