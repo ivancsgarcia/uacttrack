@@ -1,19 +1,19 @@
 <script setup></script>
 
 <template>
-    <!-- Background Image -->
+    Background Image
     <div class="bg-img">
         <img src="/public/images/sys-logos/ua-logo.png" alt="UA-logo" />
     </div>
 
-    <!-- Header -->
+    Header
     <UAHeader />
 
     <div class="cont">
-        <!-- Sidebar -->
+        Sidebar
         <SideMenu />
 
-        <!-- Content -->
+        Content
         <main class="content">
             <div class="account-section">
                 <Account />

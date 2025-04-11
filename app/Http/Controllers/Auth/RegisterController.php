@@ -35,7 +35,7 @@ class RegisterController extends Controller
             "Vice President for Administration",
         ];
 
-        return Inertia::render('Auth/Register', [
+        return Inertia::render('Auth/Register/index', [
             'organizations' => $organizations,
             'registerAs' => $registerAs,
             'organization_positions' => $organization_positions,
